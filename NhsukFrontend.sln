@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1B79E09E-40A4-4BC8-AF99-3A2D6C89278A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NhsukFrontend.Components", "src\NhsukFrontend.Components\NhsukFrontend.Components.csproj", "{55B48E10-68F7-49F1-BAF4-2C4C206D2D19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NhsukFrontend.Parity", "src\NhsukFrontend.Parity\NhsukFrontend.Parity.csproj", "{D40BE9BF-4913-4843-BEBA-045EDA095C41}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{AEC4D218-E0E9-4F0D-B649-17D23F25F440}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NhsukFrontend.ParityCheck", "tools\NhsukFrontend.ParityCheck\NhsukFrontend.ParityCheck.csproj", "{A26512C6-2AC2-4C3F-8A02-6DBB58A7CF87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NhsukFrontend.Demo", "src\NhsukFrontend.Demo\NhsukFrontend.Demo.csproj", "{CC4D5581-42D0-455E-B6BE-15F08FC1DDF5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{55B48E10-68F7-49F1-BAF4-2C4C206D2D19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55B48E10-68F7-49F1-BAF4-2C4C206D2D19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55B48E10-68F7-49F1-BAF4-2C4C206D2D19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55B48E10-68F7-49F1-BAF4-2C4C206D2D19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D40BE9BF-4913-4843-BEBA-045EDA095C41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D40BE9BF-4913-4843-BEBA-045EDA095C41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D40BE9BF-4913-4843-BEBA-045EDA095C41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D40BE9BF-4913-4843-BEBA-045EDA095C41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A26512C6-2AC2-4C3F-8A02-6DBB58A7CF87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A26512C6-2AC2-4C3F-8A02-6DBB58A7CF87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A26512C6-2AC2-4C3F-8A02-6DBB58A7CF87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A26512C6-2AC2-4C3F-8A02-6DBB58A7CF87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC4D5581-42D0-455E-B6BE-15F08FC1DDF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC4D5581-42D0-455E-B6BE-15F08FC1DDF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC4D5581-42D0-455E-B6BE-15F08FC1DDF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC4D5581-42D0-455E-B6BE-15F08FC1DDF5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{55B48E10-68F7-49F1-BAF4-2C4C206D2D19} = {1B79E09E-40A4-4BC8-AF99-3A2D6C89278A}
+		{D40BE9BF-4913-4843-BEBA-045EDA095C41} = {1B79E09E-40A4-4BC8-AF99-3A2D6C89278A}
+		{A26512C6-2AC2-4C3F-8A02-6DBB58A7CF87} = {AEC4D218-E0E9-4F0D-B649-17D23F25F440}
+		{CC4D5581-42D0-455E-B6BE-15F08FC1DDF5} = {1B79E09E-40A4-4BC8-AF99-3A2D6C89278A}
+	EndGlobalSection
+EndGlobal

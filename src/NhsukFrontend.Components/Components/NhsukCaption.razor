@@ -1,0 +1,27 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/caption/template.njk *@
+<NhsukElement Tag="@Tag" Attributes="ElementAttributes"><NhsukContent Caller="ChildContent" Html="@Html" Text="@Text" /></NhsukElement>
+
+@code {
+    private static readonly string[] Sizes = ["m", "l", "xl", "xxl"];
+
+    private string Tag => Default(Element, "span").ToLowerInvariant();
+
+    private Attrs ElementAttributes
+    {
+        get
+        {
+            var classNames = "nhsuk-caption";
+            if (Size is not null && Sizes.Contains(Size) && !Sizes.Any(s => Contains(Classes, "nhsuk-caption-" + s)))
+                classNames = "nhsuk-caption-" + Size;
+            if (Placement is "after" or "end")
+                classNames += " nhsuk-caption--bottom";
+            classNames = Append(classNames, Classes);
+
+            return new Attrs()
+                .Add("class", classNames)
+                .Optional("id", Truthy(Id) ? Id : null)
+                .AddUser(Attributes, AdditionalAttributes);
+        }
+    }
+}

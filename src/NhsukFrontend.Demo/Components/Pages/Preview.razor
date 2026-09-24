@@ -1,0 +1,55 @@
+@page "/preview/{Name}/{Index:int}"
+@inject ParityReport Report
+
+@if (_fixture is null || _type is null)
+{
+    <DemoPage Title="Example not found"><h1>Example not found</h1></DemoPage>
+}
+else if (Name == "template")
+{
+    @* The page template example is the whole document, rendered directly. Add the stylesheet unless the example replaces the head block. *@
+    <DynamicComponent Type="_type" Parameters="TemplateParameters" />
+}
+else
+{
+    <NhsukTemplate>
+        <PageTitle>@_fixture.Name – @Name example</PageTitle>
+        <Head>@((MarkupString)NhsukFrontendAssets.HeadHtml)</Head>
+        @* Headers and footers go in the template's own slots, so they sit edge to edge like on a real page. *@
+        <Header>@if (Name == "header") { @Example }</Header>
+        <Footer>@if (Name == "footer") { @Example }</Footer>
+        <ChildContent>@if (Name is not ("header" or "footer")) { @Example }</ChildContent>
+        <BodyEnd>@((MarkupString)NhsukFrontendAssets.BodyEndHtml)</BodyEnd>
+    </NhsukTemplate>
+}
+
+@code {
+    [Parameter] public string Name { get; set; } = "";
+    [Parameter] public int Index { get; set; }
+
+    private Fixture? _fixture;
+    private Type? _type;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var parity = await Report.ForComponentAsync(Name);
+        _type = parity?.ComponentType;
+        _fixture = parity is not null && Index >= 0 && Index < parity.Results.Count ? parity.Results[Index].Fixture : null;
+    }
+
+    private RenderFragment Example =>
+        @<DynamicComponent Type="_type" Parameters="ParityRunner.BuildParameters(_type!, _fixture!.Context, _fixture.CallBlock, _fixture.Blocks)" />;
+
+    private IDictionary<string, object?> TemplateParameters
+    {
+        get
+        {
+            var parameters = ParityRunner.BuildParameters(_type!, _fixture!.Context, _fixture.CallBlock, _fixture.Blocks);
+            if (!parameters.ContainsKey("Head"))
+                parameters["Head"] = (RenderFragment)(b => b.AddMarkupContent(0, NhsukFrontendAssets.HeadHtml));
+            if (!parameters.ContainsKey("BodyEnd"))
+                parameters["BodyEnd"] = (RenderFragment)(b => b.AddMarkupContent(0, NhsukFrontendAssets.BodyEndHtml));
+            return parameters;
+        }
+    }
+}

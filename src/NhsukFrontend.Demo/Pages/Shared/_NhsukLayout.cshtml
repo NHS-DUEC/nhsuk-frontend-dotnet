@@ -1,0 +1,41 @@
+@*
+    A conventional Razor Pages / MVC layout using the ported components through the <component> tag helper.
+    Existing MVC apps can adopt the components without moving to Blazor.
+*@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewData["Title"] – NHS.UK frontend for .NET</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#005eb8">
+    <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48">
+    <link rel="stylesheet" href="@NhsukFrontendAssets.Stylesheet">
+    <link rel="stylesheet" href="/demo.css">
+</head>
+<body>
+    <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' nhsuk-frontend-supported' : '');</script>
+
+    <component type="typeof(NhsukSkipLink)" render-mode="Static" />
+    <component type="typeof(NhsukHeader)" render-mode="Static"
+               param-Service='new HeaderServiceOptions { Text = "NHS.UK frontend for .NET", Href = "/" }'
+               param-Navigation='new HeaderNavigationOptions { Items = [
+                   new() { Text = "Components", Href = "/" },
+                   new() { Text = "Form example", Href = "/examples/form" },
+                   new() { Text = "Razor Pages", Href = "/examples/razor-pages", Current = true },
+                   new() { Text = "Keeping up with upstream", Href = "/about" } ] }' />
+
+    <div class="nhsuk-width-container">
+        @RenderSection("BeforeContent", required: false)
+        <main class="nhsuk-main-wrapper" id="maincontent">
+            @RenderBody()
+        </main>
+    </div>
+
+    <component type="typeof(NhsukFooter)" render-mode="Static"
+               param-Meta='new FooterMetaOptions { Text = "Rendered by Razor Pages." }'
+               param-Copyright='new FooterCopyrightOptions { Text = "" }' />
+
+    @Html.Raw(NhsukFrontendAssets.BodyEndHtml)
+</body>
+</html>

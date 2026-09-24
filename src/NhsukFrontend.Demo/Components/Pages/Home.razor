@@ -1,0 +1,60 @@
+@page "/"
+@inject ParityReport Report
+
+<DemoPage Title="Components" Section="components">
+    <NhsukHeading Size="xl" Text="NHS.UK frontend for ASP.NET Core" />
+    <p class="nhsuk-lede-text">Razor components that render the same HTML as the NHS.UK frontend Nunjucks macros, generated from and tested against nhsuk-frontend @NhsukFrontendUpstream.Version.</p>
+
+    @if (_results is not null)
+    {
+        var passed = _results.Sum(r => r.PassedCount);
+        var total = _results.Sum(r => r.Results.Count);
+        <NhsukInsetText Html="@($"<p><strong>{passed} of {total}</strong> upstream examples render identical HTML in .NET, across {_results.Count(r => r.Component != "template")} components and the page template. Every page on this site uses the ported components.</p>")" />
+
+        <table class="nhsuk-table">
+            <caption class="nhsuk-table__caption">Ported components</caption>
+            <thead class="nhsuk-table__head">
+                <tr class="nhsuk-table__row">
+                    <th scope="col" class="nhsuk-table__header">Component</th>
+                    <th scope="col" class="nhsuk-table__header">Razor component</th>
+                    <th scope="col" class="nhsuk-table__header nhsuk-table__header--numeric">Examples matching</th>
+                    <th scope="col" class="nhsuk-table__header">Status</th>
+                </tr>
+            </thead>
+            <tbody class="nhsuk-table__body">
+                @foreach (var result in _results)
+                {
+                    <tr class="nhsuk-table__row">
+                        <td class="nhsuk-table__cell"><a href="@DemoLinks.Component(result.Component)">@result.DisplayName</a></td>
+                        <td class="nhsuk-table__cell"><code>&lt;@(result.ComponentType?.Name ?? "–")&gt;</code></td>
+                        <td class="nhsuk-table__cell nhsuk-table__cell--numeric">@result.PassedCount of @result.Results.Count</td>
+                        <td class="nhsuk-table__cell">
+                            @if (result.Results.Count == 0)
+                            {
+                                <NhsukTag Text="Tested through other components" Colour="grey" />
+                            }
+                            else if (result.AllPassed)
+                            {
+                                <NhsukTag Text="Matches upstream" Colour="green" />
+                            }
+                            else
+                            {
+                                <NhsukTag Text="Differs from upstream" Colour="red" />
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h2>Not ported yet</h2>
+        <p>These upstream components have generated-ready options and fixtures, but no Razor markup yet:</p>
+        <p>@string.Join(", ", FixtureStore.Manifest.NotYetPorted)</p>
+    }
+</DemoPage>
+
+@code {
+    private IReadOnlyList<ComponentParity>? _results;
+
+    protected override async Task OnInitializedAsync() => _results = await Report.Results;
+}

@@ -1,0 +1,76 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/button/template.njk *@
+@if (Tag == "input")
+{
+    <input @attributes="ButtonAttributes" />
+}
+else
+{
+    <NhsukElement Tag="@Tag" Attributes="ButtonAttributes">
+        @if (Truthy(IconMarkupSource) && Icon!.Placement == "start") { @IconFragment }
+        @if (ChildContent is not null) { @ChildContent }
+        else if ((Truthy(Text) || Truthy(Html)) && Truthy(IconMarkupSource)) {<span class="nhsuk-button__content">@ButtonText</span>}
+        else if (Truthy(Text) || Truthy(Html)) { @ButtonText }
+        @if (Truthy(IconMarkupSource) && Icon!.Placement == "end") { @IconFragment }
+    </NhsukElement>
+}
+
+@code {
+    private static readonly string[] Variants = ["brand", "login", "reverse", "secondary", "secondary-solid", "warning"];
+
+    private string Tag => Truthy(Element)
+        ? Element!.ToLowerInvariant()
+        : Truthy(Href) && !Truthy(Type) ? "a" : "button";
+
+    // Upstream: `icon.html if icon.html else (nhsukIcon(icon.name) if icon.name)`
+    private string? IconMarkupSource => Truthy(Icon?.Html) ? Icon!.Html : Icon?.Name;
+
+    private RenderFragment IconFragment => Truthy(Icon?.Html)
+        ? @<text>@((MarkupString)Icon!.Html!)</text>
+        : @<NhsukIcon Name="@(Icon!.Name!)" />;
+
+    private RenderFragment ButtonText => Truthy(Html)
+        ? @<text>@((MarkupString)Html!)</text>
+        : @<text>@Text</text>;
+
+    private Attrs ButtonAttributes
+    {
+        get
+        {
+            var classNames = "nhsuk-button";
+            if (Variant is not null && Variants.Contains(Variant) && !Variants.Any(v => Contains(Classes, "nhsuk-button--" + v)))
+                classNames += " nhsuk-button--" + Variant;
+            if (Icon is not null && !Contains(Classes, "nhsuk-button--icon"))
+                classNames += " nhsuk-button--icon";
+            if (Small == true && !Contains(Classes, "nhsuk-button--small"))
+                classNames += " nhsuk-button--small";
+            classNames = Append(classNames, Classes);
+
+            var tag = Tag;
+            var isFormControl = tag is "button" or "input";
+            var attrs = new Attrs()
+                .Add("class", classNames)
+                .Optional("id", Id)
+                .Optional("name", isFormControl ? Name : null)
+                .Add("data-module", "nhsuk-button")
+                .Optional("data-prevent-double-click", PreventDoubleClick is bool b ? (b ? "true" : "false") : null);
+
+            if (isFormControl)
+            {
+                attrs.Add("type", Default(Type, "submit"))
+                    .Optional("value", tag == "input" ? Text : Value)
+                    .Optional("disabled", Disabled)
+                    .Optional("aria-label", AriaLabel)
+                    .Optional("aria-disabled", Disabled == true ? "true" : null);
+            }
+            else if (tag == "a")
+            {
+                attrs.Add("href", Default(Href, "#"))
+                    .Add("role", "button")
+                    .Add("draggable", "false")
+                    .Optional("aria-label", AriaLabel);
+            }
+            return attrs.AddUser(Attributes, AdditionalAttributes);
+        }
+    }
+}

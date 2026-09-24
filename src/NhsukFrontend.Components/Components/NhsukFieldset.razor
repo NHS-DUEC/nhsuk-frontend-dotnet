@@ -1,0 +1,17 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/fieldset/template.njk *@
+<fieldset @attributes="FieldsetAttributes">
+    <NhsukLegend Text="@Legend?.Text" Html="@Legend?.Html" Classes="@Legend?.Classes"
+                 IsPageHeading="@Legend?.IsPageHeading" Size="@Legend?.Size" />
+    @if (ChildContent is not null) { @ChildContent }
+    else if (Truthy(Html)) { @((MarkupString)Html!) }
+</fieldset>
+
+@code {
+    private Attrs FieldsetAttributes => new Attrs()
+        .Add("class", Append("nhsuk-fieldset", Classes))
+        .Optional("id", Id)
+        .Optional("role", Role)
+        .Optional("aria-describedby", Truthy(DescribedBy) ? DescribedBy : null)
+        .AddUser(Attributes, AdditionalAttributes);
+}

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+  <!--
+    Compiles every Razor snippet shown on the demo site, to prove the documented usage is valid.
+    CI writes AllSnippets.razor here first by running the ParityCheck tool with the emit-snippets flag
+    (see .github/workflows/ci.yml).
+    Deliberately not in the solution, so Heroku never builds it.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <ProjectReference Include="..\..\src\NhsukFrontend.Components\NhsukFrontend.Components.csproj" />
+  </ItemGroup>
+</Project>

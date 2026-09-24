@@ -1,0 +1,122 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/input/template.njk *@
+<div class="@_formGroupClasses" @attributes="new Attrs().AddUser(FormGroup?.Attributes)">
+    <NhsukLabel Html="@Label?.Html" Text="@Label?.Text" Id="@Label?.Id" For="@(Label?.For ?? _id)" Size="@Label?.Size"
+                IsPageHeading="@Label?.IsPageHeading" Classes="@Label?.Classes" Attributes="@Label?.Attributes" />
+    @if (_hasHint)
+    {
+        <NhsukHint Html="@Hint!.Html" Text="@Hint.Text" Id="@_hintId" Classes="@Hint.Classes" Attributes="@Hint.Attributes" />
+    }
+    @if (_hasError)
+    {
+        <NhsukErrorMessage Html="@ErrorMessage!.Html" Text="@ErrorMessage.Text" VisuallyHiddenText="@ErrorMessage.VisuallyHiddenText"
+                           Id="@_errorId" Classes="@ErrorMessage.Classes" Attributes="@ErrorMessage.Attributes" />
+    }
+    @if (_hasWrapper)
+    {
+        <div class="@_inputWrapperClasses" @attributes="new Attrs().AddUser(InputWrapper?.Attributes)">
+            @if (BeforeInputContent is not null) { @BeforeInputContent }
+            else if (_hasBeforeInput) { @HtmlOrText(FormGroup!.BeforeInput!.Html, FormGroup.BeforeInput.Text) }
+            @if (_hasPrefix) { @Affix(Prefix!.Html, Prefix.Text, Prefix.Classes, Prefix.Attributes, "prefix") }
+            <input @attributes="InputAttributes" />
+            @if (_hasSuffix) { @Affix(Suffix!.Html, Suffix.Text, Suffix.Classes, Suffix.Attributes, "suffix") }
+            @if (AfterInputContent is not null) { @AfterInputContent }
+            else if (_hasAfterInput) { @HtmlOrText(FormGroup!.AfterInput!.Html, FormGroup.AfterInput.Text) }
+        </div>
+    }
+    else
+    {
+        <input @attributes="InputAttributes" />
+    }
+</div>
+
+@code {
+    private static readonly int[] Widths = [2, 3, 4, 5, 10, 20, 30];
+
+    /// <summary>
+    /// Razor-native alternative to <c>formGroup.beforeInput.html</c>: render components instead of an HTML string.
+    /// Not an upstream option.
+    /// </summary>
+    [Parameter] public RenderFragment? BeforeInputContent { get; set; }
+
+    /// <summary>Razor-native alternative to <c>formGroup.afterInput.html</c>. Not an upstream option.</summary>
+    [Parameter] public RenderFragment? AfterInputContent { get; set; }
+
+    private string _id = "", _classNames = "", _formGroupClasses = "", _inputWrapperClasses = "", _describedBy = "";
+    private string? _hintId, _errorId;
+    private bool _hasHint, _hasError, _hasPrefix, _hasSuffix, _hasBeforeInput, _hasAfterInput, _hasWrapper;
+
+    protected override void OnParametersSet()
+    {
+        var classNames = "nhsuk-input";
+        var wrapperClasses = "nhsuk-input-wrapper";
+        var formGroupClasses = "nhsuk-form-group";
+
+        if (Large == true && !Contains(Classes, "nhsuk-input--large"))
+        {
+            classNames += " nhsuk-input--large";
+            wrapperClasses += " nhsuk-input-wrapper--large";
+        }
+        if (Code == true && !Contains(Classes, "nhsuk-input--code"))
+            classNames += " nhsuk-input--code";
+
+        _hasError = Truthy(ErrorMessage?.Text) || Truthy(ErrorMessage?.Html);
+        if (_hasError || ErrorMessage?.IsTrue == true)
+        {
+            classNames += " nhsuk-input--error";
+            formGroupClasses += " nhsuk-form-group--error";
+        }
+
+        if (Width is int w && Widths.Contains(w) && !Widths.Any(x => Contains(Classes, "nhsuk-input--width-" + x)))
+            classNames += " nhsuk-input--width-" + w;
+
+        _classNames = Append(classNames, Classes);
+        _inputWrapperClasses = Append(wrapperClasses, InputWrapper?.Classes);
+        _formGroupClasses = Append(formGroupClasses, FormGroup?.Classes);
+
+        _id = Truthy(Id) ? Id! : Name ?? "";
+        _describedBy = DescribedBy ?? "";
+
+        _hasHint = Truthy(Hint?.Text) || Truthy(Hint?.Html);
+        if (_hasHint)
+        {
+            _hintId = Hint!.Id ?? _id + "-hint";
+            _describedBy = (_describedBy + " " + _hintId).Trim();
+        }
+        if (_hasError)
+        {
+            _errorId = ErrorMessage!.Id ?? _id + "-error";
+            _describedBy = (_describedBy + " " + _errorId).Trim();
+        }
+
+        _hasPrefix = Truthy(Prefix?.Text) || Truthy(Prefix?.Html);
+        _hasSuffix = Truthy(Suffix?.Text) || Truthy(Suffix?.Html);
+        _hasBeforeInput = BeforeInputContent is not null || Truthy(FormGroup?.BeforeInput?.Text) || Truthy(FormGroup?.BeforeInput?.Html);
+        _hasAfterInput = AfterInputContent is not null || Truthy(FormGroup?.AfterInput?.Text) || Truthy(FormGroup?.AfterInput?.Html);
+        _hasWrapper = _hasPrefix || _hasSuffix || _hasBeforeInput || _hasAfterInput
+            || Truthy(InputWrapper?.Classes) || InputWrapper?.Attributes is not null;
+    }
+
+    private Attrs InputAttributes => new Attrs()
+        .Add("class", _classNames)
+        .Add("id", _id)
+        .Add("name", Name)
+        .Add("type", DefaultIfFalsy(Type, "text"))
+        .Optional("spellcheck", Spellcheck is bool b ? (b ? "true" : "false") : null)
+        .Optional("value", Value)
+        .Optional("disabled", Disabled)
+        .Optional("aria-describedby", Truthy(_describedBy) ? _describedBy : null)
+        .Optional("autocomplete", Autocomplete)
+        .Optional("autocapitalize", Autocapitalize)
+        .Optional("pattern", Pattern)
+        .Optional("placeholder", Placeholder)
+        .Optional("inputmode", Inputmode)
+        .AddUser(Attributes, AdditionalAttributes);
+
+    private static RenderFragment HtmlOrText(string? html, string? text) => Truthy(html)
+        ? @<text>@((MarkupString)html!)</text>
+        : @<text>@text</text>;
+
+    private static RenderFragment Affix(string? html, string? text, string? classes, NhsukAttributes? attributes, string type) =>
+        @<div class="@Append("nhsuk-input-wrapper__" + type, classes)" aria-hidden="true" @attributes="new Attrs().AddUser(attributes)">@HtmlOrText(html, text)</div>;
+}

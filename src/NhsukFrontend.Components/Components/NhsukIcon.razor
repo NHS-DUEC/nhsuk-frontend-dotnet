@@ -1,0 +1,39 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/macros/icon.njk. SVG paths are generated from upstream into IconPaths.g.cs. *@
+<svg @attributes="SvgAttributes">@if (Truthy(Title)) {<title>@Title</title>}@if (Truthy(Html)) {@((MarkupString)Html!)} else if (IconPaths.Markup.TryGetValue(Name, out var paths)) {@((MarkupString)paths)}</svg>
+
+@code {
+    [Parameter, EditorRequired] public string Name { get; set; } = "";
+    [Parameter] public string? Title { get; set; }
+    [Parameter] public string? Classes { get; set; }
+    [Parameter] public int? Size { get; set; }
+    [Parameter] public string? Html { get; set; }
+    [Parameter] public NhsukAttributes? Attributes { get; set; }
+
+    private Attrs SvgAttributes
+    {
+        get
+        {
+            var classNames = "nhsuk-icon nhsuk-icon--" + Name;
+            if (Size is 25 or 50 or 75 or 100
+                && !Contains(Classes, "nhsuk-icon--size-25") && !Contains(Classes, "nhsuk-icon--size-50")
+                && !Contains(Classes, "nhsuk-icon--size-75") && !Contains(Classes, "nhsuk-icon--size-100"))
+            {
+                classNames += " nhsuk-icon--size-" + Size;
+            }
+            classNames = Append(classNames, Classes);
+
+            return new Attrs()
+                .Add("class", classNames)
+                .Add("xmlns", "http://www.w3.org/2000/svg")
+                .Add("viewBox", "0 0 24 24")
+                .Add("width", "16")
+                .Add("height", "16")
+                .Add("focusable", "false")
+                .Optional("role", Truthy(Title) ? "img" : null)
+                .Optional("aria-label", Truthy(Title) ? Title : null)
+                .Optional("aria-hidden", Truthy(Title) ? null : "true")
+                .AddUser(Attributes);
+        }
+    }
+}

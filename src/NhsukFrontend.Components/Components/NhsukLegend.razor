@@ -1,0 +1,30 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/legend/template.njk (note: upstream legend has no attributes option) *@
+@if (ChildContent is not null || Truthy(Html) || Truthy(Text))
+{
+    <legend class="@ClassNames">
+        @if (IsPageHeading == true)
+        {
+            <NhsukHeading ClassName="nhsuk-fieldset__heading" Html="@Html" Text="@Text" ChildContent="ChildContent" />
+        }
+        else
+        {
+            <NhsukContent Caller="ChildContent" Html="@Html" Text="@Text" />
+        }
+    </legend>
+}
+
+@code {
+    private static readonly string[] Sizes = ["s", "m", "l", "xl"];
+
+    private string ClassNames
+    {
+        get
+        {
+            var classNames = "nhsuk-fieldset__legend";
+            if (Size is not null && Sizes.Contains(Size) && !Sizes.Any(s => Contains(Classes, "nhsuk-fieldset__legend--" + s)))
+                classNames += " nhsuk-fieldset__legend--" + Size;
+            return Append(classNames, Classes);
+        }
+    }
+}

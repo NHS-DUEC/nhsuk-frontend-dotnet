@@ -1,0 +1,55 @@
+/* Demo-only styles. Everything else comes from NHS.UK frontend. */
+
+.app-example {
+  border: 1px solid #d8dde0;
+  padding: 24px;
+  margin-bottom: 16px;
+  background: #fff;
+  overflow-x: auto;
+}
+
+.app-example--header,
+.app-example--footer {
+  padding: 0;
+}
+
+.app-example-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.app-example-meta p {
+  margin: 0;
+}
+
+.app-code {
+  background: #f0f4f5;
+  border-left: 4px solid #005eb8;
+  padding: 16px;
+  overflow-x: auto;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 16px;
+  white-space: pre;
+}
+
+.app-diff {
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 16px;
+  overflow-x: auto;
+  white-space: pre;
+  background: #fff;
+  border: 1px solid #d8dde0;
+}
+
+.app-diff__expected { background: #fce4e2; display: block; }
+.app-diff__actual { background: #e1f3e3; display: block; }
+.app-diff__same { color: #4c6272; display: block; }
+
+.app-example-heading {
+  margin-top: 48px;
+}

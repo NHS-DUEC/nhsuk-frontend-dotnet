@@ -1,0 +1,11 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/error-message/template.njk *@
+<span class="@Append("nhsuk-error-message", Classes)" id="@(Truthy(Id) ? Id : null)" @attributes="new Attrs().AddUser(Attributes, AdditionalAttributes)">
+  @if (Truthy(HiddenText)) {<span class="nhsuk-u-visually-hidden">@HiddenText: </span>}
+  <NhsukContent Caller="ChildContent" Html="@Html" Text="@Text" />
+</span>
+
+@code {
+    // `default("Error")` only replaces a missing value, so an empty string turns the prefix off.
+    private string HiddenText => Default(VisuallyHiddenText, "Error");
+}

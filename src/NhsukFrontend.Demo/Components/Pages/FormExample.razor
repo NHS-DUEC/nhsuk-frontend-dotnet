@@ -1,0 +1,65 @@
+@page "/examples/form"
+@using System.Text.RegularExpressions
+
+<DemoPage Title="Form example" Section="form">
+    <BeforeContent><NhsukBackLink Href="/" /></BeforeContent>
+    <ChildContent>
+        @if (_submitted && _errors.Count == 0)
+        {
+            <NhsukHeading Size="l" Text="Details checked" />
+            <p>Name: @FullName<br>NHS number: @NhsNumber<br>Email: @Email</p>
+            <NhsukInsetText Text="Nothing has been stored or sent. This page shows ASP.NET Core form binding and validation working with the ported components." />
+            <NhsukButton Href="/examples/form" Text="Start again" Variant="secondary" />
+        }
+        else
+        {
+            <form method="post" @formname="details" @onsubmit="Submit" novalidate>
+                <AntiforgeryToken />
+                <NhsukFieldset Legend="@(new LegendOptions { Text = "Enter your details", Size = "l", IsPageHeading = true })">
+                    <NhsukInput Name="FullName" Label="@("Full name")" Autocomplete="name" Spellcheck="false"
+                                Value="@FullName" ErrorMessage="@ErrorFor(nameof(FullName))" />
+
+                    <NhsukInput Name="NhsNumber" Label="@("NHS number")" Hint="@("This is a 10 digit number, like 999 123 4567")"
+                                Width="10" Inputmode="numeric" Code="true" Spellcheck="false"
+                                Value="@NhsNumber" ErrorMessage="@ErrorFor(nameof(NhsNumber))" />
+
+                    <NhsukInput Name="Email" Label="@("Email address")" Type="email" Autocomplete="email" Spellcheck="false"
+                                Value="@Email" ErrorMessage="@ErrorFor(nameof(Email))" />
+                </NhsukFieldset>
+
+                <NhsukButton Text="Continue" PreventDoubleClick="true" />
+            </form>
+        }
+    </ChildContent>
+</DemoPage>
+
+@code {
+    [SupplyParameterFromForm(FormName = "details")] public string? FullName { get; set; }
+    [SupplyParameterFromForm(FormName = "details")] public string? NhsNumber { get; set; }
+    [SupplyParameterFromForm(FormName = "details")] public string? Email { get; set; }
+
+    private readonly Dictionary<string, string> _errors = [];
+    private bool _submitted;
+
+    private ErrorMessageOptions? ErrorFor(string field) => _errors.TryGetValue(field, out var message) ? new ErrorMessageOptions { Text = message } : null;
+
+    private void Submit()
+    {
+        _submitted = true;
+        _errors.Clear();
+
+        if (string.IsNullOrWhiteSpace(FullName))
+            _errors[nameof(FullName)] = "Enter your full name";
+
+        var digits = Regex.Replace(NhsNumber ?? "", @"[\s-]", "");
+        if (digits.Length == 0)
+            _errors[nameof(NhsNumber)] = "Enter your NHS number";
+        else if (!Regex.IsMatch(digits, @"^\d{10}$"))
+            _errors[nameof(NhsNumber)] = "NHS number must be 10 numbers";
+
+        if (string.IsNullOrWhiteSpace(Email))
+            _errors[nameof(Email)] = "Enter your email address";
+        else if (!Regex.IsMatch(Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            _errors[nameof(Email)] = "Enter an email address in the correct format, like name@example.com";
+    }
+}

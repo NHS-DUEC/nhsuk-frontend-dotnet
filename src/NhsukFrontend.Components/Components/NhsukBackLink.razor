@@ -1,0 +1,31 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/back-link/template.njk *@
+<NhsukElement Tag="@Tag" Attributes="LinkAttributes">
+    @if (Truthy(VisuallyHiddenText)) {<span class="nhsuk-u-visually-hidden">@VisuallyHiddenText </span>}
+    @if (ChildContent is not null) { @ChildContent }
+    else if (Truthy(Html)) { @((MarkupString)Html!) }
+    else { @DefaultIfFalsy(Text, "Back") }
+</NhsukElement>
+
+@code {
+    private string Tag => Truthy(Element)
+        ? Element!.ToLowerInvariant()
+        : Truthy(Href) && !Truthy(Type) ? "a" : "button";
+
+    private Attrs LinkAttributes
+    {
+        get
+        {
+            var classNames = "nhsuk-back-link";
+            if (Variant == "reverse" && !Contains(Classes, "nhsuk-back-link--reverse"))
+                classNames += " nhsuk-back-link--reverse";
+
+            var attrs = new Attrs()
+                .Add("class", Append(classNames, Classes))
+                .Optional("id", Id);
+            if (Tag == "button") attrs.Add("type", Default(Type, "submit"));
+            else if (Tag == "a") attrs.Add("href", Default(Href, "#"));
+            return attrs.AddUser(Attributes, AdditionalAttributes);
+        }
+    }
+}

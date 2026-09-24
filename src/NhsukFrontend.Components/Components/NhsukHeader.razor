@@ -1,0 +1,196 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/header/template.njk *@
+<header @attributes="HeaderAttributes">
+    <div class="@Append("nhsuk-header__container nhsuk-width-container", ContainerClasses)">
+        <div class="nhsuk-header__service">
+            @if (Truthy(_logoHref))
+            {
+                <a class="nhsuk-header__service-logo" href="@_logoHref" aria-label="@LogoAriaLabel">
+                    @ServiceLogo
+                    @if (_combineLinks) { @ServiceName(Service!.Text, null) }
+                </a>
+            }
+            else if (_combineLinks)
+            {
+                @ServiceLogo
+                @ServiceName(Service!.Text, null)
+            }
+            else
+            {
+                @ServiceLogo
+            }
+            @if (Truthy(Service?.Text) && !_combineLinks) { @ServiceName(Service!.Text, Service.Href) }
+        </div>
+        @if (Search is not null)
+        {
+            <search class="@Append("nhsuk-header__search", Search.Classes)" @attributes="new Attrs().AddUser(Search.Attributes)">
+                <form @attributes="SearchFormAttributes" novalidate>
+                    <NhsukInput Label="@(new LabelOptions { Text = SearchLabelText, Classes = "nhsuk-u-visually-hidden" })"
+                                Id="search-field" Name="@Default(Search.Name, "q")" Type="search" Autocomplete="off"
+                                Placeholder="@SearchPlaceholder">
+                        <AfterInputContent>
+                            <NhsukButton AriaLabel="@SearchButtonAriaLabel" Icon="@("search")" Small="true" />
+                        </AfterInputContent>
+                    </NhsukInput>
+                </form>
+            </search>
+        }
+        @if (Account is not null)
+        {
+            <nav class="@Append("nhsuk-header__account", Account.Classes)" aria-label="@Default(Account.AriaLabel, "Account")" @attributes="new Attrs().AddUser(Account.Attributes)">
+                <ul class="nhsuk-header__account-list">
+                    @foreach (var item in Account.Items ?? [])
+                    {
+                        if (item is null) continue;
+                        <li class="@Append("nhsuk-header__account-item", item.Classes)">
+                            @if (Truthy(item.Href))
+                            {
+                                <a class="nhsuk-header__account-link" href="@item.Href">@AccountItem(item)</a>
+                            }
+                            else if (Truthy(item.Action))
+                            {
+                                <form class="nhsuk-header__account-form" action="@item.Action" method="@Default(item.Method, "post")" novalidate>
+                                    <button class="nhsuk-header__account-button">@AccountItem(item)</button>
+                                </form>
+                            }
+                            else
+                            {
+                                @AccountItem(item)
+                            }
+                        </li>
+                    }
+                </ul>
+            </nav>
+        }
+    </div>
+    @if (Navigation?.Items is { Count: > 0 })
+    {
+        <nav class="@NavigationClasses" aria-label="@Default(Navigation.AriaLabel, "Menu")" @attributes="new Attrs().AddUser(Navigation.Attributes)">
+            <div class="@Append("nhsuk-header__navigation-container nhsuk-width-container", ContainerClasses)">
+                <ul class="nhsuk-header__navigation-list">
+                    @foreach (var item in Navigation.Items)
+                    {
+                        if (item is null) continue;
+                        var isCurrent = item.Active == true || item.Current == true;
+                        var itemAttributes = new Attrs()
+                            .Add("class", Truthy(item.Href) ? "nhsuk-header__navigation-link" : "nhsuk-header__navigation-text")
+                            .Optional("href", item.Href)
+                            .Optional("aria-current", isCurrent ? (item.Current == true ? "page" : "true") : null);
+                        <li class="@NavigationItemClasses(item, isCurrent)" @attributes="new Attrs().AddUser(item.Attributes)">
+                            <NhsukElement Tag="@(Truthy(item.Href) ? "a" : "span")" Attributes="itemAttributes">
+                                @if (isCurrent)
+                                {
+                                    <strong class="nhsuk-header__navigation-item-current-fallback">@HtmlOrText(item.Html, item.Text)</strong>
+                                }
+                                else
+                                {
+                                    @HtmlOrText(item.Html, item.Text)
+                                }
+                            </NhsukElement>
+                        </li>
+                    }
+                    <li class="nhsuk-header__menu" hidden>
+                        <button class="nhsuk-header__menu-toggle nhsuk-header__navigation-link" id="toggle-menu" aria-expanded="false">
+                            <span class="nhsuk-u-visually-hidden">@Default(Navigation.ToggleMenuVisuallyHiddenText, "Browse") </span>@Default(Navigation.ToggleMenuText, "More")
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    }
+</header>
+
+@code {
+    private bool _combineLinks;
+    private string _logoAlt = "";
+    private string? _logoHref;
+
+    protected override void OnParametersSet()
+    {
+        // The logo and service name share one link when they'd otherwise both point to the same place.
+        var serviceHref = Service?.Href;
+        _combineLinks = Truthy(serviceHref) && (!Truthy(Logo?.Href) || serviceHref == Logo!.Href);
+        _logoAlt = Default(Logo?.Alt, "NHS");
+        _logoHref = _combineLinks ? serviceHref : Logo?.Href;
+    }
+
+    private Attrs HeaderAttributes
+    {
+        get
+        {
+            var classNames = "nhsuk-header";
+            if (Colour == "white" && !Contains(Classes, "nhsuk-header--white")) classNames += " nhsuk-header--white";
+            if (Inline == true && !Contains(Classes, "nhsuk-header--inline")) classNames += " nhsuk-header--inline";
+            if (Organisation is not null) classNames += " nhsuk-header--organisation";
+
+            return new Attrs()
+                .Add("class", Append(classNames, Classes))
+                .Optional("id", Id)
+                .Add("data-module", "nhsuk-header")
+                .Add("role", "banner")
+                .AddUser(Attributes, AdditionalAttributes);
+        }
+    }
+
+    private string NavigationClasses
+    {
+        get
+        {
+            var classNames = "nhsuk-header__navigation";
+            if (Navigation!.Colour == "white" && !Contains(Navigation.Classes, "nhsuk-header__navigation--white"))
+                classNames += " nhsuk-header__navigation--white";
+            if (Navigation.Justified == true && !Contains(Navigation.Classes, "nhsuk-header__navigation--justified"))
+                classNames += " nhsuk-header__navigation--justified";
+            return Append(classNames, Navigation.Classes);
+        }
+    }
+
+    private static string NavigationItemClasses(HeaderNavigationItemsItem item, bool isCurrent) =>
+        Append("nhsuk-header__navigation-item" + (isCurrent ? " nhsuk-header__navigation-item--current" : ""), item.Classes);
+
+    private string LogoAriaLabel => Truthy(Logo?.AriaLabel)
+        ? Logo!.AriaLabel!
+        : string.Join(" ", new[] { _logoAlt, Organisation?.Name, Organisation?.Split, _combineLinks ? Service?.Text : null, "homepage" }
+            .Where(s => s is not null));
+
+    private string SearchLabelText => Default(Search!.Label?.VisuallyHiddenText ?? Search.VisuallyHiddenLabel, "Search the NHS website");
+    private string SearchPlaceholder => Default(Search!.Input?.Placeholder ?? Search.Placeholder, "Search");
+    private string SearchButtonAriaLabel => Default(Search!.Button?.AriaLabel ?? Search.VisuallyHiddenButton, "Search");
+
+    private Attrs SearchFormAttributes => new Attrs()
+        .Add("class", "nhsuk-header__search-form")
+        .Add("id", "search")
+        .Optional("action", Default(Search!.Action, "https://www.nhs.uk/search/"))
+        .Optional("method", Default(Search.Method, "get"));
+
+    private RenderFragment ServiceLogo =>
+        @<text>
+            @if (Truthy(Logo?.Src))
+            {
+                <img class="nhsuk-header__organisation-logo" src="@(BaseUrl + Logo!.Src)" width="280" alt="@_logoAlt">
+            }
+            else
+            {
+                <svg class="nhsuk-header__logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" height="40" width="100" focusable="false" role="img" aria-label="@_logoAlt">
+                    <title>@_logoAlt</title>
+                    <path fill="currentcolor" d="@NhsLogo.Path"></path>
+                </svg>
+            }
+            @if (Organisation is not null)
+            {
+                <span class="nhsuk-header__organisation-name">@Organisation.Name@if (Truthy(Organisation.Split)) {<text> </text><span class="nhsuk-header__organisation-name-split">@Organisation.Split</span>}</span>
+                @if (Truthy(Organisation.Descriptor)) {<span class="nhsuk-header__organisation-name-descriptor">@Organisation.Descriptor</span>}
+            }
+        </text>;
+
+    private static RenderFragment ServiceName(string? text, string? href) => Truthy(href)
+        ? @<a class="nhsuk-header__service-name" href="@href">@text</a>
+        : @<span class="nhsuk-header__service-name">@text</span>;
+
+    private static RenderFragment AccountItem(HeaderAccountItemsItem item) =>
+        @<text>@if (item.Icon == true) {<NhsukIcon Name="user" />}@HtmlOrText(item.Html, item.Text)</text>;
+
+    private static RenderFragment HtmlOrText(string? html, string? text) => Truthy(html)
+        ? @<text>@((MarkupString)html!)</text>
+        : @<text>@text</text>;
+}

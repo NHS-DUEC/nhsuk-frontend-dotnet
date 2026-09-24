@@ -1,0 +1,8 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/inset-text/template.njk *@
+<div class="@Append("nhsuk-inset-text", Classes)" id="@(Truthy(Id) ? Id : null)" @attributes="new Attrs().AddUser(Attributes, AdditionalAttributes)">
+  <span class="nhsuk-u-visually-hidden">@DefaultIfFalsy(VisuallyHiddenText, "Information"): </span>
+  @if (ChildContent is not null) { @ChildContent }
+  else if (Truthy(Html)) { @((MarkupString)Html!) }
+  else if (Truthy(Text)) { <p>@Text</p> }
+</div>

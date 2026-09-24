@@ -1,0 +1,13 @@
+version: 2
+updates:
+  # nhsuk-frontend itself is handled by .github/workflows/upstream-release.yml, which also regenerates code.
+  - package-ecosystem: npm
+    directory: /upstream
+    schedule:
+      interval: weekly
+    ignore:
+      - dependency-name: nhsuk-frontend
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly

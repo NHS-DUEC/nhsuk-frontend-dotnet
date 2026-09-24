@@ -1,0 +1,16 @@
+{
+  "name": "nhsuk-frontend-dotnet-upstream",
+  "private": true,
+  "description": "Pins the upstream NHS.UK frontend release this port tracks, and syncs assets, fixtures and generated C# from it.",
+  "type": "module",
+  "scripts": {
+    "sync": "node scripts/sync.mjs",
+    "check": "node scripts/sync.mjs --check"
+  },
+  "dependencies": {
+    "nhsuk-frontend": "10.6.0"
+  },
+  "devDependencies": {
+    "nunjucks": "^3.2.4"
+  }
+}

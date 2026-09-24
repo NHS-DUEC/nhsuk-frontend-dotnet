@@ -1,0 +1,14 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/skip-link/template.njk *@
+<a @attributes="LinkAttributes">
+  @if (Truthy(Html)) { @((MarkupString)Html!) } else { @DefaultIfFalsy(Text, "Skip to main content") }
+</a>
+
+@code {
+    private Attrs LinkAttributes => new Attrs()
+        .Add("class", Append("nhsuk-skip-link", Classes))
+        .Optional("id", Id)
+        .Add("data-module", "nhsuk-skip-link")
+        .Add("href", DefaultIfFalsy(Href, "#maincontent"))
+        .AddUser(Attributes, AdditionalAttributes);
+}

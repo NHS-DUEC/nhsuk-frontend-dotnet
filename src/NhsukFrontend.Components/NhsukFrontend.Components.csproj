@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>NhsukFrontend.Components</RootNamespace>
+
+    <!-- Package version mirrors upstream major.minor; the patch number is ours. -->
+    <PackageId>NhsukFrontend.Components</PackageId>
+    <Version>10.6.0-poc.1</Version>
+    <Description>Razor components for NHS.UK frontend, generated from and tested against the upstream Nunjucks macros.</Description>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- CS0618: we deliberately read deprecated upstream options. CS1591: generated option docs cover the public API. -->
+    <NoWarn>$(NoWarn);CS0618;CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+</Project>

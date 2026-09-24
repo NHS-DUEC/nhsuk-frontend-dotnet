@@ -1,0 +1,84 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/footer/template.njk *@
+<footer class="@Append("nhsuk-footer", Classes)" id="@(Truthy(Id) ? Id : null)" role="contentinfo" @attributes="new Attrs().AddUser(Attributes, AdditionalAttributes)">
+    <div class="@Append("nhsuk-width-container", ContainerClasses)">
+        @if (Navigation is not null)
+        {
+            @foreach (var row in Navigation.Chunk(_columns))
+            {
+                <div class="nhsuk-footer__navigation nhsuk-grid-row">
+                    @foreach (var navigation in row)
+                    {
+                        <div class="nhsuk-grid-column-@DefaultIfFalsy(navigation?.Width, _width)">
+                            @if (navigation?.Heading is not null || Truthy(navigation?.Title))
+                            {
+                                var heading = navigation!.Heading;
+                                <NhsukHeading Id="@heading?.Id" Text="@(heading?.Text ?? navigation.Title)" Html="@heading?.Html"
+                                              VisuallyHiddenText="@heading?.VisuallyHiddenText" Caption="@heading?.Caption" Href="@heading?.Href"
+                                              Level="2" Size="s" ClassName="nhsuk-footer__heading" ClassPrefix="nhsuk-heading-"
+                                              Classes="@heading?.Classes" Attributes="@heading?.Attributes" />
+                            }
+                            @if (Truthy(navigation?.Html)) { @((MarkupString)navigation!.Html!) }
+                            else if (Truthy(navigation?.Text)) {<p class="nhsuk-body-s">@navigation!.Text</p>}
+                            @if (navigation?.Items is not null) { @FooterList(navigation.Items) }
+                        </div>
+                    }
+                </div>
+            }
+        }
+        <div class="nhsuk-footer__meta">
+            @if (Meta is not null)
+            {
+                @if (Meta.Items is not null)
+                {
+                    <h2 class="nhsuk-u-visually-hidden">@Default(Meta.VisuallyHiddenText ?? Meta.VisuallyHiddenTitle, "Support links")</h2>
+                    @FooterList(Meta.Items)
+                }
+                @if (ChildContent is not null) { @ChildContent }
+                else if (Truthy(Meta.Html)) { @((MarkupString)Meta.Html!) }
+                else if (Truthy(Meta.Text)) {<p class="nhsuk-body-s">@Meta.Text</p>}
+            }
+            @if (Truthy(Copyright?.Html)) { @((MarkupString)Copyright!.Html!) }
+            else if (Copyright?.Text != "")
+            {
+                <p class="nhsuk-body-s">@Default(Copyright?.Text, "© NHS England")</p>
+            }
+        </div>
+    </div>
+</footer>
+
+@code {
+    private int _columns;
+    private string _width = "";
+
+    protected override void OnParametersSet()
+    {
+        _columns = Columns is > 0 ? Columns.Value : 4;
+        (_width, _columns) = _columns switch
+        {
+            1 => ("full", 1),
+            2 => ("one-half", 2),
+            3 => ("one-third", 3),
+            _ => ("one-quarter", 4),
+        };
+    }
+
+    private static RenderFragment FooterList<T>(List<T?> items) where T : NhsukOptions =>
+        @<ul class="nhsuk-footer__list">
+            @foreach (var item in items)
+            {
+                if (item is null) continue;
+                var (href, html, text, attributes) = Link(item);
+                <li class="nhsuk-footer__list-item">
+                    <a class="nhsuk-footer__list-item-link" href="@(href ?? "")" @attributes="new Attrs().AddUser(attributes)">@if (Truthy(html)) { @((MarkupString)html!) } else { @text }</a>
+                </li>
+            }
+        </ul>;
+
+    private static (string? Href, string? Html, string? Text, NhsukAttributes? Attributes) Link(NhsukOptions item) => item switch
+    {
+        FooterNavigationItemsItem i => (i.Href, i.Html, i.Text, i.Attributes),
+        FooterMetaItemsItem i => (i.Href, i.Html, i.Text, i.Attributes),
+        _ => (null, null, null, null),
+    };
+}

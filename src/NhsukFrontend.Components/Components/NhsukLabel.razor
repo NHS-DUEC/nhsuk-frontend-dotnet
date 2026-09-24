@@ -1,0 +1,37 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/label/template.njk *@
+@if (ChildContent is not null || Truthy(Html) || Truthy(Text))
+{
+    @if (IsPageHeading == true)
+    {
+        <NhsukHeading ClassName="nhsuk-label-wrapper">@LabelElement</NhsukHeading>
+    }
+    else
+    {
+        @LabelElement
+    }
+}
+
+@code {
+    private static readonly string[] Sizes = ["s", "m", "l", "xl"];
+
+    private string ClassNames
+    {
+        get
+        {
+            var classNames = "nhsuk-label";
+            if (Size is not null && Sizes.Contains(Size) && !Sizes.Any(s => Contains(Classes, "nhsuk-label--" + s)))
+                classNames += " nhsuk-label--" + Size;
+            return Append(classNames, Classes);
+        }
+    }
+
+    private RenderFragment LabelElement =>
+        @<label @attributes="LabelAttributes"><NhsukContent Caller="ChildContent" Html="@Html" Text="@Text" /></label>;
+
+    private Attrs LabelAttributes => new Attrs()
+        .Add("class", ClassNames)
+        .Optional("id", Id)
+        .Optional("for", For)
+        .AddUser(Attributes, AdditionalAttributes);
+}

@@ -1,0 +1,20 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/tag/template.njk *@
+<strong class="@ClassNames" id="@(Truthy(Id) ? Id : null)" @attributes="new Attrs().AddUser(Attributes, AdditionalAttributes)"><NhsukContent Caller="ChildContent" Html="@Html" Text="@Text" /></strong>
+
+@code {
+    private static readonly string[] Colours = ["white", "grey", "green", "aqua-green", "blue", "purple", "pink", "red", "orange", "yellow"];
+
+    private string ClassNames
+    {
+        get
+        {
+            var classNames = "nhsuk-tag";
+            if (Colour is not null && Colours.Contains(Colour) && !Colours.Any(c => Contains(Classes, "nhsuk-tag--" + c)))
+                classNames += " nhsuk-tag--" + Colour;
+            if (Border == false && !Contains(Classes, "nhsuk-tag--no-border"))
+                classNames += " nhsuk-tag--no-border";
+            return Append(classNames, Classes);
+        }
+    }
+}

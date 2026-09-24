@@ -1,0 +1,77 @@
+name: Track nhsuk-frontend releases
+
+# Checks npm for a newer nhsuk-frontend every weekday morning. If there is one, it bumps the pin,
+# regenerates everything, runs the parity check, and opens a pull request with the results.
+on:
+  schedule:
+    - cron: "0 7 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Look for a new release
+        id: versions
+        working-directory: upstream
+        run: |
+          current=$(node -p "require('./package.json').dependencies['nhsuk-frontend']")
+          latest=$(npm view nhsuk-frontend version)
+          echo "current=$current" >> "$GITHUB_OUTPUT"
+          echo "latest=$latest" >> "$GITHUB_OUTPUT"
+
+      - name: Bump pin and sync
+        if: steps.versions.outputs.current != steps.versions.outputs.latest
+        working-directory: upstream
+        run: |
+          npm install --save-exact nhsuk-frontend@${{ steps.versions.outputs.latest }}
+          npm run sync
+
+      - name: Build and run parity check
+        if: steps.versions.outputs.current != steps.versions.outputs.latest
+        id: parity
+        run: |
+          set +e
+          dotnet build NhsukFrontend.sln -c Release > build.log 2>&1
+          build=$?
+          dotnet run -c Release --no-build --project tools/NhsukFrontend.ParityCheck -- --verbose > parity.log 2>&1
+          parity=$?
+          {
+            echo 'report<<EOF'
+            echo "Build exit code: $build (non-zero usually means an option was renamed or removed upstream)"
+            echo
+            echo '```'
+            grep -E "error|FAIL|PASS|match upstream|^ +[-+] " build.log parity.log | head -300
+            echo '```'
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
+          rm build.log parity.log
+
+      - name: Open pull request
+        if: steps.versions.outputs.current != steps.versions.outputs.latest
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: upstream/nhsuk-frontend-${{ steps.versions.outputs.latest }}
+          title: "Update nhsuk-frontend to ${{ steps.versions.outputs.latest }}"
+          commit-message: "Update nhsuk-frontend to ${{ steps.versions.outputs.latest }}"
+          body: |
+            Upstream release: https://github.com/nhsuk/nhsuk-frontend/releases/tag/v${{ steps.versions.outputs.latest }}
+
+            This PR bumps the pin from ${{ steps.versions.outputs.current }} and regenerates assets, parameters and fixtures.
+            Review `upstream/snapshot/*.macro-options.json` for option changes, then fix any failing components below.
+
+            ${{ steps.parity.outputs.report }}

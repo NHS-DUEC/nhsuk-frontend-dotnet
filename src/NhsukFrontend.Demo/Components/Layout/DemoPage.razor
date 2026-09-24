@@ -1,0 +1,41 @@
+@* Site chrome for the demo: the ported page template, header and footer, used exactly as an app would. *@
+<NhsukTemplate MainClasses="@MainClasses">
+    <PageTitle>@Title – NHS.UK frontend for .NET</PageTitle>
+    <Head>
+        @((MarkupString)NhsukFrontendAssets.HeadHtml)
+        <link rel="stylesheet" href="/demo.css">
+    </Head>
+    <Header>
+        <NhsukHeader Service="@(new HeaderServiceOptions { Text = "NHS.UK frontend for .NET", Href = "/" })"
+                     Navigation="@Navigation" />
+    </Header>
+    <BeforeContent>@BeforeContent</BeforeContent>
+    <ChildContent>@ChildContent</ChildContent>
+    <Footer>
+        <NhsukFooter Meta="@(new FooterMetaOptions { Text = $"Proof of concept. Components generated from and tested against nhsuk-frontend {NhsukFrontendUpstream.Version}." })"
+                     Copyright="@(new FooterCopyrightOptions { Text = "" })" />
+    </Footer>
+    <BodyEnd>@((MarkupString)NhsukFrontendAssets.BodyEndHtml)</BodyEnd>
+</NhsukTemplate>
+
+@code {
+    [Parameter, EditorRequired] public string Title { get; set; } = "";
+    [Parameter] public string? Section { get; set; }
+    [Parameter] public string? MainClasses { get; set; }
+    [Parameter] public RenderFragment? BeforeContent { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private HeaderNavigationOptions Navigation => new()
+    {
+        Items =
+        [
+            Item("Components", "/", "components"),
+            Item("Form example", "/examples/form", "form"),
+            Item("Razor Pages", "/examples/razor-pages", "razor-pages"),
+            Item("Keeping up with upstream", "/about", "about"),
+        ]
+    };
+
+    private HeaderNavigationItemsItem Item(string text, string href, string section) =>
+        new() { Text = text, Href = href, Current = Section == section ? true : null };
+}

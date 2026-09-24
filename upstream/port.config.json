@@ -1,0 +1,32 @@
+{
+  "$comment": "Components listed here get generated parameters, copied fixtures and parity checks. Add a component here, run `npm run sync`, then write its .razor markup.",
+  "components": [
+    "back-link",
+    "button",
+    "caption",
+    "error-message",
+    "fieldset",
+    "footer",
+    "header",
+    "heading",
+    "hint",
+    "input",
+    "inset-text",
+    "label",
+    "legend",
+    "skip-link",
+    "tag"
+  ],
+  "overrides": {
+    "$comment": "Where an upstream template accepts more than its macro-options.json declares. Keyed by component/option/path.",
+    "button/icon": {
+      "shorthand": "name",
+      "shorthandDefaults": {
+        "placement": "start"
+      }
+    },
+    "footer/navigation": {
+      "list": true
+    }
+  }
+}

@@ -1,0 +1,28 @@
+@page "/about"
+
+<DemoPage Title="Keeping up with upstream" Section="about">
+    <NhsukHeading Size="xl" Text="Keeping up with upstream" />
+    <p class="nhsuk-lede-text">This port is designed so that a new NHS.UK frontend release is a small, reviewable pull request rather than a re-port.</p>
+
+    <h2>What comes from upstream automatically</h2>
+    <p>The repository pins an exact <code>nhsuk-frontend</code> version (currently @NhsukFrontendUpstream.Version). Running <code>npm run sync</code> copies or generates everything that is data rather than logic:</p>
+    <ul>
+        <li>the compiled CSS, JavaScript, fonts references and images, served from this library</li>
+        <li>C# parameters for every component, generated from upstream's <code>macro-options.json</code> files, with upstream's descriptions and deprecation warnings</li>
+        <li>SVG icon paths and the NHS logo, rendered from upstream's own templates</li>
+        <li>upstream's example fixtures: the options for every example and the exact HTML the Nunjucks macros produce</li>
+    </ul>
+
+    <h2>What is hand-written</h2>
+    <p>Each component's Razor markup is a line-by-line port of its Nunjucks template. This is the only part a person has to change when upstream changes a template.</p>
+
+    <h2>How changes are caught</h2>
+    <p>Every upstream example is rendered through the Razor components and compared with upstream's HTML, ignoring only differences a browser ignores, like whitespace and attribute order. This runs in CI and on this site.</p>
+    <p>When a new upstream version is released, the upgrade pull request shows:</p>
+    <ol>
+        <li>which component options were added, changed or deprecated, as a diff of <code>macro-options.json</code></li>
+        <li>which parameters changed, as compile errors or new properties in the generated C#</li>
+        <li>which examples no longer match, as failing parity checks with an HTML diff</li>
+    </ol>
+    <p>Each pull request can also get its own copy of this site through Heroku review apps, so changes can be checked visually before merging.</p>
+</DemoPage>

@@ -1,0 +1,6 @@
+@* Each page renders its own full document through NhsukTemplate, so App only routes. *@
+<Router AppAssembly="typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="routeData" />
+    </Found>
+</Router>

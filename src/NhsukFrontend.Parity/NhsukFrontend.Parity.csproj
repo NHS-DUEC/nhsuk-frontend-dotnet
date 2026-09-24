@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <ProjectReference Include="..\NhsukFrontend.Components\NhsukFrontend.Components.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Upstream fixtures, copied by /upstream/scripts/sync.mjs -->
+    <EmbeddedResource Include="Fixtures\*.json" LogicalName="Fixtures/%(Filename)%(Extension)" />
+  </ItemGroup>
+
+</Project>

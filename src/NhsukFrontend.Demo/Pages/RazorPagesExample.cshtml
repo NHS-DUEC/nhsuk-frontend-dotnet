@@ -1,0 +1,33 @@
+@page "/examples/razor-pages"
+@model RazorPagesExampleModel
+@{
+    Layout = "Shared/_NhsukLayout";
+    ViewData["Title"] = "Razor Pages example";
+}
+
+@section BeforeContent {
+    <component type="typeof(NhsukBackLink)" render-mode="Static" param-Href='"/"' />
+}
+
+<component type="typeof(NhsukHeading)" render-mode="Static" param-Text='"Find a pharmacy"' param-Size='"l"' />
+<p>This page is a Razor Page, not a Blazor component. It renders the same components with the <code>&lt;component&gt;</code> tag helper, and binds the form with <code>[BindProperty]</code> and <code>ModelState</code>.</p>
+
+@if (Model.Searched && ModelState.IsValid)
+{
+    <component type="typeof(NhsukInsetText)" render-mode="Static"
+               param-Text='$"You searched for pharmacies near {Model.Postcode}. This demo does not look anything up."' />
+}
+
+<form method="post" novalidate>
+    <component type="typeof(NhsukInput)" render-mode="Static"
+               param-Name='"Postcode"'
+               param-Label='(LabelOptions)"Postcode"'
+               param-Hint='(HintOptions)"For example, LS1 4AP"'
+               param-Width='10'
+               param-Autocomplete='"postal-code"'
+               param-Value='Model.Postcode'
+               param-ErrorMessage='Model.PostcodeError is null ? null : (ErrorMessageOptions)Model.PostcodeError' />
+
+    @* The HTML helper works too, for teams that prefer it. *@
+    @(await Html.RenderComponentAsync<NhsukButton>(RenderMode.Static, new { Text = "Search" }))
+</form>

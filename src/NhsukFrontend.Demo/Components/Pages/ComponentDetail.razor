@@ -1,0 +1,129 @@
+@page "/components/{Name}"
+@inject ParityReport Report
+@inject NavigationManager Nav
+
+@if (_parity is null)
+{
+    <DemoPage Title="Component not found">
+        <h1>Component not found</h1>
+        <p><a href="/">Go to the list of components</a></p>
+    </DemoPage>
+}
+else
+{
+    <DemoPage Title="@_parity.DisplayName" Section="components">
+        <BeforeContent><NhsukBackLink Href="/" Text="All components" /></BeforeContent>
+        <ChildContent>
+            <NhsukHeading Size="xl" Text="@_parity.DisplayName" Caption="@("Component")" />
+            <p class="nhsuk-body-l">
+                <strong>@_parity.PassedCount of @_parity.Results.Count</strong> upstream examples match.
+                Razor component: <code>&lt;@(_parity.ComponentType?.Name)&gt;</code>
+            </p>
+            @if (_hiddenCount > 0)
+            {
+                <p>
+                    @if (ShowAll)
+                    {
+                        <a href="@DemoLinks.Component(Name)">Hide the @_hiddenCount test-only examples</a>
+                    }
+                    else
+                    {
+                        <text>Showing the examples from upstream's review app. </text>
+                        <a href="@(DemoLinks.Component(Name) + "?all=true")">Show @_hiddenCount more test-only examples</a>
+                    }
+                </p>
+            }
+
+            @for (var i = 0; i < _parity.Results.Count; i++)
+            {
+                var index = i;
+                var result = _parity.Results[index];
+                if (result.Fixture.Hidden && !ShowAll) continue;
+
+                <h2 class="nhsuk-heading-m app-example-heading" id="example-@index">@Capitalise(result.Fixture.Name)</h2>
+                <div class="app-example-meta">
+                    @if (result.Passed)
+                    {
+                        <NhsukTag Text="Matches upstream" Colour="green" />
+                    }
+                    else
+                    {
+                        <NhsukTag Text="Differs from upstream" Colour="red" />
+                    }
+                    @if (!string.IsNullOrEmpty(result.Fixture.Description)) {<p class="nhsuk-body-s">@result.Fixture.Description</p>}
+                    <p class="nhsuk-body-s"><a href="@DemoLinks.Preview(Name, index)" target="_blank">Open on its own page (opens in new tab)</a></p>
+                </div>
+
+                @if (Name == "template")
+                {
+                    <p>Page template examples render a whole page, so open them on their own page to see them.</p>
+                }
+                else
+                {
+                    <div class="app-example app-example--@Name">
+                        <DynamicComponent Type="_parity.ComponentType" Parameters="ParityRunner.BuildParameters(_parity.ComponentType!, result.Fixture.Context, result.Fixture.CallBlock, result.Fixture.Blocks)" />
+                    </div>
+                }
+
+                <details class="nhsuk-details">
+                    <summary class="nhsuk-details__summary"><span class="nhsuk-details__summary-text">Razor</span></summary>
+                    <div class="nhsuk-details__text"><pre class="app-code"><code>@Snippets.Razor(_parity.ComponentType!, result.Fixture)</code></pre></div>
+                </details>
+                <details class="nhsuk-details">
+                    <summary class="nhsuk-details__summary"><span class="nhsuk-details__summary-text">Nunjucks (upstream)</span></summary>
+                    <div class="nhsuk-details__text"><pre class="app-code"><code>@Snippets.Nunjucks(Name, result.Fixture)</code></pre></div>
+                </details>
+                @if (!result.Passed)
+                {
+                    <details class="nhsuk-details" open>
+                        <summary class="nhsuk-details__summary"><span class="nhsuk-details__summary-text">Differences from upstream</span></summary>
+                        <div class="nhsuk-details__text">
+                            @if (result.Error is not null)
+                            {
+                                <p>@result.Error</p>
+                            }
+                            else
+                            {
+                                <p>Lines marked − appear only in upstream's HTML; lines marked + appear only in the .NET output.</p>
+                                <div class="app-diff">@foreach (var line in result.Diff)
+                                {
+                                    <span class="@DiffClass(line.Kind)">@DiffPrefix(line.Kind) @line.Token</span>
+                                }</div>
+                            }
+                        </div>
+                    </details>
+                }
+            }
+        </ChildContent>
+    </DemoPage>
+}
+
+@code {
+    [Parameter] public string Name { get; set; } = "";
+    [SupplyParameterFromQuery(Name = "all")] public bool ShowAll { get; set; }
+
+    private ComponentParity? _parity;
+    private int _hiddenCount;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _parity = await Report.ForComponentAsync(Name);
+        _hiddenCount = _parity?.Results.Count(r => r.Fixture.Hidden) ?? 0;
+    }
+
+    private static string Capitalise(string s) => s.Length == 0 ? s : char.ToUpperInvariant(s[0]) + s[1..];
+
+    private static string DiffClass(DiffKind kind) => kind switch
+    {
+        DiffKind.Expected => "app-diff__expected",
+        DiffKind.Actual => "app-diff__actual",
+        _ => "app-diff__same",
+    };
+
+    private static string DiffPrefix(DiffKind kind) => kind switch
+    {
+        DiffKind.Expected => "−",
+        DiffKind.Actual => "+",
+        _ => " ",
+    };
+}

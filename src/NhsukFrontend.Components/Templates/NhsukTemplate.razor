@@ -1,0 +1,92 @@
+@namespace NhsukFrontend.Components
+@using System.Text.Encodings.Web
+@attribute [MacroComponent("template")]
+@*
+    Port of nhsuk/template.njk: the full page shell. Nunjucks {% block %}s become RenderFragment
+    parameters with the same names, so <PageTitle>, <BeforeContent>, <Header> etc. work like
+    overriding a block. Unset blocks render upstream's defaults.
+*@
+<!DOCTYPE html>
+<html lang="@DefaultIfFalsy(HtmlLang, "en")" class="@(Truthy(HtmlClasses) ? HtmlClasses : null)" @attributes="new Attrs().AddUser(HtmlAttributes)">
+<head>
+    <meta charset="utf-8">
+    <title lang="@(Truthy(PageTitleLang) ? PageTitleLang : null)">@if (PageTitle is not null) { @PageTitle } else { <text>NHS</text> }</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="@_themeColor">
+    @if (HeadIcons is not null) { @HeadIcons }
+    else
+    {
+        <link rel="icon" href="@(_assetPath)/images/favicon.ico" sizes="48x48">
+        <link rel="icon" href="@(_assetPath)/images/favicon.svg" sizes="any" type="image/svg+xml">
+        <link rel="mask-icon" href="@(_assetPath)/images/nhsuk-icon-mask.svg" color="@_themeColor">
+        <link rel="apple-touch-icon" href="@(_assetPath)/images/nhsuk-icon-180.png">
+        <link rel="manifest" href="@(_assetPath)/manifest.json">
+    }
+    @Head
+    @if (Truthy(OpengraphImageUrl) || Truthy(AssetUrl))
+    {
+        <meta property="og:image" content="@DefaultIfFalsy(OpengraphImageUrl, AssetUrl + "/images/nhsuk-opengraph-image.png")">
+    }
+</head>
+<body class="@(Truthy(BodyClasses) ? BodyClasses : null)" @attributes="new Attrs().AddUser(BodyAttributes)">
+    @* Razor components can't contain <script> tags directly, so the upstream snippet is emitted as markup. *@
+    @((MarkupString)JsEnabledScript)
+    @BodyStart
+    @if (SkipLink is not null) { @SkipLink } else { <NhsukSkipLink Href="#maincontent" Text="Skip to main content" /> }
+    @if (Header is not null) { @Header } else { <NhsukHeader /> }
+    @if (Main is not null) { @Main }
+    else
+    {
+        <div class="@Append("nhsuk-width-container", ContainerClasses)">
+            @BeforeContent
+            <main class="@Append("nhsuk-main-wrapper", MainClasses)" id="maincontent" lang="@(Truthy(MainLang) ? MainLang : null)">
+                @ChildContent
+            </main>
+        </div>
+    }
+    @if (Footer is not null) { @Footer } else { <NhsukFooter /> }
+    @BodyEnd
+</body>
+</html>
+
+@code {
+    [Parameter, MacroOption("htmlLang")] public string? HtmlLang { get; set; }
+    [Parameter, MacroOption("htmlClasses")] public string? HtmlClasses { get; set; }
+    [Parameter, MacroOption("htmlAttributes")] public NhsukAttributes? HtmlAttributes { get; set; }
+    [Parameter, MacroOption("pageTitleLang")] public string? PageTitleLang { get; set; }
+    [Parameter, MacroOption("themeColor")] public string? ThemeColor { get; set; }
+    [Parameter, MacroOption("assetPath")] public string? AssetPath { get; set; }
+    [Parameter, MacroOption("assetUrl")] public string? AssetUrl { get; set; }
+    [Parameter, MacroOption("opengraphImageUrl")] public string? OpengraphImageUrl { get; set; }
+    [Parameter, MacroOption("bodyClasses")] public string? BodyClasses { get; set; }
+    [Parameter, MacroOption("bodyAttributes")] public NhsukAttributes? BodyAttributes { get; set; }
+    [Parameter, MacroOption("cspNonce")] public string? CspNonce { get; set; }
+    [Parameter, MacroOption("containerClasses")] public string? ContainerClasses { get; set; }
+    [Parameter, MacroOption("mainClasses")] public string? MainClasses { get; set; }
+    [Parameter, MacroOption("mainLang")] public string? MainLang { get; set; }
+
+    [Parameter, MacroBlock("pageTitle")] public RenderFragment? PageTitle { get; set; }
+    [Parameter, MacroBlock("headIcons")] public RenderFragment? HeadIcons { get; set; }
+    [Parameter, MacroBlock("head")] public RenderFragment? Head { get; set; }
+    [Parameter, MacroBlock("bodyStart")] public RenderFragment? BodyStart { get; set; }
+    [Parameter, MacroBlock("skipLink")] public RenderFragment? SkipLink { get; set; }
+    [Parameter, MacroBlock("header")] public RenderFragment? Header { get; set; }
+    [Parameter, MacroBlock("main")] public RenderFragment? Main { get; set; }
+    [Parameter, MacroBlock("beforeContent")] public RenderFragment? BeforeContent { get; set; }
+    [Parameter, MacroBlock("content")] public RenderFragment? ChildContent { get; set; }
+    [Parameter, MacroBlock("footer")] public RenderFragment? Footer { get; set; }
+    [Parameter, MacroBlock("bodyEnd")] public RenderFragment? BodyEnd { get; set; }
+
+    private string _assetPath = "", _themeColor = "";
+
+    protected override void OnParametersSet()
+    {
+        _assetPath = DefaultIfFalsy(AssetPath, "/assets");
+        _themeColor = DefaultIfFalsy(ThemeColor, "#005eb8");
+    }
+
+    private string JsEnabledScript =>
+        "<script" + (Truthy(CspNonce) ? $" nonce=\"{HtmlEncoder.Default.Encode(CspNonce!)}\"" : "") + ">" +
+        "document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' nhsuk-frontend-supported' : '');" +
+        "</script>";
+}

@@ -1,0 +1,12 @@
+{
+  "name": "NHS.UK frontend for .NET",
+  "description": "Demo site for the ASP.NET Core port of NHS.UK frontend.",
+  "repository": "https://github.com/YOUR-ORG/nhsuk-frontend-dotnet",
+  "buildpacks": [{ "url": "heroku/dotnet" }],
+  "env": {
+    "ASPNETCORE_ENVIRONMENT": { "value": "Production" }
+  },
+  "formation": {
+    "web": { "quantity": 1 }
+  }
+}
