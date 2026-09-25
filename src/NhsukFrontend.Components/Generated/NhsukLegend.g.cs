@@ -67,6 +67,6 @@ public sealed partial class LegendOptions : NhsukOptions, IShorthandOptions<Lege
     public static implicit operator LegendOptions(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static LegendOptions FromShorthand(string value) => new() { Text = value };
+    public static LegendOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator LegendOptions(string value) => FromShorthand(value);
 }

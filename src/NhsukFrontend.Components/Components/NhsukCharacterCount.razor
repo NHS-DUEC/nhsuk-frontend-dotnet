@@ -1,0 +1,75 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/character-count/template.njk: a textarea with a live count message. *@
+<NhsukTextarea Id="@_id" Name="@Name" DescribedBy="@(_id + "-info")" Rows="@Rows" Spellcheck="@Spellcheck" Value="@Value"
+               FormGroup="@_formGroup" FormGroupAttributesOverride="@FormGroupAttributes" AfterInputContent="@CountMessageFragment"
+               Classes="@Append("nhsuk-js-character-count", Classes)" Label="@_label" Hint="@Hint" ErrorMessage="@ErrorMessage"
+               Disabled="@Disabled" Autocomplete="@Autocomplete" Attributes="@Attributes" AdditionalAttributes="@AdditionalAttributes" />
+
+@code {
+    private string _id = "";
+    private string? _countType, _description;
+    private bool _hasNoLimit;
+    private LabelOptions? _label;
+    private TextareaFormGroupOptions _formGroup = new();
+
+    protected override void OnParametersSet()
+    {
+        _id = Truthy(Id) ? Id! : Name ?? "";
+        _countType = Truthy(CountType) ? CountType : Truthy(Maxwords) ? "words" : null;
+        _hasNoLimit = !Truthy(Maxwords) && !Truthy(Maxlength);
+
+        var description = Truthy(TextareaDescriptionText) ? TextareaDescriptionText!
+            : "You can enter up to %{count} " + (_countType == "words" ? "words" : "characters");
+        _description = _hasNoLimit ? null : description.Replace("%{count}", Truthy(Maxwords) ? Maxwords : Maxlength);
+
+        _label = Label is null ? null : new LabelOptions
+        {
+            Html = Label.Html, Text = Label.Text, Id = Label.Id, For = Label.For ?? _id, Size = Label.Size,
+            IsPageHeading = Label.IsPageHeading, Classes = Label.Classes, Attributes = Label.Attributes,
+        };
+
+        var formGroupClasses = Truthy(FormGroup?.Classes) ? FormGroup!.Classes + " nhsuk-character-count" : "nhsuk-character-count";
+        _formGroup = new TextareaFormGroupOptions
+        {
+            Classes = formGroupClasses,
+            BeforeInput = FormGroup?.BeforeInput is { } before ? new TextareaFormGroupBeforeInputOptions { Html = before.Html, Text = before.Text } : null,
+        };
+    }
+
+    private Attrs FormGroupAttributes
+    {
+        get
+        {
+            var attrs = new Attrs()
+                .Add("data-module", "nhsuk-character-count")
+                .Optional("data-maxlength", Maxlength)
+                .Optional("data-maxwords", Maxwords)
+                .Optional("data-threshold", Threshold)
+                .Optional("data-count-type", _countType);
+            if (_hasNoLimit && Truthy(TextareaDescriptionText))
+                attrs.Add("data-i18n.textarea-description.other", TextareaDescriptionText);
+            I18n(attrs, "characters-under-limit", CharactersUnderLimitText);
+            if (Truthy(CharactersAtLimitText)) attrs.Add("data-i18n.characters-at-limit", CharactersAtLimitText);
+            I18n(attrs, "characters-over-limit", CharactersOverLimitText);
+            I18n(attrs, "words-under-limit", WordsUnderLimitText);
+            if (Truthy(WordsAtLimitText)) attrs.Add("data-i18n.words-at-limit", WordsAtLimitText);
+            I18n(attrs, "words-over-limit", WordsOverLimitText);
+            return attrs.AddUser(FormGroup?.Attributes);
+        }
+    }
+
+    /// <summary>Port of the <c>nhsukI18nAttributes</c> macro for messages keyed by plural rule.</summary>
+    private static void I18n(Attrs attrs, string key, NhsukAttributes? messages)
+    {
+        if (messages is null) return;
+        foreach (var (rule, message) in messages) attrs.Add($"data-i18n.{key}.{rule}", message);
+    }
+
+    private RenderFragment CountMessageFragment => @<text>
+        <NhsukHint Text="@_description" Id="@(_id + "-info")" Classes="@Append("nhsuk-character-count__message", CountMessage?.Classes)"
+                   AdditionalAttributes="@(_description is { Length: > 0 } ? null : Hidden)" />
+        @if (FormGroup?.AfterInput is { } after) { @Render.HtmlOrText(after.Html, after.Text) }
+    </text>;
+
+    private static readonly IReadOnlyDictionary<string, object> Hidden = new Dictionary<string, object> { ["hidden"] = true };
+}

@@ -94,6 +94,6 @@ public sealed partial class LabelOptions : NhsukOptions, IShorthandOptions<Label
     public static implicit operator LabelOptions(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static LabelOptions FromShorthand(string value) => new() { Text = value };
+    public static LabelOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator LabelOptions(string value) => FromShorthand(value);
 }

@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -32,7 +33,19 @@ jobs:
       - name: Build
         run: dotnet build NhsukFrontend.sln -c Release
 
-      - name: Parity check against upstream fixtures
+      # One test case per upstream example (parity), plus model binding and validation tests.
+      - name: Test
+        run: dotnet test NhsukFrontend.sln -c Release --no-build --logger "console;verbosity=minimal" --logger "trx;LogFileName=results.trx"
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: "**/TestResults/*.trx"
+
+      - name: Parity report (readable HTML diffs for any failure)
+        if: failure()
         run: dotnet run -c Release --no-build --project tools/NhsukFrontend.ParityCheck -- --verbose
 
       - name: Compile every documented Razor snippet
@@ -42,3 +55,10 @@ jobs:
 
       - name: Publish as Heroku does
         run: dotnet publish NhsukFrontend.sln -c Release -p:PublishDir=bin/publish
+
+      # Run the published site the way the Procfile does, then drive both example forms.
+      - name: Smoke test the published site
+        run: |
+          (cd src/NhsukFrontend.Demo/bin/publish && ./NhsukFrontend.Demo --urls http://127.0.0.1:5000 > /tmp/site.log 2>&1 &)
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:5000/healthz > /dev/null && break; sleep 1; done
+          tools/smoke-test.sh http://127.0.0.1:5000 || { cat /tmp/site.log; exit 1; }

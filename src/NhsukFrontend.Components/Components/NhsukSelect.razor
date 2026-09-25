@@ -1,0 +1,96 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/select/template.njk *@
+<div class="@_formGroupClasses" @attributes="new Attrs().AddUser(FormGroup?.Attributes)">
+    <NhsukLabel Html="@Label?.Html" Text="@Label?.Text" Id="@Label?.Id" For="@(Label?.For ?? _id)" Size="@Label?.Size"
+                IsPageHeading="@Label?.IsPageHeading" Classes="@Label?.Classes" Attributes="@Label?.Attributes" />
+    @if (_hasHint)
+    {
+        <NhsukHint Html="@Hint!.Html" Text="@Hint.Text" Id="@_hintId" Classes="@Hint.Classes" Attributes="@Hint.Attributes" />
+    }
+    @if (_hasError)
+    {
+        <NhsukErrorMessage Html="@ErrorMessage!.Html" Text="@ErrorMessage.Text" VisuallyHiddenText="@ErrorMessage.VisuallyHiddenText"
+                           Id="@_errorId" Classes="@ErrorMessage.Classes" Attributes="@ErrorMessage.Attributes" />
+    }
+    @if (_hasBefore || _hasAfter || Truthy(InputWrapper?.Classes) || InputWrapper?.Attributes is not null)
+    {
+        <div class="@Append("nhsuk-input-wrapper", InputWrapper?.Classes)" @attributes="new Attrs().AddUser(InputWrapper?.Attributes)">
+            @if (_hasBefore) { @Render.HtmlOrText(FormGroup!.BeforeInput!.Html, FormGroup.BeforeInput.Text) }
+            @SelectElement
+            @if (_hasAfter) { @Render.HtmlOrText(FormGroup!.AfterInput!.Html, FormGroup.AfterInput.Text) }
+        </div>
+    }
+    else
+    {
+        @SelectElement
+    }
+</div>
+
+@code {
+    private string _id = "", _formGroupClasses = "", _classNames = "", _describedBy = "";
+    private string? _hintId, _errorId;
+    private bool _hasHint, _hasError, _hasBefore, _hasAfter;
+
+    protected override void OnParametersSet()
+    {
+        var classNames = "nhsuk-select";
+        var formGroupClasses = "nhsuk-form-group";
+        _hasError = Truthy(ErrorMessage?.Text) || Truthy(ErrorMessage?.Html);
+        if (_hasError || ErrorMessage?.IsTrue == true)
+        {
+            classNames += " nhsuk-select--error";
+            formGroupClasses += " nhsuk-form-group--error";
+        }
+        _classNames = Append(classNames, Classes);
+        _formGroupClasses = Append(formGroupClasses, FormGroup?.Classes);
+
+        _id = Truthy(Id) ? Id! : Name ?? "";
+        _describedBy = Truthy(DescribedBy) ? DescribedBy! : "";
+        _hasHint = Truthy(Hint?.Text) || Truthy(Hint?.Html);
+        if (_hasHint)
+        {
+            _hintId = Hint!.Id ?? _id + "-hint";
+            _describedBy = (_describedBy + " " + _hintId).Trim();
+        }
+        if (_hasError)
+        {
+            _errorId = ErrorMessage!.Id ?? _id + "-error";
+            _describedBy = (_describedBy + " " + _errorId).Trim();
+        }
+        _hasBefore = Render.HasContent(FormGroup?.BeforeInput?.Html, FormGroup?.BeforeInput?.Text);
+        _hasAfter = Render.HasContent(FormGroup?.AfterInput?.Html, FormGroup?.AfterInput?.Text);
+    }
+
+    private RenderFragment SelectElement =>
+        @<select @attributes="SelectAttributes">
+            @foreach (var item in Items ?? [])
+            {
+                if (item is null) continue;
+                if (item.Divider == true)
+                {
+                    <hr>
+                }
+                else
+                {
+                    <option @attributes="OptionAttributes(item)">@item.Text</option>
+                }
+            }
+        </select>;
+
+    private Attrs SelectAttributes => new Attrs()
+        .Add("class", _classNames)
+        .Add("id", _id)
+        .Add("name", Name)
+        .Optional("disabled", Disabled)
+        .Optional("aria-describedby", Truthy(_describedBy) ? _describedBy : null)
+        .AddUser(Attributes, AdditionalAttributes);
+
+    private Attrs OptionAttributes(SelectItemsItem item)
+    {
+        var effectiveValue = item.Value ?? item.Text;
+        var selected = item.Selected == true || (Truthy(Value) && item.Selected != false && effectiveValue == Value);
+        var attrs = new Attrs();
+        if (item.Value is not null) attrs.Add("value", item.Value);
+        return attrs.Optional("selected", selected).Optional("disabled", item.Disabled).AddUser(item.Attributes);
+    }
+}

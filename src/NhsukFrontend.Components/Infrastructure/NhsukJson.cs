@@ -15,6 +15,20 @@ public static class NhsukJson
 {
     public static readonly JsonSerializerOptions Options = Create();
 
+    /// <summary>Reads one option value for a property, honouring <see cref="KeepFalseAttribute"/>.</summary>
+    public static object? ReadOption(JsonElement value, PropertyInfo property)
+    {
+        if (value.ValueKind == JsonValueKind.False
+            && typeof(NhsukOptions).IsAssignableFrom(property.PropertyType)
+            && property.GetCustomAttribute<KeepFalseAttribute>() is not null)
+        {
+            var result = (NhsukOptions)Activator.CreateInstance(property.PropertyType)!;
+            typeof(NhsukOptions).GetProperty(nameof(NhsukOptions.IsFalse))!.SetValue(result, true);
+            return result;
+        }
+        return value.Deserialize(property.PropertyType, Options);
+    }
+
     private static JsonSerializerOptions Create()
     {
         var options = new JsonSerializerOptions
@@ -22,10 +36,27 @@ public static class NhsukJson
             NumberHandling = JsonNumberHandling.AllowReadingFromString,
             PropertyNameCaseInsensitive = false,
         };
+        options.Converters.Add(new LooseStringConverter());
         options.Converters.Add(new OptionsConverterFactory());
         options.Converters.Add(new OptionsListConverterFactory());
         options.MakeReadOnly(populateMissingResolver: true);
         return options;
+    }
+
+    /// <summary>Nunjucks prints numbers and booleans into string options, so accept them (<c>rows: 8</c>).</summary>
+    private sealed class LooseStringConverter : JsonConverter<string>
+    {
+        public override string? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => reader.TokenType switch
+        {
+            JsonTokenType.String => reader.GetString(),
+            JsonTokenType.Number => System.Text.Encoding.UTF8.GetString(reader.ValueSpan),
+            JsonTokenType.True => "true",
+            JsonTokenType.False => "false",
+            JsonTokenType.Null => null,
+            _ => throw new JsonException($"Cannot read a string option from {reader.TokenType}."),
+        };
+
+        public override void Write(Utf8JsonWriter writer, string value, JsonSerializerOptions options) => writer.WriteStringValue(value);
     }
 
     private sealed class OptionsConverterFactory : JsonConverterFactory
@@ -66,7 +97,7 @@ public static class NhsukJson
                         foreach (var prop in doc.RootElement.EnumerateObject())
                         {
                             if (!Properties.TryGetValue(prop.Name, out var info)) continue; // unknown options are ignored, as in Nunjucks
-                            info.SetValue(result, prop.Value.Deserialize(info.PropertyType, options));
+                            info.SetValue(result, ReadOption(prop.Value, info));
                         }
                     }
                     return result;

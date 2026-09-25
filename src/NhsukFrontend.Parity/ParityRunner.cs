@@ -113,7 +113,7 @@ public sealed class ParityRunner : IAsyncDisposable
             {
                 if (!byOption.TryGetValue(option.Name, out var property))
                     throw new InvalidOperationException($"Upstream option '{option.Name}' has no matching parameter.");
-                parameters[property.Name] = option.Value.Deserialize(property.PropertyType, NhsukJson.Options);
+                parameters[property.Name] = NhsukJson.ReadOption(option.Value, property);
             }
         }
         if (callBlock is not null)

@@ -126,7 +126,7 @@ public sealed partial class FooterNavigationOptions : NhsukOptions, IShorthandOp
     public static implicit operator FooterNavigationOptions(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static FooterNavigationOptions FromShorthand(string value) => new() { Text = value };
+    public static FooterNavigationOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator FooterNavigationOptions(string value) => FromShorthand(value);
 }
 
@@ -158,7 +158,7 @@ public sealed partial class FooterMetaOptions : NhsukOptions, IShorthandOptions<
     public static implicit operator FooterMetaOptions(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static FooterMetaOptions FromShorthand(string value) => new() { Text = value };
+    public static FooterMetaOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator FooterMetaOptions(string value) => FromShorthand(value);
 }
 
@@ -177,7 +177,7 @@ public sealed partial class FooterCopyrightOptions : NhsukOptions, IShorthandOpt
     public static implicit operator FooterCopyrightOptions(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static FooterCopyrightOptions FromShorthand(string value) => new() { Text = value };
+    public static FooterCopyrightOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator FooterCopyrightOptions(string value) => FromShorthand(value);
 }
 
@@ -220,7 +220,7 @@ public sealed partial class FooterNavigationHeadingOptions : NhsukOptions, IShor
     public static implicit operator FooterNavigationHeadingOptions(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static FooterNavigationHeadingOptions FromShorthand(string value) => new() { Text = value };
+    public static FooterNavigationHeadingOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator FooterNavigationHeadingOptions(string value) => FromShorthand(value);
 }
 
@@ -247,7 +247,7 @@ public sealed partial class FooterNavigationItemsItem : NhsukOptions, IShorthand
     public static implicit operator FooterNavigationItemsItem(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static FooterNavigationItemsItem FromShorthand(string value) => new() { Text = value };
+    public static FooterNavigationItemsItem FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator FooterNavigationItemsItem(string value) => FromShorthand(value);
 }
 
@@ -274,6 +274,6 @@ public sealed partial class FooterMetaItemsItem : NhsukOptions, IShorthandOption
     public static implicit operator FooterMetaItemsItem(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static FooterMetaItemsItem FromShorthand(string value) => new() { Text = value };
+    public static FooterMetaItemsItem FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator FooterMetaItemsItem(string value) => FromShorthand(value);
 }

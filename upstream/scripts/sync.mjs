@@ -55,12 +55,15 @@ function loadOptions(component) {
 
 function generateComponent(component) {
   const nested = [] // extra classes emitted alongside
-  const options = loadOptions(component)
+  const options = [...loadOptions(component), ...(config.additionalOptions?.[component] ?? [])]
 
   function typeFor(param, pathParts) {
     const key = [component, ...pathParts].join('/')
     const override = config.overrides[key] ?? {}
     let type
+    if (override.type) return override.type + '?'
+    // Some macro-options.json files declare `attributes` as a string; every template reads it as an object.
+    if (param.name === 'attributes') return 'NhsukAttributes?'
     switch (param.type) {
       case 'string': type = 'string'; break
       case 'boolean': type = 'bool'; break
@@ -88,9 +91,17 @@ function generateComponent(component) {
     const name = pascal(component) + pathParts.map(pascal).join('') + (isItem ? 'Item' : 'Options')
     const key = [component, ...pathParts].join('/')
     if (!nested.some((n) => n.name === name)) {
-      nested.push({ name, params: param.params, pathParts, shorthand: config.overrides[key]?.shorthand, shorthandDefaults: config.overrides[key]?.shorthandDefaults })
+      nested.push({ name, params: withAlias(param), pathParts, shorthand: config.overrides[key]?.shorthand, shorthandDefaults: config.overrides[key]?.shorthandDefaults })
     }
     return name
+  }
+
+  // An option with `alias` (for example date-input `items`, alias `input`) accepts every option of the
+  // aliased component; its own `params` only add to or override them.
+  function withAlias(param) {
+    if (!param.alias || !fs.existsSync(path.join(distNhsuk, 'components', param.alias, 'macro-options.json'))) return param.params
+    const own = new Set(param.params.map((p) => p.name))
+    return [...param.params, ...loadOptions(param.alias).filter((p) => !own.has(p.name))]
   }
 
   function property(param, pathParts, { isParameter }) {
@@ -99,9 +110,10 @@ function generateComponent(component) {
     lines.push(`    /// <summary>${xml(param.description)}</summary>`)
     lines.push(`    /// <remarks>Macro option <c>${xml(pathParts.join('.'))}</c>${param.required ? ' (required)' : ''}, released in ${xml(param.released)}.</remarks>`)
     if (param.deprecated) lines.push(`    [Obsolete("Deprecated in nhsuk-frontend ${param.deprecated}.")]`)
+    const keepFalse = config.overrides[[component, ...pathParts].join('/')]?.keepFalse ? ', KeepFalse' : ''
     const attrs = isParameter
-      ? `[Parameter, MacroOption(${csString(param.name)})]`
-      : `[JsonPropertyName(${csString(param.name)})]`
+      ? `[Parameter, MacroOption(${csString(param.name)})${keepFalse}]`
+      : `[JsonPropertyName(${csString(param.name)})${keepFalse}]`
     lines.push(`    ${attrs} public ${type} ${propName(param.name)} { get; set; }`)
     return lines.join('\n')
   }
@@ -125,7 +137,7 @@ function generateComponent(component) {
       lines.push('')
       lines.push(`    /// <summary>Upstream templates accept a plain string here, used as <c>${shorthandParam}</c>.</summary>`)
       const extra = Object.entries(shorthandDefaults).map(([k, v]) => `, ${pascal(k)} = ${csString(v)}`).join('')
-      lines.push(`    public static ${className} FromShorthand(string value) => new() { ${pascal(shorthandParam)} = value${extra} };`)
+      lines.push(`    public static ${className} FromShorthand(string value) => new() { ${pascal(shorthandParam)} = value${extra}, IsShorthand = true };`)
       lines.push(`    public static implicit operator ${className}(string value) => FromShorthand(value);`)
     }
     lines.push('}')

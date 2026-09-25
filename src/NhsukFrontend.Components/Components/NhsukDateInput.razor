@@ -1,0 +1,127 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/date-input/template.njk *@
+<div class="@_formGroupClasses" @attributes="new Attrs().AddUser(FormGroup?.Attributes)">
+    @if (Fieldset is not null)
+    {
+        @* Role "group" so JAWS announces the description for a fieldset of text inputs. *@
+        <NhsukFieldset Legend="@Fieldset.Legend" Id="@Fieldset.Id" Role="@(Fieldset.Role ?? "group")" DescribedBy="@_describedBy"
+                       Classes="@Fieldset.Classes" Attributes="@Fieldset.Attributes">@Inner</NhsukFieldset>
+    }
+    else
+    {
+        @Inner
+    }
+</div>
+
+@code {
+    private enum Part { Other, Day, Month, Year }
+
+    private string _formGroupClasses = "", _describedBy = "";
+    private string? _hintId, _errorId;
+    private bool _hasHint, _hasError, _anyItemHasError;
+    private List<(DateInputItemsItem? Item, Part Part)> _items = [];
+    private DateInputItemsItem _day = new(), _month = new(), _year = new();
+
+    protected override void OnParametersSet()
+    {
+        _day = Day ?? new DateInputItemsItem { Name = "day", Value = Values?.Day, Width = 2 };
+        _month = Month ?? new DateInputItemsItem { Name = "month", Value = Values?.Month, Width = 2 };
+        _year = Year ?? new DateInputItemsItem { Name = "year", Value = Values?.Year, Width = 4 };
+
+        _items = Items is { Count: > 0 }
+            ? Items.Select(item => (item, PartOf(item))).ToList()
+            : [(_day.IsFalse ? null : _day, Part.Day), (_month.IsFalse ? null : _month, Part.Month), (_year.IsFalse ? null : _year, Part.Year)];
+
+        _anyItemHasError = _items.Any(x => x.Item is not null && ItemHasError(x.Item));
+
+        _hasError = Truthy(ErrorMessage?.Text) || Truthy(ErrorMessage?.Html);
+        _formGroupClasses = Append("nhsuk-form-group"
+            + (_hasError || ErrorMessage?.IsTrue == true || _anyItemHasError ? " nhsuk-form-group--error" : ""), FormGroup?.Classes);
+
+        _describedBy = Truthy(Fieldset?.DescribedBy) ? Fieldset!.DescribedBy! : "";
+        _hasHint = Truthy(Hint?.Text) || Truthy(Hint?.Html);
+        if (_hasHint)
+        {
+            _hintId = Hint!.Id ?? Id + "-hint";
+            _describedBy = (_describedBy + " " + _hintId).Trim();
+        }
+        if (_hasError)
+        {
+            _errorId = ErrorMessage!.Id ?? Id + "-error";
+            _describedBy = (_describedBy + " " + _errorId).Trim();
+        }
+    }
+
+    private Part PartOf(DateInputItemsItem? item)
+    {
+        if (item is null || !Truthy(item.Name)) return Part.Other;
+        if (item.Name == "day" || item.Name == _day.Name) return Part.Day;
+        if (item.Name == "month" || item.Name == _month.Name) return Part.Month;
+        if (item.Name == "year" || item.Name == _year.Name) return Part.Year;
+        return Part.Other;
+    }
+
+    private static bool ItemHasError(DateInputItemsItem item) => item.Error == true || Contains(item.Classes, "nhsuk-input--error");
+
+    private RenderFragment Inner => @<text>
+        @if (_hasHint)
+        {
+            <NhsukHint Html="@Hint!.Html" Text="@Hint.Text" Id="@_hintId" Classes="@Hint.Classes" Attributes="@Hint.Attributes" />
+        }
+        @if (_hasError)
+        {
+            <NhsukErrorMessage Html="@ErrorMessage!.Html" Text="@ErrorMessage.Text" VisuallyHiddenText="@ErrorMessage.VisuallyHiddenText"
+                               Id="@_errorId" Classes="@ErrorMessage.Classes" Attributes="@ErrorMessage.Attributes" />
+        }
+        <div @attributes="@(new Attrs().Add("class", Append("nhsuk-date-input", Classes)).Optional("id", Id).AddUser(Attributes, AdditionalAttributes))">
+            @if (FormGroup?.BeforeInputs is { } before) { @Render.HtmlOrText(before.Html, before.Text) }
+            @foreach (var (item, part) in _items)
+            {
+                if (item is not null) { <div class="nhsuk-date-input__item">@ItemInput(item, part)</div> }
+            }
+            @if (FormGroup?.AfterInputs is { } after) { @Render.HtmlOrText(after.Html, after.Text) }
+        </div>
+    </text>;
+
+    private RenderFragment ItemInput(DateInputItemsItem item, Part part)
+    {
+        var name = item.Name;
+        var value = item.Value;
+        var width = item.Width ?? 2;
+        switch (part)
+        {
+            case Part.Day: name = item.Name ?? "day"; value = item.Value ?? _day.Value; break;
+            case Part.Month: name = item.Name ?? "month"; value = item.Value ?? _month.Value; break;
+            case Part.Year: name = item.Name ?? "year"; value = item.Value ?? _year.Value; width = item.Width ?? 4; break;
+        }
+        value ??= name switch { "day" => Values?.Day, "month" => Values?.Month, "year" => Values?.Year, _ => null };
+
+        var itemClasses = (item.Classes ?? "").Trim();
+        var showError = !Contains(itemClasses, "nhsuk-input--error")
+            && (ItemHasError(item) || (item.Error != false && (_hasError || ErrorMessage?.IsTrue == true) && !_anyItemHasError));
+
+        var label = new LabelOptions
+        {
+            Html = item.Label?.Html,
+            Text = item.Label?.Text ?? Capitalize(name),
+            Id = item.Label?.Id,
+            For = item.Label?.For,
+            Classes = Append("nhsuk-date-input__label", item.Label?.Classes),
+            Attributes = item.Label?.Attributes,
+        };
+
+        return @<NhsukInput Label="@label" ErrorMessage="@(showError ? true : null)"
+                            Id="@(Truthy(item.Id) ? item.Id : Id + "-" + name)"
+                            Name="@(Truthy(NamePrefix) ? NamePrefix + "[" + name + "]" : name)"
+                            Value="@value" Type="@DefaultIfFalsy(item.Type, "text")"
+                            Prefix="@(item.Prefix is { } p ? new InputPrefixOptions { Text = p.Text, Html = p.Html, Classes = p.Classes, Attributes = p.Attributes } : null)"
+                            Suffix="@(item.Suffix is { } s ? new InputSuffixOptions { Text = s.Text, Html = s.Html, Classes = s.Classes, Attributes = s.Attributes } : null)"
+                            Width="@width" Inputmode="@(Truthy(item.Inputmode) ? item.Inputmode : "numeric")"
+                            Spellcheck="@item.Spellcheck" Autocomplete="@item.Autocomplete" Autocapitalize="@item.Autocapitalize"
+                            Pattern="@item.Pattern" Disabled="@(item.Disabled ?? Disabled)" DescribedBy="@item.DescribedBy"
+                            Classes="@(("nhsuk-date-input__input " + itemClasses).Trim())" Attributes="@item.Attributes" />;
+    }
+
+    /// <summary>Nunjucks' <c>capitalize</c> filter: first letter upper case, the rest lower case.</summary>
+    private static string? Capitalize(string? s) => string.IsNullOrEmpty(s) ? s : char.ToUpperInvariant(s[0]) + s[1..].ToLowerInvariant();
+}

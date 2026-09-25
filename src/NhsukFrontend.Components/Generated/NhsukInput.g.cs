@@ -241,7 +241,7 @@ public sealed partial class InputPrefixOptions : NhsukOptions, IShorthandOptions
     public static implicit operator InputPrefixOptions(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static InputPrefixOptions FromShorthand(string value) => new() { Text = value };
+    public static InputPrefixOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator InputPrefixOptions(string value) => FromShorthand(value);
 }
 
@@ -268,7 +268,7 @@ public sealed partial class InputSuffixOptions : NhsukOptions, IShorthandOptions
     public static implicit operator InputSuffixOptions(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static InputSuffixOptions FromShorthand(string value) => new() { Text = value };
+    public static InputSuffixOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator InputSuffixOptions(string value) => FromShorthand(value);
 }
 
@@ -325,7 +325,7 @@ public sealed partial class InputFormGroupBeforeInputOptions : NhsukOptions, ISh
     public static implicit operator InputFormGroupBeforeInputOptions(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static InputFormGroupBeforeInputOptions FromShorthand(string value) => new() { Text = value };
+    public static InputFormGroupBeforeInputOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator InputFormGroupBeforeInputOptions(string value) => FromShorthand(value);
 }
 
@@ -344,6 +344,6 @@ public sealed partial class InputFormGroupAfterInputOptions : NhsukOptions, ISho
     public static implicit operator InputFormGroupAfterInputOptions(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static InputFormGroupAfterInputOptions FromShorthand(string value) => new() { Text = value };
+    public static InputFormGroupAfterInputOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator InputFormGroupAfterInputOptions(string value) => FromShorthand(value);
 }

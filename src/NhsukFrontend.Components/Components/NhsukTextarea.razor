@@ -1,0 +1,76 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/textarea/template.njk *@
+<div class="@_formGroupClasses" @attributes="FormGroupAttributes">
+    <NhsukLabel Html="@Label?.Html" Text="@Label?.Text" Id="@Label?.Id" For="@(Label?.For ?? _id)" Size="@Label?.Size"
+                IsPageHeading="@Label?.IsPageHeading" Classes="@Label?.Classes" Attributes="@Label?.Attributes" />
+    @if (_hasHint)
+    {
+        <NhsukHint Html="@Hint!.Html" Text="@Hint.Text" Id="@_hintId" Classes="@Hint.Classes" Attributes="@Hint.Attributes" />
+    }
+    @if (_hasError)
+    {
+        <NhsukErrorMessage Html="@ErrorMessage!.Html" Text="@ErrorMessage.Text" VisuallyHiddenText="@ErrorMessage.VisuallyHiddenText"
+                           Id="@_errorId" Classes="@ErrorMessage.Classes" Attributes="@ErrorMessage.Attributes" />
+    }
+    @if (FormGroup?.BeforeInput is { } before) { @Render.HtmlOrText(before.Html, before.Text) }
+    <textarea @attributes="TextareaAttributes">@Value</textarea>
+    @if (AfterInputContent is not null) { @AfterInputContent }
+    else if (FormGroup?.AfterInput is { } after) { @Render.HtmlOrText(after.Html, after.Text) }
+</div>
+
+@code {
+    /// <summary>
+    /// Attributes for the form group, as a pre-built list. Used by <see cref="NhsukCharacterCount"/>, which passes
+    /// attribute HTML into <c>formGroup.attributes</c> upstream. Not an upstream option.
+    /// </summary>
+    [Parameter] public IEnumerable<KeyValuePair<string, object>>? FormGroupAttributesOverride { get; set; }
+
+    /// <summary>Razor-native alternative to <c>formGroup.afterInput.html</c>. Not an upstream option.</summary>
+    [Parameter] public RenderFragment? AfterInputContent { get; set; }
+
+    private string _id = "", _formGroupClasses = "", _classNames = "", _describedBy = "";
+    private string? _hintId, _errorId;
+    private bool _hasHint, _hasError;
+
+    protected override void OnParametersSet()
+    {
+        var classNames = "nhsuk-textarea";
+        var formGroupClasses = "nhsuk-form-group";
+        _hasError = Truthy(ErrorMessage?.Text) || Truthy(ErrorMessage?.Html);
+        if (_hasError || ErrorMessage?.IsTrue == true)
+        {
+            classNames += " nhsuk-textarea--error";
+            formGroupClasses += " nhsuk-form-group--error";
+        }
+        _classNames = Append(classNames, Classes);
+        _formGroupClasses = Append(formGroupClasses, FormGroup?.Classes);
+
+        _id = Truthy(Id) ? Id! : Name ?? "";
+        _describedBy = Truthy(DescribedBy) ? DescribedBy! : "";
+        _hasHint = Truthy(Hint?.Text) || Truthy(Hint?.Html);
+        if (_hasHint)
+        {
+            _hintId = Hint!.Id ?? _id + "-hint";
+            _describedBy = (_describedBy + " " + _hintId).Trim();
+        }
+        if (_hasError)
+        {
+            _errorId = ErrorMessage!.Id ?? _id + "-error";
+            _describedBy = (_describedBy + " " + _errorId).Trim();
+        }
+    }
+
+    private IEnumerable<KeyValuePair<string, object>> FormGroupAttributes =>
+        FormGroupAttributesOverride ?? new Attrs().AddUser(FormGroup?.Attributes);
+
+    private Attrs TextareaAttributes => new Attrs()
+        .Add("class", _classNames)
+        .Add("id", _id)
+        .Add("name", Name)
+        .Add("rows", DefaultIfFalsy(Rows, "5"))
+        .Optional("spellcheck", Spellcheck is bool b ? (b ? "true" : "false") : null)
+        .Optional("disabled", Disabled)
+        .Optional("aria-describedby", Truthy(_describedBy) ? _describedBy : null)
+        .Optional("autocomplete", Autocomplete)
+        .AddUser(Attributes, AdditionalAttributes);
+}

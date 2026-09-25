@@ -86,6 +86,6 @@ public sealed partial class TagOptions : NhsukOptions, IShorthandOptions<TagOpti
     public static implicit operator TagOptions(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static TagOptions FromShorthand(string value) => new() { Text = value };
+    public static TagOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator TagOptions(string value) => FromShorthand(value);
 }

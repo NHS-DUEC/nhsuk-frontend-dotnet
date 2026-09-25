@@ -1,0 +1,93 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/summary-list/template.njk and summary-list/row/template.njk *@
+@if (Card is not null)
+{
+#pragma warning disable CS0618 // pass deprecated card options through unchanged
+    <NhsukCard Id="@Card.Id" Heading="@Card.Heading" HeadingHtml="@Card.HeadingHtml" HeadingClasses="@Card.HeadingClasses"
+               HeadingSize="@Card.HeadingSize" HeadingLevel="@Card.HeadingLevel" HeadingId="@Card.HeadingId"
+               HeadingVisuallyHiddenText="@Card.HeadingVisuallyHiddenText" Href="@Card.Href" Clickable="@Card.Clickable"
+               Variant="@Card.Variant" Type="@Card.Type" Feature="@Card.Feature" Primary="@Card.Primary"
+               Secondary="@Card.Secondary" Warning="@Card.Warning" ImgURL="@Card.ImgURL" ImgALT="@Card.ImgALT"
+               Image="@Card.Image" Description="@Card.Description" DescriptionHtml="@Card.DescriptionHtml"
+               Actions="@Card.Actions" Classes="@Card.Classes" Attributes="@Card.Attributes">@ListElement</NhsukCard>
+#pragma warning restore CS0618
+}
+else
+{
+    @ListElement
+}
+
+@code {
+    private List<SummaryListRowsItem> _rows = [];
+    private string _classNames = "";
+    private bool _hasActions;
+
+    protected override void OnParametersSet()
+    {
+        var classNames = "nhsuk-summary-list";
+        if (Border == false && !Contains(Classes, "nhsuk-summary-list--no-border"))
+            classNames += " nhsuk-summary-list--no-border";
+        else if (LastRowBorder == false && !Contains(Classes, "nhsuk-summary-list--no-last-row-border"))
+            classNames += " nhsuk-summary-list--no-last-row-border";
+        _classNames = Append(classNames, Classes);
+
+        _rows = Rows?.Where(r => r is not null).Select(r => r!).ToList() ?? [];
+        _hasActions = _rows.Any(r => r.Actions?.Items?.Count > 0);
+    }
+
+    private RenderFragment ListElement => @<dl @attributes="ListAttributes">
+        @for (var i = 0; i < _rows.Count; i++) { @Row(_rows[i], i == _rows.Count - 1) }
+    </dl>;
+
+    private Attrs ListAttributes => new Attrs().Add("class", _classNames).Optional("id", Id).AddUser(Attributes, AdditionalAttributes);
+
+    private RenderFragment Row(SummaryListRowsItem row, bool isLast)
+    {
+        var actions = row.Actions?.Items?.Where(a => a is not null).Select(a => a!).ToList() ?? [];
+
+        var classNames = "nhsuk-summary-list__row";
+        if (_hasActions && actions.Count == 0) classNames += " nhsuk-summary-list__row--no-actions";
+        if (row.Border == false
+            && !Contains(row.Classes, "nhsuk-summary-list__row--no-border")
+            && !Contains(Classes, "nhsuk-summary-list--no-border")
+            && !Contains(Classes, "nhsuk-summary-list--no-last-row-border")
+            && !(LastRowBorder == false && isLast))
+            classNames += " nhsuk-summary-list__row--no-border";
+        classNames = Append(classNames, row.Classes);
+
+        return @<div @attributes="@(new Attrs().Add("class", classNames).Optional("id", row.Id).AddUser(row.Attributes))">
+            <dt @attributes="@(new Attrs().Add("class", Cell("nhsuk-summary-list__key", row.Key?.Width, row.Key?.Classes)).Optional("id", row.Key?.Id).AddUser(row.Key?.Attributes))">@Render.HtmlOrText(row.Key?.Html, row.Key?.Text)</dt>
+            <dd @attributes="@(new Attrs().Add("class", Cell("nhsuk-summary-list__value", row.Value?.Width, row.Value?.Classes)).Optional("id", row.Value?.Id).AddUser(row.Value?.Attributes))">@Render.HtmlOrText(row.Value?.Html, row.Value?.Text)</dd>
+            @if (actions.Count > 0)
+            {
+                <dd @attributes="@(new Attrs().Add("class", Cell("nhsuk-summary-list__actions", row.Actions!.Width, row.Actions.Classes)).AddUser(row.Actions.Attributes))">
+                    @if (actions.Count == 1)
+                    {
+                        @Action(actions[0])
+                    }
+                    else
+                    {
+                        <ul class="nhsuk-summary-list__actions-list">
+                            @foreach (var action in actions)
+                            {
+                                <li class="nhsuk-summary-list__actions-list-item">@Action(action)</li>
+                            }
+                        </ul>
+                    }
+                </dd>
+            }
+        </div>;
+    }
+
+    private static string Cell(string baseClass, string? width, string? classes)
+    {
+        var classNames = baseClass;
+        if (Truthy(width) && !Contains(classes, "nhsuk-u-width-" + width)) classNames += " nhsuk-u-width-" + width;
+        return Append(classNames, classes);
+    }
+
+    private RenderFragment Action(SummaryListRowsActionsItemsItem a) =>
+        @<NhsukCardAction Id="@a.Id" Text="@a.Text" Html="@a.Html" VisuallyHiddenText="@a.VisuallyHiddenText" Name="@a.Name"
+                          Type="@a.Type" Value="@a.Value" Href="@a.Href" Classes="@a.Classes" Attributes="@a.Attributes"
+                          HeadingText="@Card?.Heading?.Text" HeadingHtml="@Card?.Heading?.Html" />;
+}

@@ -1,0 +1,38 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/details/template.njk *@
+<details @attributes="DetailsAttributes">
+    <summary @attributes="SummaryAttributes">
+        <span class="nhsuk-details__summary-text">@Render.HtmlOrText(_summary?.Html, _summary?.Text)</span>
+    </summary>
+    <div class="nhsuk-details__text"><NhsukContent Caller="ChildContent" Html="@Html" Text="@Text" /></div>
+</details>
+
+@code {
+    private DetailsSummaryOptions? _summary;
+
+    protected override void OnParametersSet()
+    {
+#pragma warning disable CS0618 // deprecated summaryText / summaryHtml still supported upstream
+        // A summary object replaces summaryText / summaryHtml; a summary string only replaces the text.
+        _summary = Summary is { IsShorthand: false } ? Summary : new DetailsSummaryOptions { Text = Summary?.Text ?? SummaryText, Html = SummaryHtml };
+#pragma warning restore CS0618
+    }
+
+    private Attrs DetailsAttributes
+    {
+        get
+        {
+            var classNames = "nhsuk-details";
+            if (Variant == "reverse" && !Contains(Classes, "nhsuk-details--reverse")) classNames += " nhsuk-details--reverse";
+            return new Attrs()
+                .Add("class", Append(classNames, Classes))
+                .Optional("id", Id)
+                .AddUser(Attributes, AdditionalAttributes)
+                .Optional("open", Open == true);
+        }
+    }
+
+    private Attrs SummaryAttributes => new Attrs()
+        .Add("class", Append("nhsuk-details__summary", _summary?.Classes))
+        .AddUser(_summary?.Attributes);
+}

@@ -168,7 +168,7 @@ public sealed partial class HeaderServiceOptions : NhsukOptions, IShorthandOptio
     public static implicit operator HeaderServiceOptions(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static HeaderServiceOptions FromShorthand(string value) => new() { Text = value };
+    public static HeaderServiceOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator HeaderServiceOptions(string value) => FromShorthand(value);
 }
 
@@ -342,7 +342,7 @@ public sealed partial class HeaderNavigationItemsItem : NhsukOptions, IShorthand
     public static implicit operator HeaderNavigationItemsItem(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static HeaderNavigationItemsItem FromShorthand(string value) => new() { Text = value };
+    public static HeaderNavigationItemsItem FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator HeaderNavigationItemsItem(string value) => FromShorthand(value);
 }
 
@@ -414,6 +414,6 @@ public sealed partial class HeaderAccountItemsItem : NhsukOptions, IShorthandOpt
     public static implicit operator HeaderAccountItemsItem(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static HeaderAccountItemsItem FromShorthand(string value) => new() { Text = value };
+    public static HeaderAccountItemsItem FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator HeaderAccountItemsItem(string value) => FromShorthand(value);
 }

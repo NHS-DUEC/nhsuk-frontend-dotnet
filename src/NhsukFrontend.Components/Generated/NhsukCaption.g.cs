@@ -94,6 +94,6 @@ public sealed partial class CaptionOptions : NhsukOptions, IShorthandOptions<Cap
     public static implicit operator CaptionOptions(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static CaptionOptions FromShorthand(string value) => new() { Text = value };
+    public static CaptionOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator CaptionOptions(string value) => FromShorthand(value);
 }

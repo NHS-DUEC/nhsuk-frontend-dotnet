@@ -1,0 +1,124 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/card/template.njk *@
+<div @attributes="CardAttributes">
+    @if (Truthy(_imageHtml))
+    {
+        @((MarkupString)_imageHtml!)
+    }
+    else if (Truthy(_imageSrc))
+    {
+        <img @attributes="@(new Attrs().Add("class", "nhsuk-card__img").Add("src", _imageSrc).Add("alt", _imageAlt))">
+    }
+    @if (_isCareCard || _actions.Count > 0)
+    {
+        <div class="nhsuk-card__heading-container">
+            @if (_isCareCard) { @CardHeading(CareVisuallyHiddenText) }
+            else if (_hasHeading) { @CardHeading(_heading.VisuallyHiddenText) }
+            @if (_actions.Count == 1)
+            {
+                <div class="@Append("nhsuk-card__actions", Actions?.Classes)">@ActionFragment(_actions[0])</div>
+            }
+            else if (_actions.Count > 1)
+            {
+                <ul class="@Append("nhsuk-card__actions", Actions?.Classes)">
+                    @foreach (var action in _actions)
+                    {
+                        <li class="nhsuk-card__action">@ActionFragment(action)</li>
+                    }
+                </ul>
+            }
+        </div>
+    }
+    <div class="@Append("nhsuk-card__content", _description.Classes)" @attributes="new Attrs().AddUser(_description.Attributes)">
+        @if (!_isCareCard && _actions.Count == 0 && _hasHeading) { @CardHeading(_heading.VisuallyHiddenText) }
+        @if (ChildContent is not null) { @ChildContent }
+        else if (Truthy(_description.Html)) { @((MarkupString)_description.Html!) }
+        else if (Truthy(_description.Text)) { <p class="nhsuk-card__description">@_description.Text</p> }
+        @if (Contains(_classNames, "nhsuk-card--primary")) { <NhsukIcon Name="chevron-right-circle" /> }
+    </div>
+</div>
+
+@code {
+    private static readonly string[] Variants = ["feature", "primary", "secondary", "warning"];
+    private static readonly string[] CareVariants = ["non-urgent", "urgent", "emergency"];
+
+    private CardHeadingOptions _heading = new();
+    private CardDescriptionOptions _description = new();
+    private List<CardActionsItemsItem> _actions = [];
+    private string _classNames = "";
+    private string? _variant, _imageSrc, _imageAlt, _imageHtml;
+    private bool _isCareCard, _hasHeading;
+
+    protected override void OnParametersSet()
+    {
+#pragma warning disable CS0618 // deprecated card options are still supported upstream
+        _variant = Truthy(Variant) ? Variant : Type;
+
+        // A heading object replaces the deprecated heading* options; a heading string does not.
+        _heading = Heading is { IsShorthand: false } ? Heading : new CardHeadingOptions
+        {
+            Id = HeadingId, Text = Heading?.Text, Html = HeadingHtml, VisuallyHiddenText = HeadingVisuallyHiddenText,
+            Size = HeadingSize, Level = HeadingLevel, Classes = HeadingClasses,
+        };
+        _description = Description is { IsShorthand: false } ? Description : new CardDescriptionOptions
+        {
+            Text = Description?.Text, Html = DescriptionHtml,
+        };
+
+        var classNames = "nhsuk-card";
+        if (Clickable == true) classNames += " nhsuk-card--clickable";
+        if (Feature == true) classNames += " nhsuk-card--feature";
+        if (Primary == true) classNames += " nhsuk-card--primary";
+        if (Secondary == true) classNames += " nhsuk-card--secondary";
+        if (Warning == true) classNames += " nhsuk-card--warning";
+        if (Truthy(_variant) && Variants.Contains(_variant) && !Variants.Any(v => Contains(Classes, "nhsuk-card--" + v)))
+            classNames += " nhsuk-card--" + _variant;
+
+        _hasHeading = Truthy(_heading.Text) || Truthy(_heading.Html);
+        _isCareCard = Truthy(_variant) && CareVariants.Contains(_variant) && _hasHeading;
+        if (_isCareCard && !CareVariants.Any(v => Contains(Classes, "nhsuk-card--care--" + v)))
+            classNames += " nhsuk-card--care nhsuk-card--care--" + _variant;
+        _classNames = Append(classNames, Classes);
+
+        _actions = Actions?.Items?.Where(a => a is not null).Select(a => a!).ToList() ?? [];
+
+        if (Truthy(ImgURL) || Truthy(ImgALT)) (_imageSrc, _imageAlt, _imageHtml) = (ImgURL, ImgALT, null);
+        else (_imageSrc, _imageAlt, _imageHtml) = (Image?.Src, Image?.Alt, Image?.Html);
+#pragma warning restore CS0618
+    }
+
+    private Attrs CardAttributes => new Attrs().Add("class", _classNames).Optional("id", Id).AddUser(Attributes, AdditionalAttributes);
+
+    private string CareVisuallyHiddenText => Truthy(_heading.VisuallyHiddenText) ? _heading.VisuallyHiddenText!.Trim()
+        : _variant == "emergency" ? "Immediate action required"
+        : _variant == "urgent" ? "Urgent advice"
+        : "Non-urgent advice";
+
+    private RenderFragment CardHeading(string? visuallyHiddenText) => @<text>
+        @if (Truthy(_heading.Text))
+        {
+            <NhsukHeading Id="@_heading.Id" Size="@_heading.Size" Level="@(_heading.Level ?? 2)" Classes="@_heading.Classes"
+                          ClassName="nhsuk-card__heading" ClassPrefix="nhsuk-heading-" Attributes="@_heading.Attributes">
+                @if (Truthy(Href) && !Contains(_classNames, "nhsuk-card--feature"))
+                {
+                    <a class="nhsuk-card__link" href="@Href">@_heading.Text!.Trim()</a>
+                }
+                else if (Truthy(visuallyHiddenText))
+                {
+                    <span role="text"><span class="nhsuk-u-visually-hidden">@visuallyHiddenText: </span>@_heading.Text!.Trim()</span>
+                }
+                else
+                {
+                    @_heading.Text!.Trim()
+                }
+            </NhsukHeading>
+        }
+        @if (Truthy(_heading.Html)) { @((MarkupString)_heading.Html!.Trim()) }
+        @if (_isCareCard) { <span class="nhsuk-card--care__arrow" aria-hidden="true"></span> }
+    </text>;
+
+    private RenderFragment ActionFragment(CardActionsItemsItem a) =>
+        @<NhsukCardAction Id="@a.Id" Text="@a.Text" Html="@a.Html" VisuallyHiddenText="@a.VisuallyHiddenText" Name="@a.Name"
+                          Type="@a.Type" Value="@a.Value" Href="@a.Href" Classes="@a.Classes" Attributes="@a.Attributes"
+                          HeadingText="@_heading.Text" HeadingHtml="@_heading.Html" />;
+}

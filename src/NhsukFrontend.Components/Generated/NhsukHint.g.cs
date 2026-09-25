@@ -70,6 +70,6 @@ public sealed partial class HintOptions : NhsukOptions, IShorthandOptions<HintOp
     public static implicit operator HintOptions(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static HintOptions FromShorthand(string value) => new() { Text = value };
+    public static HintOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator HintOptions(string value) => FromShorthand(value);
 }

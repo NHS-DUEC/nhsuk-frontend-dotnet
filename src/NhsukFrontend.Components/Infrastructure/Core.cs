@@ -35,7 +35,26 @@ public abstract class NhsukOptions
     /// (for example <c>errorMessage: true</c> or <c>search: true</c>).
     /// </summary>
     [JsonIgnore] public bool IsTrue { get; init; }
+
+    /// <summary>
+    /// True when upstream passed a plain string instead of an object. Some templates treat the two
+    /// differently (a string heading still picks up deprecated options like <c>headingHtml</c>).
+    /// </summary>
+    [JsonIgnore] public bool IsShorthand { get; init; }
+
+    /// <summary>
+    /// True when upstream passed the literal <c>false</c> to an option marked <see cref="KeepFalseAttribute"/>,
+    /// where <c>false</c> means "leave this out" rather than "use the default".
+    /// </summary>
+    [JsonIgnore] public bool IsFalse { get; init; }
 }
+
+/// <summary>
+/// Marks an option whose upstream template uses the <c>default</c> filter, so <c>false</c> (leave out)
+/// must be told apart from a missing value (use the default). For example date input <c>year: false</c>.
+/// </summary>
+[AttributeUsage(AttributeTargets.Property)]
+public sealed class KeepFalseAttribute : Attribute;
 
 /// <summary>Options that upstream also accepts as a plain string.</summary>
 public interface IShorthandOptions<TSelf> where TSelf : IShorthandOptions<TSelf>

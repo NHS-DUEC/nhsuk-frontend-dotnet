@@ -1,0 +1,51 @@
+@namespace NhsukFrontend.Components
+@using System.Linq.Expressions
+@using Microsoft.AspNetCore.Components.Forms
+@using NhsukFrontend.Components.Forms
+@*
+    Not an upstream component: an error summary filled from the enclosing EditForm's validation messages,
+    in the order the model declares its properties, each linking to its field.
+*@
+@if (_errors.Count > 0)
+{
+    <NhsukErrorSummary Heading="@Heading" ErrorList="@_errors" Classes="@Classes" />
+}
+
+@code {
+    /// <summary>The form model, for example <c>() =&gt; Model</c>. Needed so links match the fields' names.
+    /// Without it, the <c>EditForm</c> model is used and links have no prefix.</summary>
+    [Parameter] public Expression<Func<object?>>? For { get; set; }
+
+    [Parameter] public ErrorSummaryHeadingOptions Heading { get; set; } = "There is a problem";
+    [Parameter] public string? Classes { get; set; }
+
+    [CascadingParameter] private EditContext? EditContext { get; set; }
+
+    private List<ErrorSummaryErrorListItem?> _errors = [];
+
+    protected override void OnParametersSet()
+    {
+        _errors = [];
+        if (EditContext is null) return;
+
+        object? model = EditContext.Model;
+        var prefix = "";
+        if (For is not null)
+        {
+            var (name, _, _) = BlazorFields.Parse(For);
+            model = For.Compile()();
+            prefix = name + ".";
+        }
+        if (model is null) return;
+
+        foreach (var message in EditContext.GetValidationMessages(new FieldIdentifier(model, string.Empty)))
+            _errors.Add(new ErrorSummaryErrorListItem { Text = message });
+
+        foreach (var property in model.GetType().GetProperties())
+        {
+            var message = EditContext.GetValidationMessages(new FieldIdentifier(model, property.Name)).FirstOrDefault();
+            if (message is not null)
+                _errors.Add(new ErrorSummaryErrorListItem { Text = message, Href = "#" + NhsukField.ErrorTarget(prefix + property.Name, property.PropertyType) });
+        }
+    }
+}

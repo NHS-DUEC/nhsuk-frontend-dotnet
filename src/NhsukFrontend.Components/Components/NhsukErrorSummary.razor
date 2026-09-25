@@ -1,0 +1,57 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/error-summary/template.njk *@
+<div @attributes="SummaryAttributes">
+    <div role="alert">
+        <NhsukHeading Id="@_heading?.Id" Text="@_heading?.Text" Html="@_heading?.Html" Level="2"
+                      ClassName="nhsuk-error-summary__title" Attributes="@_heading?.Attributes" />
+        <div class="nhsuk-error-summary__body">
+            @if (ChildContent is not null || Truthy(_description?.Text) || Truthy(_description?.Html))
+            {
+                <p>
+                    @if (ChildContent is not null) { @ChildContent }
+                    else { @Render.HtmlOrText(_description!.Html, _description.Text) }
+                </p>
+            }
+            @if (ErrorList is { Count: > 0 })
+            {
+                <ul class="nhsuk-list nhsuk-error-summary__list">
+                    @foreach (var item in ErrorList)
+                    {
+                        if (item is null) continue;
+                        <li>
+                            @if (Truthy(item.Href))
+                            {
+                                <a href="@item.Href" @attributes="new Attrs().AddUser(item.Attributes)">@Render.HtmlOrText(item.Html, item.Text)</a>
+                            }
+                            else
+                            {
+                                @Render.HtmlOrText(item.Html, item.Text)
+                            }
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private ErrorSummaryHeadingOptions? _heading;
+    private ErrorSummaryDescriptionOptions? _description;
+
+    protected override void OnParametersSet()
+    {
+#pragma warning disable CS0618 // deprecated titleText / titleHtml / descriptionText / descriptionHtml
+        // An object replaces the deprecated options; a plain string only replaces the text.
+        _heading = Heading is { IsShorthand: false } ? Heading : new ErrorSummaryHeadingOptions { Text = Heading?.Text ?? TitleText, Html = TitleHtml };
+        _description = Description is { IsShorthand: false } ? Description : new ErrorSummaryDescriptionOptions { Text = Description?.Text ?? DescriptionText, Html = DescriptionHtml };
+#pragma warning restore CS0618
+    }
+
+    private Attrs SummaryAttributes => new Attrs()
+        .Add("class", Append("nhsuk-error-summary", Classes))
+        .Optional("id", Id)
+        .Add("data-module", "nhsuk-error-summary")
+        .Optional("data-disable-auto-focus", DisableAutoFocus is bool b ? (b ? "true" : "false") : null)
+        .AddUser(Attributes, AdditionalAttributes);
+}

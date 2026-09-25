@@ -160,7 +160,7 @@ public sealed partial class ButtonOptions : NhsukOptions, IShorthandOptions<Butt
     public static implicit operator ButtonOptions(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static ButtonOptions FromShorthand(string value) => new() { Text = value };
+    public static ButtonOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator ButtonOptions(string value) => FromShorthand(value);
 }
 
@@ -183,6 +183,6 @@ public sealed partial class ButtonIconOptions : NhsukOptions, IShorthandOptions<
     public static implicit operator ButtonIconOptions(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>name</c>.</summary>
-    public static ButtonIconOptions FromShorthand(string value) => new() { Name = value, Placement = "start" };
+    public static ButtonIconOptions FromShorthand(string value) => new() { Name = value, Placement = "start", IsShorthand = true };
     public static implicit operator ButtonIconOptions(string value) => FromShorthand(value);
 }

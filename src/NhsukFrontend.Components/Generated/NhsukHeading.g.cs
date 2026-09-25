@@ -142,6 +142,6 @@ public sealed partial class HeadingOptions : NhsukOptions, IShorthandOptions<Hea
     public static implicit operator HeadingOptions(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static HeadingOptions FromShorthand(string value) => new() { Text = value };
+    public static HeadingOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator HeadingOptions(string value) => FromShorthand(value);
 }

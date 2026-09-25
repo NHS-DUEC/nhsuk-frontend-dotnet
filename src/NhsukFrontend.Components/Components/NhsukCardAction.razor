@@ -1,0 +1,44 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/card/action/template.njk: an action link or button in a card or summary list row. *@
+<NhsukElement Tag="@_element" Attributes="ActionAttributes">@Render.HtmlOrText(Html, Text)@if (_hasHidden)
+{<span class="nhsuk-u-visually-hidden">@if (Truthy(VisuallyHiddenText)) {@(" " + VisuallyHiddenText)}@if (_hasHeading) {@(" (")@Render.HtmlOrText(HeadingHtml, HeadingText)@(")")}</span>}</NhsukElement>
+
+@code {
+    [Parameter] public string? Id { get; set; }
+    [Parameter] public string? Text { get; set; }
+    [Parameter] public string? Html { get; set; }
+    [Parameter] public string? VisuallyHiddenText { get; set; }
+    [Parameter] public string? Name { get; set; }
+    [Parameter] public string? Type { get; set; }
+    [Parameter] public string? Value { get; set; }
+    [Parameter] public string? Href { get; set; }
+    [Parameter] public string? Classes { get; set; }
+    [Parameter] public NhsukAttributes? Attributes { get; set; }
+
+    /// <summary>The parent card's heading, added to the visually hidden text.</summary>
+    [Parameter] public string? HeadingText { get; set; }
+    [Parameter] public string? HeadingHtml { get; set; }
+
+    private string _element = "a";
+    private bool _hasHeading, _hasHidden;
+
+    protected override void OnParametersSet()
+    {
+        _element = Truthy(Href) && !Truthy(Type) ? "a" : "button";
+        _hasHeading = Truthy(HeadingText) || Truthy(HeadingHtml);
+        _hasHidden = Truthy(VisuallyHiddenText) || _hasHeading;
+    }
+
+    private Attrs ActionAttributes
+    {
+        get
+        {
+            var attrs = new Attrs().Add("class", Append("nhsuk-link", Classes)).Optional("id", Id);
+            if (_element == "button")
+                attrs.Optional("name", Name).Add("type", Nj.Default(Type, "submit")).Optional("value", Value);
+            else
+                attrs.Add("href", Nj.Default(Href, "#"));
+            return attrs.AddUser(Attributes);
+        }
+    }
+}

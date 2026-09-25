@@ -1,0 +1,113 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/radios/template.njk *@
+<div class="@_formGroupClasses" @attributes="new Attrs().AddUser(FormGroup?.Attributes)">
+    @if (Fieldset is not null)
+    {
+        <NhsukFieldset Legend="@Fieldset.Legend" Id="@Fieldset.Id" Role="@Fieldset.Role" DescribedBy="@_describedBy"
+                       Classes="@Fieldset.Classes" Attributes="@Fieldset.Attributes">@Inner</NhsukFieldset>
+    }
+    else
+    {
+        @Inner
+    }
+</div>
+
+@code {
+    private string _idPrefix = "", _formGroupClasses = "", _classNames = "", _describedBy = "";
+    private string? _hintId, _errorId;
+    private bool _hasHint, _hasError;
+
+    protected override void OnParametersSet()
+    {
+        var classNames = "nhsuk-radios";
+        if (Small == true && !Contains(Classes, "nhsuk-radios--small")) classNames += " nhsuk-radios--small";
+        if (Inline == true && !Contains(Classes, "nhsuk-radios--inline")) classNames += " nhsuk-radios--inline";
+        _classNames = Append(classNames, Classes);
+
+        _hasError = Truthy(ErrorMessage?.Text) || Truthy(ErrorMessage?.Html);
+        _formGroupClasses = Append("nhsuk-form-group" + (_hasError || ErrorMessage?.IsTrue == true ? " nhsuk-form-group--error" : ""), FormGroup?.Classes);
+
+        _idPrefix = Truthy(IdPrefix) ? IdPrefix! : Name ?? "";
+        _describedBy = Truthy(Fieldset?.DescribedBy) ? Fieldset!.DescribedBy! : "";
+        _hasHint = Truthy(Hint?.Text) || Truthy(Hint?.Html);
+        if (_hasHint)
+        {
+            _hintId = Hint!.Id ?? _idPrefix + "-hint";
+            _describedBy = (_describedBy + " " + _hintId).Trim();
+        }
+        if (_hasError)
+        {
+            _errorId = ErrorMessage!.Id ?? _idPrefix + "-error";
+            _describedBy = (_describedBy + " " + _errorId).Trim();
+        }
+    }
+
+    private RenderFragment Inner => @<text>
+        @if (_hasHint)
+        {
+            <NhsukHint Html="@Hint!.Html" Text="@Hint.Text" Id="@_hintId" Classes="@Hint.Classes" Attributes="@Hint.Attributes" />
+        }
+        @if (_hasError)
+        {
+            <NhsukErrorMessage Html="@ErrorMessage!.Html" Text="@ErrorMessage.Text" VisuallyHiddenText="@ErrorMessage.VisuallyHiddenText"
+                               Id="@_errorId" Classes="@ErrorMessage.Classes" Attributes="@ErrorMessage.Attributes" />
+        }
+        <div @attributes="RadiosAttributes">
+            @if (FormGroup?.BeforeInputs is { } before) { @Render.HtmlOrText(before.Html, before.Text) }
+            @for (var i = 0; i < (Items?.Count ?? 0); i++)
+            {
+                if (Items![i] is { } item) { @Item(item, i + 1) }
+            }
+            @if (FormGroup?.AfterInputs is { } after) { @Render.HtmlOrText(after.Html, after.Text) }
+        </div>
+    </text>;
+
+    private Attrs RadiosAttributes => new Attrs()
+        .Add("class", _classNames)
+        .Optional("id", Id)
+        .Add("data-module", "nhsuk-radios")
+        .AddUser(Attributes, AdditionalAttributes);
+
+    private RenderFragment Item(RadiosItemsItem item, int index)
+    {
+        // The first id has no number suffix, so the error summary can link to it.
+        var itemId = Truthy(item.Id) ? item.Id! : _idPrefix + (index > 1 ? "-" + index : "");
+        var conditionalId = "conditional-" + itemId;
+        if (Truthy(item.Divider))
+            return @<div class="nhsuk-radios__divider">@item.Divider</div>;
+
+        var isChecked = item.Checked == true || (Truthy(Value) && item.Checked != false && item.Value == Value);
+        var hasHint = Truthy(item.Hint?.Text) || Truthy(item.Hint?.Html);
+        var hintId = item.Hint?.Id ?? itemId + "-item-hint";
+        var hasConditional = Truthy(item.Conditional?.Html);
+
+        var input = new Attrs()
+            .Add("class", Append("nhsuk-radios__input", item.Classes))
+            .Add("id", itemId)
+            .Add("name", Name)
+            .Add("type", "radio")
+            .Add("value", item.Value)
+            .Optional("checked", isChecked)
+            .Optional("disabled", item.Disabled == true || (item.Disabled != false && Disabled == true))
+            .Optional("data-aria-controls", hasConditional ? conditionalId : null)
+            .Optional("aria-describedby", hasHint ? hintId : null)
+            .AddUser(item.Attributes);
+
+        return @<text>
+            <div class="nhsuk-radios__item">
+                <input @attributes="input">
+                <NhsukLabel Html="@(item.Label?.Html ?? item.Html)" Text="@(item.Label?.Text ?? item.Text)" Id="@item.Label?.Id" For="@itemId"
+                            Classes="@Append("nhsuk-radios__label", item.Label?.Classes)" Attributes="@item.Label?.Attributes" />
+                @if (hasHint)
+                {
+                    <NhsukHint Html="@item.Hint!.Html" Text="@item.Hint.Text" Id="@hintId"
+                               Classes="@Append("nhsuk-radios__hint", item.Hint.Classes)" Attributes="@item.Hint.Attributes" />
+                }
+            </div>
+            @if (hasConditional)
+            {
+                <div class="@("nhsuk-radios__conditional" + (isChecked ? "" : " nhsuk-radios__conditional--hidden"))" id="@conditionalId">@((MarkupString)item.Conditional!.Html!.Trim())</div>
+            }
+        </text>;
+    }
+}

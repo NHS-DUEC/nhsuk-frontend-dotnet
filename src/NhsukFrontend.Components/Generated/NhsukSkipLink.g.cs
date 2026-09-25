@@ -74,6 +74,6 @@ public sealed partial class SkipLinkOptions : NhsukOptions, IShorthandOptions<Sk
     public static implicit operator SkipLinkOptions(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static SkipLinkOptions FromShorthand(string value) => new() { Text = value };
+    public static SkipLinkOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator SkipLinkOptions(string value) => FromShorthand(value);
 }

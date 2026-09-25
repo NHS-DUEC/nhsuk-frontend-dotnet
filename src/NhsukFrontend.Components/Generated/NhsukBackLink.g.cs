@@ -112,6 +112,6 @@ public sealed partial class BackLinkOptions : NhsukOptions, IShorthandOptions<Ba
     public static implicit operator BackLinkOptions(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static BackLinkOptions FromShorthand(string value) => new() { Text = value };
+    public static BackLinkOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator BackLinkOptions(string value) => FromShorthand(value);
 }

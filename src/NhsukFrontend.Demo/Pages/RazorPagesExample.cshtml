@@ -2,32 +2,36 @@
 @model RazorPagesExampleModel
 @{
     Layout = "Shared/_NhsukLayout";
-    ViewData["Title"] = "Razor Pages example";
+    ViewData["Title"] = Model.Submitted ? "Check your answers" : "Book an appointment";
 }
 
 @section BeforeContent {
     <component type="typeof(NhsukBackLink)" render-mode="Static" param-Href='"/"' />
 }
 
-<component type="typeof(NhsukHeading)" render-mode="Static" param-Text='"Find a pharmacy"' param-Size='"l"' />
-<p>This page is a Razor Page, not a Blazor component. It renders the same components with the <code>&lt;component&gt;</code> tag helper, and binds the form with <code>[BindProperty]</code> and <code>ModelState</code>.</p>
-
-@if (Model.Searched && ModelState.IsValid)
+@if (Model.Submitted)
 {
+    <component type="typeof(NhsukHeading)" render-mode="Static" param-Text='"Check your answers"' param-Size='"l"' />
+    <component type="typeof(NhsukSummaryList)" render-mode="Static" param-Rows='Model.Details.Summary("/examples/razor-pages")' />
     <component type="typeof(NhsukInsetText)" render-mode="Static"
-               param-Text='$"You searched for pharmacies near {Model.Postcode}. This demo does not look anything up."' />
+               param-Text='"Nothing has been stored or sent. This is a Razor Page: every field is a tag helper bound with asp-for, and the errors come from ModelState."' />
 }
+else
+{
+    <form method="post" novalidate>
+        <nhsuk-error-summary />
 
-<form method="post" novalidate>
-    <component type="typeof(NhsukInput)" render-mode="Static"
-               param-Name='"Postcode"'
-               param-Label='(LabelOptions)"Postcode"'
-               param-Hint='(HintOptions)"For example, LS1 4AP"'
-               param-Width='10'
-               param-Autocomplete='"postal-code"'
-               param-Value='Model.Postcode'
-               param-ErrorMessage='Model.PostcodeError is null ? null : (ErrorMessageOptions)Model.PostcodeError' />
+        <component type="typeof(NhsukHeading)" render-mode="Static" param-Text='"Book an appointment"' param-Size='"l"' />
+        <p>This page is a Razor Page, not a Blazor component. It uses the same model as the Blazor example, with tag helpers bound by <code>asp-for</code>.</p>
 
-    @* The HTML helper works too, for teams that prefer it. *@
-    @(await Html.RenderComponentAsync<NhsukButton>(RenderMode.Static, new { Text = "Search" }))
-</form>
+        <nhsuk-input asp-for="Details.FullName" autocomplete="name" spellcheck="false" />
+        <nhsuk-input asp-for="Details.NhsNumber" hint="This is a 10 digit number, like 999 123 4567"
+                     width="10" inputmode="numeric" spellcheck="false" options="@(new InputOptions { Code = true })" />
+        <nhsuk-date-input asp-for="Details.DateOfBirth" hint="For example, 15 3 1984" />
+        <nhsuk-radios asp-for="Details.Contact" items="AppointmentRequest.ContactOptions!" />
+        <nhsuk-checkboxes asp-for="Details.Needs" items="AppointmentRequest.NeedOptions!" hint="Select all that apply" />
+        <nhsuk-character-count asp-for="Details.Notes" maxlength="200" />
+
+        <component type="typeof(NhsukButton)" render-mode="Static" param-Text='"Continue"' param-PreventDoubleClick="true" />
+    </form>
+}

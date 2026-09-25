@@ -50,6 +50,8 @@ jobs:
           build=$?
           dotnet run -c Release --no-build --project tools/NhsukFrontend.ParityCheck -- --verbose > parity.log 2>&1
           parity=$?
+          dotnet test NhsukFrontend.sln -c Release --no-build --logger "console;verbosity=minimal" > test.log 2>&1
+          echo "Test summary: $(grep -E 'Passed!|Failed!' test.log | tail -1)" >> parity.log
           {
             echo 'report<<EOF'
             echo "Build exit code: $build (non-zero usually means an option was renamed or removed upstream)"
@@ -59,12 +61,15 @@ jobs:
             echo '```'
             echo EOF
           } >> "$GITHUB_OUTPUT"
-          rm build.log parity.log
+          rm build.log parity.log test.log
 
       - name: Open pull request
         if: steps.versions.outputs.current != steps.versions.outputs.latest
         uses: peter-evans/create-pull-request@v6
         with:
+          # Pull requests opened with the default GITHUB_TOKEN do not trigger other workflows, so CI would
+          # not run on them. Add a fine-grained token as the UPSTREAM_PR_TOKEN secret to get full CI.
+          token: ${{ secrets.UPSTREAM_PR_TOKEN || github.token }}
           branch: upstream/nhsuk-frontend-${{ steps.versions.outputs.latest }}
           title: "Update nhsuk-frontend to ${{ steps.versions.outputs.latest }}"
           commit-message: "Update nhsuk-frontend to ${{ steps.versions.outputs.latest }}"

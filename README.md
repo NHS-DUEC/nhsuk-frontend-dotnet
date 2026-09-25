@@ -3,11 +3,13 @@
 Razor components that render the same HTML as the [NHS.UK frontend](https://github.com/nhsuk/nhsuk-frontend)
 Nunjucks macros. They are generated from, and tested against, a pinned upstream release (currently **10.6.0**).
 
-- 15 components and the page template are ported: back link, button, caption, error message, fieldset,
-  footer, header, heading, hint, input, inset text, label, legend, skip link, tag.
-- All **289** examples match upstream's HTML: 284 from upstream's own fixtures, plus 5 page template examples
+- 26 components and the page template are ported: back link, button, caption, card, character count,
+  checkboxes, date input, details, error message, error summary, fieldset, footer, header, heading, hint,
+  input, inset text, label, legend, radios, select, skip link, summary list, tag, textarea, warning callout.
+- All **567** examples match upstream's HTML: 562 from upstream's own fixtures, plus 5 page template examples
   rendered from `template.njk`.
-- The components work in Blazor (static server rendering) and in Razor Pages / MVC.
+- The components work in Blazor (static server rendering) and in Razor Pages / MVC, and form components bind
+  to a model: names, values, labels and validation errors come from the model, in both stacks.
 
 ## How it stays in step with upstream
 
@@ -41,8 +43,11 @@ src/NhsukFrontend.Components/     The Razor class library (the thing you'd publi
   wwwroot/                        Compiled CSS, JS and images from upstream (do not edit)
 src/NhsukFrontend.Parity/         Loads fixtures, renders components, normalises and diffs HTML
 src/NhsukFrontend.Demo/           Demo site for Heroku
-tools/NhsukFrontend.ParityCheck/  CLI: parity report, exits 1 on any mismatch
+  Forms/                          Model binding: NhsukField, NhsukDate, Blazor For, MVC tag helpers
+tests/NhsukFrontend.Tests/        xUnit: one test per upstream example, plus binding and validation tests
+tools/NhsukFrontend.ParityCheck/  CLI: parity report with HTML diffs, exits 1 on any mismatch
 tools/NhsukFrontend.SnippetCheck/ Compiles every Razor snippet shown on the demo site (CI only)
+tools/smoke-test.sh               Drives both example forms on a running site (CI runs it on the published build)
 ```
 
 ## Commands
@@ -54,8 +59,9 @@ cd upstream && npm ci && npm run sync
 # Check nothing is out of date (CI)
 cd upstream && npm run check
 
-# Build and run the parity check
+# Build and test
 dotnet build
+dotnet test
 dotnet run --project tools/NhsukFrontend.ParityCheck                     # summary
 dotnet run --project tools/NhsukFrontend.ParityCheck -- input button -v  # chosen components, with diffs
 
@@ -91,7 +97,55 @@ Page shell (Blazor): wrap pages in `<NhsukTemplate>`. Its parameters are the tem
 `RenderFragment` parameters are the template's blocks (`<PageTitle>`, `<Header>`, `<BeforeContent>`…).
 See `src/NhsukFrontend.Demo/Components/Layout/DemoPage.razor`.
 
-Razor Pages / MVC: use the `<component>` tag helper. See `src/NhsukFrontend.Demo/Pages/`.
+Razor Pages / MVC: any component works through the `<component>` tag helper. The form components also have
+tag helpers (next section). See `src/NhsukFrontend.Demo/Pages/`.
+
+## Forms: binding to a model
+
+Form components fill in their name, value, label (or legend) and error message from a model property.
+Anything you set explicitly still wins. Validation is ordinary DataAnnotations.
+
+```csharp
+public sealed class AppointmentRequest
+{
+    [Display(Name = "Full name")]
+    [Required(ErrorMessage = "Enter your full name")]
+    public string? FullName { get; set; }
+
+    [Display(Name = "Date of birth")]
+    [NhsukDate(RequiredMessage = "Enter your date of birth", MustBeInPast = true)]
+    public NhsukDate? DateOfBirth { get; set; } = new();
+
+    public List<string>? Needs { get; set; } = [];
+}
+```
+
+Blazor (static server rendering), inside an `EditForm` with a `DataAnnotationsValidator`:
+
+```razor
+<NhsukValidationSummary For="() => Model" />
+<NhsukInput For="() => Model!.FullName" Autocomplete="name" />
+<NhsukDateInput For="() => Model!.DateOfBirth" Hint="@("For example, 15 3 1984")" />
+<NhsukCheckboxes For="() => Model!.Needs" Items="needs" />
+```
+
+Razor Pages and MVC (add `@addTagHelper *, NhsukFrontend.Components` to `_ViewImports.cshtml`):
+
+```cshtml
+<nhsuk-error-summary />
+<nhsuk-input asp-for="Details.FullName" autocomplete="name" />
+<nhsuk-date-input asp-for="Details.DateOfBirth" hint="For example, 15 3 1984" />
+<nhsuk-checkboxes asp-for="Details.Needs" items="needs" />
+```
+
+Tag helpers: `nhsuk-input`, `nhsuk-textarea`, `nhsuk-character-count`, `nhsuk-select`, `nhsuk-radios`,
+`nhsuk-checkboxes`, `nhsuk-date-input`, `nhsuk-error-summary`. Common options are attributes; for anything else
+pass the full generated options object, for example `options="@(new InputOptions { Code = true })"`.
+
+`NhsukDate` keeps the day, month and year exactly as typed, so an invalid date is shown back unchanged, and
+`NhsukDateAttribute` gives the service manual's messages ("Date of birth must include a month"). When only one
+part is missing, only that part is highlighted. The error summary lists errors in the order the model declares
+its properties and links each to its field (the day input, for dates).
 
 ## Porting another component
 
@@ -99,29 +153,40 @@ Razor Pages / MVC: use the `<component>` tag helper. See `src/NhsukFrontend.Demo
 2. Write `src/NhsukFrontend.Components/Components/Nhsuk<Name>.razor`, porting `template.njk` line by line.
    Use `Attrs` for anything upstream builds with `nhsukAttributes`, and the `Nj` helpers for Nunjucks truthiness.
 3. Run the parity check for that component with `-v` until every fixture matches.
+4. Upstream's `macro-options.json` is occasionally incomplete. `port.config.json` can override an option's type
+   (`type`), accept a plain string (`shorthand`), tell `false` apart from a missing value (`keepFalse`), or declare
+   options the template reads but the file omits (`additionalOptions`). Options with an upstream `alias` (like date
+   input items, which accept every input option) pick up the aliased component's options automatically.
 
 ## Deploying the demo to Heroku
 
 The official .NET buildpack builds the root `NhsukFrontend.sln`. The `Procfile` starts the demo project,
-because the solution contains more than one project.
+because the solution contains more than one project. The test project is marked not publishable.
 
 ```sh
-heroku create my-nhsuk-dotnet-demo --buildpack heroku/dotnet
+heroku create my-nhsuk-dotnet-demo --team your-team --buildpack heroku/dotnet
 git push heroku main
 ```
 
 For a preview site per pull request, create a Heroku Pipeline connected to the GitHub repository and turn on
 Review Apps; `app.json` configures them. Upstream-upgrade pull requests then get their own demo site automatically.
 
+## GitHub setup
+
+- Settings → Actions → General: allow GitHub Actions to create and approve pull requests (for the upgrade workflow).
+- Pull requests opened with the default token don't trigger other workflows, so CI won't run on upgrade PRs
+  until you add a fine-grained personal access token (contents and pull requests: read and write) as the
+  `UPSTREAM_PR_TOKEN` repository secret. The upgrade PR body includes its own parity and test report either way.
+
 ## Known limitations of the proof of concept
 
-- 28 upstream components are not ported yet; see the demo home page for the list.
-- Parity is checked by a console tool, not xUnit, because the sandbox this was built in could not reach NuGet.
-  Wrapping `ParityRunner` in an xUnit theory is straightforward.
-- There is no tag-helper layer yet. MVC apps use the `<component>` tag helper, which works but is verbose.
+- 17 upstream components are not ported yet; see the demo home page for the list.
+- A summary list inside a card is supported; summary list `html`/`caller` content is not (upstream doesn't declare it).
+- Blazor binding covers static server rendering with `EditForm`. It should work with interactive render modes
+  but hasn't been tested there.
 - An `attributes` option that repeats an attribute the component already sets (such as `class`) renders once in
   Razor (last value wins) but twice in Nunjucks (the browser uses the first). No upstream fixture does this.
-- The `upstream-release` workflow and Heroku deployment are written to the documented behaviour but have not
-  been run for real yet.
+- The xUnit project and GitHub workflows were written where NuGet and GitHub were unreachable: the tests were
+  compiled and run against a stand-in for xUnit, and their first real run will be in CI.
 
 See `THIRD-PARTY-NOTICES.md` for upstream licensing, and the NHS identity guidelines for use of the NHS logo.

@@ -1,0 +1,120 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/checkboxes/template.njk *@
+<div class="@_formGroupClasses" @attributes="new Attrs().AddUser(FormGroup?.Attributes)">
+    @if (Fieldset is not null)
+    {
+        <NhsukFieldset Legend="@Fieldset.Legend" Id="@Fieldset.Id" Role="@Fieldset.Role" DescribedBy="@_describedBy"
+                       Classes="@Fieldset.Classes" Attributes="@Fieldset.Attributes">@Inner</NhsukFieldset>
+    }
+    else
+    {
+        @Inner
+    }
+</div>
+
+@code {
+    private string _idPrefix = "", _formGroupClasses = "", _classNames = "", _describedBy = "";
+    private string? _hintId, _errorId;
+    private bool _hasHint, _hasError;
+
+    protected override void OnParametersSet()
+    {
+        var classNames = "nhsuk-checkboxes";
+        if (Small == true && !Contains(Classes, "nhsuk-checkboxes--small")) classNames += " nhsuk-checkboxes--small";
+        if (Inline == true && !Contains(Classes, "nhsuk-checkboxes--inline")) classNames += " nhsuk-checkboxes--inline";
+        _classNames = Append(classNames, Classes);
+
+        _hasError = Truthy(ErrorMessage?.Text) || Truthy(ErrorMessage?.Html);
+        _formGroupClasses = Append("nhsuk-form-group" + (_hasError || ErrorMessage?.IsTrue == true ? " nhsuk-form-group--error" : ""), FormGroup?.Classes);
+
+        _idPrefix = Truthy(IdPrefix) ? IdPrefix! : Name ?? "";
+        _describedBy = Truthy(Fieldset?.DescribedBy) ? Fieldset!.DescribedBy! : Truthy(DescribedBy) ? DescribedBy! : "";
+        _hasHint = Truthy(Hint?.Text) || Truthy(Hint?.Html);
+        if (_hasHint)
+        {
+            _hintId = Hint!.Id ?? _idPrefix + "-hint";
+            _describedBy = (_describedBy + " " + _hintId).Trim();
+        }
+        if (_hasError)
+        {
+            _errorId = ErrorMessage!.Id ?? _idPrefix + "-error";
+            _describedBy = (_describedBy + " " + _errorId).Trim();
+        }
+    }
+
+    private RenderFragment Inner => @<text>
+        @if (_hasHint)
+        {
+            <NhsukHint Html="@Hint!.Html" Text="@Hint.Text" Id="@_hintId" Classes="@Hint.Classes" Attributes="@Hint.Attributes" />
+        }
+        @if (_hasError)
+        {
+            <NhsukErrorMessage Html="@ErrorMessage!.Html" Text="@ErrorMessage.Text" VisuallyHiddenText="@ErrorMessage.VisuallyHiddenText"
+                               Id="@_errorId" Classes="@ErrorMessage.Classes" Attributes="@ErrorMessage.Attributes" />
+        }
+        <div @attributes="CheckboxesAttributes">
+            @if (FormGroup?.BeforeInputs is { } before) { @Render.HtmlOrText(before.Html, before.Text) }
+            @for (var i = 0; i < (Items?.Count ?? 0); i++)
+            {
+                if (Items![i] is { } item) { @Item(item, i + 1) }
+            }
+            @if (FormGroup?.AfterInputs is { } after) { @Render.HtmlOrText(after.Html, after.Text) }
+        </div>
+    </text>;
+
+    private Attrs CheckboxesAttributes => new Attrs()
+        .Add("class", _classNames)
+        .Optional("id", Id)
+        .Add("data-module", "nhsuk-checkboxes")
+        .AddUser(Attributes, AdditionalAttributes);
+
+    private RenderFragment Item(CheckboxesItemsItem item, int index)
+    {
+        var itemId = Truthy(item.Id) ? item.Id! : _idPrefix + (index > 1 ? "-" + index : "");
+        var conditionalId = "conditional-" + itemId;
+        var notSupportedHidden = item.Behaviour == "inclusive" ? " nhsuk-u-frontend-not-supported-hidden" : "";
+        if (Truthy(item.Divider))
+            return @<div class="@("nhsuk-checkboxes__divider" + notSupportedHidden)">@item.Divider</div>;
+
+        var isChecked = item.Checked == true || (Values is not null && item.Checked != false && Values.Contains(item.Value ?? ""));
+        var hasHint = Truthy(item.Hint?.Text) || Truthy(item.Hint?.Html);
+        var hintId = hasHint ? item.Hint!.Id ?? itemId + "-item-hint" : "";
+        var itemDescribedBy = ((Fieldset is null ? _describedBy : "") + " " + hintId).Trim();
+        var hasConditional = Truthy(item.Conditional?.Html);
+#pragma warning disable CS0618 // item.exclusive and item.exclusiveGroup are deprecated, still supported upstream
+        var behaviour = item.Exclusive == true ? "exclusive" : item.Behaviour;
+        var behaviourGroup = item.ExclusiveGroup ?? item.BehaviourGroup;
+#pragma warning restore CS0618
+
+        var input = new Attrs()
+            .Add("class", Append("nhsuk-checkboxes__input", item.Classes))
+            .Add("id", itemId)
+            .Add("name", Truthy(item.Name) ? item.Name : Name)
+            .Add("type", "checkbox")
+            .Add("value", item.Value)
+            .Optional("checked", isChecked)
+            .Optional("disabled", item.Disabled == true || (item.Disabled != false && Disabled == true))
+            .Optional("data-behaviour", Truthy(behaviour) ? behaviour : null)
+            .Optional("data-behaviour-group", Truthy(behaviourGroup) ? behaviourGroup : null)
+            .Optional("data-aria-controls", hasConditional ? conditionalId : null)
+            .Optional("aria-describedby", Truthy(itemDescribedBy) ? itemDescribedBy : null)
+            .AddUser(item.Attributes);
+
+        return @<text>
+            <div class="@("nhsuk-checkboxes__item" + notSupportedHidden)">
+                <input @attributes="input">
+                <NhsukLabel Html="@(item.Label?.Html ?? item.Html)" Text="@(item.Label?.Text ?? item.Text)" Id="@item.Label?.Id" For="@itemId"
+                            Classes="@Append("nhsuk-checkboxes__label", item.Label?.Classes)" Attributes="@item.Label?.Attributes" />
+                @if (hasHint)
+                {
+                    <NhsukHint Html="@item.Hint!.Html" Text="@item.Hint.Text" Id="@hintId"
+                               Classes="@Append("nhsuk-checkboxes__hint", item.Hint.Classes)" Attributes="@item.Hint.Attributes" />
+                }
+            </div>
+            @if (hasConditional)
+            {
+                <div class="@("nhsuk-checkboxes__conditional" + (isChecked ? "" : " nhsuk-checkboxes__conditional--hidden"))" id="@conditionalId">@((MarkupString)item.Conditional!.Html!.Trim())</div>
+            }
+        </text>;
+    }
+}

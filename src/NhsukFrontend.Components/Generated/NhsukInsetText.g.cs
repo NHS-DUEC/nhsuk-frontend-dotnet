@@ -78,6 +78,6 @@ public sealed partial class InsetTextOptions : NhsukOptions, IShorthandOptions<I
     public static implicit operator InsetTextOptions(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static InsetTextOptions FromShorthand(string value) => new() { Text = value };
+    public static InsetTextOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator InsetTextOptions(string value) => FromShorthand(value);
 }

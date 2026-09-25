@@ -4,7 +4,13 @@
     "back-link",
     "button",
     "caption",
+    "card",
+    "character-count",
+    "checkboxes",
+    "date-input",
+    "details",
     "error-message",
+    "error-summary",
     "fieldset",
     "footer",
     "header",
@@ -14,8 +20,13 @@
     "inset-text",
     "label",
     "legend",
+    "radios",
+    "select",
     "skip-link",
-    "tag"
+    "summary-list",
+    "tag",
+    "textarea",
+    "warning-callout"
   ],
   "overrides": {
     "$comment": "Where an upstream template accepts more than its macro-options.json declares. Keyed by component/option/path.",
@@ -27,6 +38,65 @@
     },
     "footer/navigation": {
       "list": true
+    },
+    "date-input/day": {
+      "type": "DateInputItemsItem",
+      "keepFalse": true
+    },
+    "date-input/month": {
+      "type": "DateInputItemsItem",
+      "keepFalse": true
+    },
+    "date-input/year": {
+      "type": "DateInputItemsItem",
+      "keepFalse": true
     }
+  },
+  "additionalOptions": {
+    "$comment": "Options an upstream template reads but its macro-options.json does not declare.",
+    "character-count": [
+      {
+        "name": "charactersUnderLimitText",
+        "type": "object",
+        "required": false,
+        "description": "Message shown when under the character limit, by plural rule (for example `one`, `other`). `%{count}` is replaced with the number remaining.",
+        "released": "an undeclared option"
+      },
+      {
+        "name": "charactersAtLimitText",
+        "type": "string",
+        "required": false,
+        "description": "Message shown when at the character limit.",
+        "released": "an undeclared option"
+      },
+      {
+        "name": "charactersOverLimitText",
+        "type": "object",
+        "required": false,
+        "description": "Message shown when over the character limit, by plural rule. `%{count}` is replaced with the number over.",
+        "released": "an undeclared option"
+      },
+      {
+        "name": "wordsUnderLimitText",
+        "type": "object",
+        "required": false,
+        "description": "Message shown when under the word limit, by plural rule.",
+        "released": "an undeclared option"
+      },
+      {
+        "name": "wordsAtLimitText",
+        "type": "string",
+        "required": false,
+        "description": "Message shown when at the word limit.",
+        "released": "an undeclared option"
+      },
+      {
+        "name": "wordsOverLimitText",
+        "type": "object",
+        "required": false,
+        "description": "Message shown when over the word limit, by plural rule.",
+        "released": "an undeclared option"
+      }
+    ]
   }
 }

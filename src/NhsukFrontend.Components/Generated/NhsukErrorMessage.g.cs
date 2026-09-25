@@ -78,6 +78,6 @@ public sealed partial class ErrorMessageOptions : NhsukOptions, IShorthandOption
     public static implicit operator ErrorMessageOptions(bool value) => value ? new() { IsTrue = true } : null!;
 
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static ErrorMessageOptions FromShorthand(string value) => new() { Text = value };
+    public static ErrorMessageOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator ErrorMessageOptions(string value) => FromShorthand(value);
 }
