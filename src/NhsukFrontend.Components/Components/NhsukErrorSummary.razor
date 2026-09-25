@@ -41,11 +41,9 @@
 
     protected override void OnParametersSet()
     {
-#pragma warning disable CS0618 // deprecated titleText / titleHtml / descriptionText / descriptionHtml
         // An object replaces the deprecated options; a plain string only replaces the text.
         _heading = Heading is { IsShorthand: false } ? Heading : new ErrorSummaryHeadingOptions { Text = Heading?.Text ?? TitleText, Html = TitleHtml };
         _description = Description is { IsShorthand: false } ? Description : new ErrorSummaryDescriptionOptions { Text = Description?.Text ?? DescriptionText, Html = DescriptionHtml };
-#pragma warning restore CS0618
     }
 
     private Attrs SummaryAttributes => new Attrs()

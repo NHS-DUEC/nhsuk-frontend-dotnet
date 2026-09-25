@@ -51,7 +51,6 @@
 
     protected override void OnParametersSet()
     {
-#pragma warning disable CS0618 // deprecated card options are still supported upstream
         _variant = Truthy(Variant) ? Variant : Type;
 
         // A heading object replaces the deprecated heading* options; a heading string does not.
@@ -84,7 +83,6 @@
 
         if (Truthy(ImgURL) || Truthy(ImgALT)) (_imageSrc, _imageAlt, _imageHtml) = (ImgURL, ImgALT, null);
         else (_imageSrc, _imageAlt, _imageHtml) = (Image?.Src, Image?.Alt, Image?.Html);
-#pragma warning restore CS0618
     }
 
     private Attrs CardAttributes => new Attrs().Add("class", _classNames).Optional("id", Id).AddUser(Attributes, AdditionalAttributes);

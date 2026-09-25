@@ -2,7 +2,6 @@
 @* Port of nhsuk/components/summary-list/template.njk and summary-list/row/template.njk *@
 @if (Card is not null)
 {
-#pragma warning disable CS0618 // pass deprecated card options through unchanged
     <NhsukCard Id="@Card.Id" Heading="@Card.Heading" HeadingHtml="@Card.HeadingHtml" HeadingClasses="@Card.HeadingClasses"
                HeadingSize="@Card.HeadingSize" HeadingLevel="@Card.HeadingLevel" HeadingId="@Card.HeadingId"
                HeadingVisuallyHiddenText="@Card.HeadingVisuallyHiddenText" Href="@Card.Href" Clickable="@Card.Clickable"
@@ -10,7 +9,6 @@
                Secondary="@Card.Secondary" Warning="@Card.Warning" ImgURL="@Card.ImgURL" ImgALT="@Card.ImgALT"
                Image="@Card.Image" Description="@Card.Description" DescriptionHtml="@Card.DescriptionHtml"
                Actions="@Card.Actions" Classes="@Card.Classes" Attributes="@Card.Attributes">@ListElement</NhsukCard>
-#pragma warning restore CS0618
 }
 else
 {

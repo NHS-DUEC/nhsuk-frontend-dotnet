@@ -12,10 +12,8 @@
 
     protected override void OnParametersSet()
     {
-#pragma warning disable CS0618 // deprecated summaryText / summaryHtml still supported upstream
         // A summary object replaces summaryText / summaryHtml; a summary string only replaces the text.
         _summary = Summary is { IsShorthand: false } ? Summary : new DetailsSummaryOptions { Text = Summary?.Text ?? SummaryText, Html = SummaryHtml };
-#pragma warning restore CS0618
     }
 
     private Attrs DetailsAttributes

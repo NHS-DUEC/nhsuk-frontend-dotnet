@@ -81,10 +81,8 @@
         var hintId = hasHint ? item.Hint!.Id ?? itemId + "-item-hint" : "";
         var itemDescribedBy = ((Fieldset is null ? _describedBy : "") + " " + hintId).Trim();
         var hasConditional = Truthy(item.Conditional?.Html);
-#pragma warning disable CS0618 // item.exclusive and item.exclusiveGroup are deprecated, still supported upstream
         var behaviour = item.Exclusive == true ? "exclusive" : item.Behaviour;
         var behaviourGroup = item.ExclusiveGroup ?? item.BehaviourGroup;
-#pragma warning restore CS0618
 
         var input = new Attrs()
             .Add("class", Append("nhsuk-checkboxes__input", item.Classes))
