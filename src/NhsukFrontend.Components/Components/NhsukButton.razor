@@ -40,7 +40,7 @@ else
             var classNames = "nhsuk-button";
             if (Variant is not null && Variants.Contains(Variant) && !Variants.Any(v => Contains(Classes, "nhsuk-button--" + v)))
                 classNames += " nhsuk-button--" + Variant;
-            if (Icon is not null && !Contains(Classes, "nhsuk-button--icon"))
+            if (Icon is not null && !Icon.IsFalse && !Contains(Classes, "nhsuk-button--icon"))
                 classNames += " nhsuk-button--icon";
             if (Small == true && !Contains(Classes, "nhsuk-button--small"))
                 classNames += " nhsuk-button--small";

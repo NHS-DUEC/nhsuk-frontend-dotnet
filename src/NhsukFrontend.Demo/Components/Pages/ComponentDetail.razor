@@ -65,8 +65,15 @@ else
                     </div>
                 }
 
+                @if (Snippets.TagHelper(_parity.ComponentType!, result.Fixture) is { } tagHelper)
+                {
+                    <details class="nhsuk-details">
+                        <summary class="nhsuk-details__summary"><span class="nhsuk-details__summary-text">Razor Pages and MVC</span></summary>
+                        <div class="nhsuk-details__text"><pre class="app-code"><code>@tagHelper</code></pre></div>
+                    </details>
+                }
                 <details class="nhsuk-details">
-                    <summary class="nhsuk-details__summary"><span class="nhsuk-details__summary-text">Razor</span></summary>
+                    <summary class="nhsuk-details__summary"><span class="nhsuk-details__summary-text">Blazor</span></summary>
                     <div class="nhsuk-details__text"><pre class="app-code"><code>@Snippets.Razor(_parity.ComponentType!, result.Fixture)</code></pre></div>
                 </details>
                 <details class="nhsuk-details">

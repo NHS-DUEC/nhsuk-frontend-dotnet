@@ -1,30 +1,47 @@
 {
   "$comment": "Components listed here get generated parameters, copied fixtures and parity checks. Add a component here, run `npm run sync`, then write its .razor markup.",
   "components": [
+    "action-link",
     "back-link",
+    "breadcrumb",
     "button",
     "caption",
     "card",
     "character-count",
     "checkboxes",
+    "code",
+    "contents-list",
     "date-input",
     "details",
+    "do-dont-list",
     "error-message",
     "error-summary",
     "fieldset",
+    "file-upload",
     "footer",
     "header",
     "heading",
+    "hero",
     "hint",
+    "images",
     "input",
     "inset-text",
     "label",
     "legend",
+    "notification-banner",
+    "pagination",
+    "panel",
+    "password-input",
     "radios",
+    "scroll",
+    "search-input",
     "select",
     "skip-link",
     "summary-list",
+    "tables",
+    "tabs",
     "tag",
+    "task-list",
     "textarea",
     "warning-callout"
   ],
@@ -34,7 +51,8 @@
       "shorthand": "name",
       "shorthandDefaults": {
         "placement": "start"
-      }
+      },
+      "keepFalse": true
     },
     "footer/navigation": {
       "list": true
@@ -50,6 +68,37 @@
     "date-input/year": {
       "type": "DateInputItemsItem",
       "keepFalse": true
+    },
+    "tables/rows": {
+      "list": true
+    },
+    "code/button": {
+      "type": "ButtonOptions"
+    },
+    "password-input/button": {
+      "type": "ButtonOptions"
+    },
+    "search-input/button": {
+      "type": "ButtonOptions",
+      "keepFalse": true
+    },
+    "password-input/prefix": {
+      "type": "InputPrefixOptions"
+    },
+    "password-input/suffix": {
+      "type": "InputSuffixOptions"
+    },
+    "hero/content": {
+      "list": true
+    },
+    "hero/content/image": {
+      "type": "ImagesOptions"
+    },
+    "task-list/items/title": {
+      "type": "TaskListItemsHeadingOptions"
+    },
+    "contents-list/items/items": {
+      "type": "List<ContentsListItemsItem?>"
     }
   },
   "additionalOptions": {
@@ -97,6 +146,100 @@
         "description": "Message shown when over the word limit, by plural rule.",
         "released": "an undeclared option"
       }
+    ],
+    "password-input": [
+      {
+        "name": "prefix",
+        "type": "object",
+        "required": false,
+        "description": "Options for the prefix element, as for the input component.",
+        "released": "an undeclared option"
+      },
+      {
+        "name": "suffix",
+        "type": "object",
+        "required": false,
+        "description": "Options for the suffix element, as for the input component.",
+        "released": "an undeclared option"
+      }
+    ],
+    "search-input": [
+      {
+        "name": "placeholder",
+        "type": "string",
+        "required": false,
+        "description": "Placeholder text for the search input.",
+        "released": "an undeclared option"
+      }
+    ],
+    "scroll": [
+      {
+        "name": "labelledBy",
+        "type": "string",
+        "required": false,
+        "description": "The id of the element that labels the scrollable region, for example a table caption.",
+        "released": "an undeclared option"
+      }
+    ],
+    "tabs": [
+      {
+        "name": "classes",
+        "type": "string",
+        "required": false,
+        "description": "Classes to add to the tabs container.",
+        "released": "an undeclared option"
+      },
+      {
+        "name": "attributes",
+        "type": "object",
+        "required": false,
+        "description": "HTML attributes (for example data attributes) to add to the tabs container.",
+        "released": "an undeclared option"
+      }
+    ],
+    "contents-list/items": [
+      {
+        "name": "items",
+        "type": "array",
+        "required": false,
+        "description": "Nested contents list items.",
+        "released": "an undeclared option"
+      }
+    ],
+    "pagination/items": [
+      {
+        "name": "classes",
+        "type": "string",
+        "required": false,
+        "description": "Classes to add to the list item.",
+        "released": "an undeclared option"
+      }
+    ],
+    "code": [
+      {
+        "name": "caller",
+        "type": "nunjucks-block",
+        "required": false,
+        "description": "Code to show, as child content. Whitespace is kept.",
+        "released": "an undeclared option"
+      }
+    ]
+  },
+  "bindable": [
+    "character-count",
+    "checkboxes",
+    "date-input",
+    "input",
+    "radios",
+    "select",
+    "textarea"
+  ],
+  "tagAliases": {
+    "tables": [
+      "table"
+    ],
+    "images": [
+      "image"
     ]
   }
 }

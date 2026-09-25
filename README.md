@@ -3,11 +3,9 @@
 Razor components that render the same HTML as the [NHS.UK frontend](https://github.com/nhsuk/nhsuk-frontend)
 Nunjucks macros. They are generated from, and tested against, a pinned upstream release (currently **10.6.0**).
 
-- 26 components and the page template are ported: back link, button, caption, card, character count,
-  checkboxes, date input, details, error message, error summary, fieldset, footer, header, heading, hint,
-  input, inset text, label, legend, radios, select, skip link, summary list, tag, textarea, warning callout.
-- All **567** examples match upstream's HTML: 562 from upstream's own fixtures, plus 5 page template examples
-  rendered from `template.njk`.
+- **All 43 components** in nhsuk-frontend and the page template are ported.
+- All **864** examples match upstream's HTML: 859 from upstream's own fixtures, plus 5 page template examples
+  rendered from `template.njk`. Upstream's JavaScript runs unchanged against the output.
 - The components work in Blazor (static server rendering) and in Razor Pages / MVC, and form components bind
   to a model: names, values, labels and validation errors come from the model, in both stacks.
 
@@ -71,20 +69,8 @@ dotnet run --project src/NhsukFrontend.Demo
 
 ## Using the components
 
-```razor
-<NhsukInput Name="NhsNumber"
-            Label="@("NHS number")"
-            Hint="@("This is a 10 digit number, like 999 123 4567")"
-            Width="10" Inputmode="numeric" Code="true"
-            ErrorMessage="@error" />
-
-<NhsukButton Text="Continue" PreventDoubleClick="true" />
-```
-
-Parameters mirror the Nunjucks options one to one (`isPageHeading` becomes `IsPageHeading`), so the
-[design system documentation](https://service-manual.nhs.uk/design-system) applies directly.
-Nunjucks `{% call %}` content becomes child content. Where upstream accepts a string instead of an object
-(`label: "Name"`), the option classes convert implicitly from `string`.
+Every component works in **Razor Pages and MVC** as a tag helper, and in **Blazor** as a Razor component. Both
+render the same HTML, and both are tested against every upstream example.
 
 In `Program.cs`:
 
@@ -93,12 +79,59 @@ app.UseNhsukFrontendAssets(); // serves images at /assets, where the compiled CS
 app.UseStaticFiles();
 ```
 
-Page shell (Blazor): wrap pages in `<NhsukTemplate>`. Its parameters are the template's variables, and its
-`RenderFragment` parameters are the template's blocks (`<PageTitle>`, `<Header>`, `<BeforeContent>`…).
-See `src/NhsukFrontend.Demo/Components/Layout/DemoPage.razor`.
+### Razor Pages and MVC
 
-Razor Pages / MVC: any component works through the `<component>` tag helper. The form components also have
-tag helpers (next section). See `src/NhsukFrontend.Demo/Pages/`.
+In `_ViewImports.cshtml`:
+
+```cshtml
+@addTagHelper *, NhsukFrontend.Components
+@using NhsukFrontend.Components
+```
+
+Each component is a tag named after it, with an attribute for each Nunjucks option (`isPageHeading` becomes
+`is-page-heading`), so the [design system documentation](https://service-manual.nhs.uk/design-system) applies directly:
+
+```cshtml
+<nhsuk-panel heading="Application complete" text="Your reference number is HDJ2123F" />
+
+<nhsuk-input name="nhs-number" label="NHS number" hint="This is a 10 digit number, like 999 123 4567"
+             width="10" inputmode="numeric" code="true" />
+
+<nhsuk-inset-text>
+    <p>Tag content becomes the component's content, like a Nunjucks call block.</p>
+</nhsuk-inset-text>
+
+<nhsuk-button text="Continue" prevent-double-click="true" data-tracking="continue" />
+```
+
+- Where upstream accepts either text or an object (`label`, `hint`, `heading`…), there are two attributes: `label`
+  for plain text, and `label-options="@(new LabelOptions { Text = "Name", IsPageHeading = true })"` for everything else.
+- Lists and objects are C# expressions: `rows="@Model.Rows"`, `items="@Model.ContactOptions"`.
+- Any other HTML attribute on the tag (`data-*`, `aria-*`, `required`…) is passed to the component's main element.
+- `options="@(new PanelOptions { … })"` passes a whole options object built in C#; attributes on the tag win over it.
+  Deprecated upstream options are only available this way.
+- The page template is a layout in MVC: see `src/NhsukFrontend.Demo/Pages/Shared/_NhsukLayout.cshtml`.
+
+The demo site shows every upstream example as a tag helper, a Blazor component and the original Nunjucks, and CI
+compiles all of them. The tag helpers are generated from upstream's `macro-options.json`, like the C# option classes,
+so upstream releases update them too.
+
+Each tag helper renders its Razor component, sharing one renderer per request. Measured with
+`dotnet run -c Release --project tools/NhsukFrontend.ParityCheck -- --benchmark`, that adds roughly 15–20 microseconds
+per tag compared with rendering the components directly: about 0.35 ms for a form page with 20 fields, and about
+0.3 ms on a 3 ms, 200-row table.
+
+### Blazor
+
+```razor
+<NhsukPanel Heading="@("Application complete")" Text="Your reference number is HDJ2123F" />
+<NhsukInsetText><p>Child content, like a Nunjucks call block.</p></NhsukInsetText>
+```
+
+Parameters mirror the Nunjucks options (`isPageHeading` becomes `IsPageHeading`); call blocks become child content.
+Wrap pages in `<NhsukTemplate>`, whose `RenderFragment` parameters are the template's blocks (`<Header>`,
+`<BeforeContent>`…); see `src/NhsukFrontend.Demo/Components/Layout/DemoPage.razor`. Blazor support is tested with
+static server rendering; interactive render modes are untested.
 
 ## Forms: binding to a model
 
@@ -120,6 +153,15 @@ public sealed class AppointmentRequest
 }
 ```
 
+Razor Pages and MVC:
+
+```cshtml
+<nhsuk-error-summary />
+<nhsuk-input asp-for="Details.FullName" autocomplete="name" />
+<nhsuk-date-input asp-for="Details.DateOfBirth" hint="For example, 15 3 1984" />
+<nhsuk-checkboxes asp-for="Details.Needs" items="needs" />
+```
+
 Blazor (static server rendering), inside an `EditForm` with a `DataAnnotationsValidator`:
 
 ```razor
@@ -129,18 +171,9 @@ Blazor (static server rendering), inside an `EditForm` with a `DataAnnotationsVa
 <NhsukCheckboxes For="() => Model!.Needs" Items="needs" />
 ```
 
-Razor Pages and MVC (add `@addTagHelper *, NhsukFrontend.Components` to `_ViewImports.cshtml`):
-
-```cshtml
-<nhsuk-error-summary />
-<nhsuk-input asp-for="Details.FullName" autocomplete="name" />
-<nhsuk-date-input asp-for="Details.DateOfBirth" hint="For example, 15 3 1984" />
-<nhsuk-checkboxes asp-for="Details.Needs" items="needs" />
-```
-
-Tag helpers: `nhsuk-input`, `nhsuk-textarea`, `nhsuk-character-count`, `nhsuk-select`, `nhsuk-radios`,
-`nhsuk-checkboxes`, `nhsuk-date-input`, `nhsuk-error-summary`. Common options are attributes; for anything else
-pass the full generated options object, for example `options="@(new InputOptions { Code = true })"`.
+`asp-for` works on `nhsuk-input`, `nhsuk-textarea`, `nhsuk-character-count`, `nhsuk-select`, `nhsuk-radios`,
+`nhsuk-checkboxes` and `nhsuk-date-input`; the last three also take a plain-text `legend`. An `<nhsuk-error-summary />`
+with no error list, description or content lists every ModelState error and renders nothing when the model is valid.
 
 `NhsukDate` keeps the day, month and year exactly as typed, so an invalid date is shown back unchanged, and
 `NhsukDateAttribute` gives the service manual's messages ("Date of birth must include a month"). When only one
@@ -154,9 +187,24 @@ its properties and links each to its field (the day input, for dates).
    Use `Attrs` for anything upstream builds with `nhsukAttributes`, and the `Nj` helpers for Nunjucks truthiness.
 3. Run the parity check for that component with `-v` until every fixture matches.
 4. Upstream's `macro-options.json` is occasionally incomplete. `port.config.json` can override an option's type
-   (`type`), accept a plain string (`shorthand`), tell `false` apart from a missing value (`keepFalse`), or declare
-   options the template reads but the file omits (`additionalOptions`). Options with an upstream `alias` (like date
-   input items, which accept every input option) pick up the aliased component's options automatically.
+   (`type`, for example `tables.rows` is a list of rows of cells), accept a plain string (`shorthand`), tell `false`
+   apart from a missing value (`keepFalse`, for example date input `year: false` or button `icon: false`), or declare
+   options the template reads but the file omits (`additionalOptions`, top level or at a nested path such as
+   `contents-list/items`). Options with an upstream `alias` (like date input items, which accept every input option)
+   pick up the aliased component's options automatically. `upstream/UPSTREAM-NOTES.md` lists every such gap found
+   so far, to report upstream so the overrides can be deleted over time.
+
+## Differences from the Nunjucks macros
+
+The HTML is the same; a few things are expressed differently in C#:
+
+- **`false` versus missing.** Where upstream treats `false` as "leave this out" (date input `day`/`month`/`year`,
+  button `icon`, search input `button`), pass an options object with `IsFalse = true`, for example
+  `Year="@(new DateInputItemsItem { IsFalse = true })"`. Everywhere else `null` and `false` mean the same.
+- **Marked-safe HTML.** Nunjucks can mark a string as already-safe HTML. C# strings can't carry that flag, so `html`
+  options are always treated as markup, except the code component's `html`, which upstream escapes unless it is
+  marked safe; there, `Html` is shown as text and markup goes in child content.
+- **`caller` blocks** are child content (`ChildContent`).
 
 ## Deploying the demo to Heroku
 
@@ -180,7 +228,6 @@ Review Apps; `app.json` configures them. Upstream-upgrade pull requests then get
 
 ## Known limitations of the proof of concept
 
-- 17 upstream components are not ported yet; see the demo home page for the list.
 - A summary list inside a card is supported; summary list `html`/`caller` content is not (upstream doesn't declare it).
 - Blazor binding covers static server rendering with `EditForm`. It should work with interactive render modes
   but hasn't been tested there.

@@ -1,0 +1,78 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/hero/template.njk *@
+<section @attributes="SectionAttributes">
+    @if (_rows.Count > 0)
+    {
+        <div class="@Append("nhsuk-width-container", ContainerClasses)">
+            @for (var i = 0; i < _rows.Count; i += 2)
+            {
+                <div class="nhsuk-grid-row">
+                    @foreach (var content in _rows.Skip(i).Take(2))
+                    {
+                        <div class="@("nhsuk-grid-column-" + DefaultIfFalsy(content.Width, "one-half"))">
+                            <div class="@Append("nhsuk-hero__content", content.Classes)">
+                                @if (Truthy(_backgroundSrc) && _rows.Count == 1) { <span class="nhsuk-hero__arrow" aria-hidden="true"></span> }
+                                @if (content.Heading is { } h && (Truthy(h.Text) || Truthy(h.Html)))
+                                {
+                                    <NhsukHeading Id="@h.Id" Text="@h.Text" Html="@h.Html" VisuallyHiddenText="@h.VisuallyHiddenText" Caption="@h.Caption"
+                                                  Href="@h.Href" Size="@(h.Size ?? "xl")" Level="@h.Level" Classes="@Append("nhsuk-hero__heading", h.Classes)"
+                                                  Attributes="@h.Attributes" />
+                                }
+                                @if (content.Fragment is not null) { @content.Fragment }
+                                else if (Truthy(content.Html)) { @((MarkupString)content.Html!.Trim()) }
+                                else if (Truthy(content.Text)) { <p class="nhsuk-body-l">@content.Text!.Trim()</p> }
+                                @if (content.Image is { } image)
+                                {
+                                    <NhsukImages Id="@image.Id" Src="@image.Src" Srcset="@image.Srcset" Sizes="@image.Sizes" Alt="@image.Alt" Html="@image.Html"
+                                                 Caption="@image.Caption" Background="@image.Background" Border="@image.Border" Width="@image.Width"
+                                                 Classes="@image.Classes" Attributes="@image.Attributes" />
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    }
+    @if (Truthy(_backgroundSrc)) { <div class="nhsuk-hero__overlay"></div> }
+</section>
+
+@code {
+    private sealed record Row(HeroContentHeadingOptions? Heading, string? Text, string? Html, RenderFragment? Fragment, ImagesOptions? Image, string? Width, string? Classes);
+
+    private List<Row> _rows = [];
+    private string? _backgroundSrc;
+
+    protected override void OnParametersSet()
+    {
+        _backgroundSrc = Truthy(ImageURL) ? ImageURL : Image?.Src;
+        _rows = (Content ?? []).Where(c => c is not null)
+            .Select(c => new Row(c!.Heading, c.Text, c.Html, null, c.Image, c.Width, c.Classes)).ToList();
+
+        if (ChildContent is not null || Heading is not null || Truthy(Text) || Truthy(Html))
+        {
+            // A heading object replaces headingSize / headingLevel / headingClasses; a heading string does not.
+            var heading = Heading is { IsShorthand: false } h
+                ? new HeroContentHeadingOptions
+                {
+                    Id = h.Id, Text = h.Text, Html = h.Html, VisuallyHiddenText = h.VisuallyHiddenText, Href = h.Href,
+                    Caption = h.Caption, Size = h.Size, Level = h.Level, Classes = h.Classes, Attributes = h.Attributes,
+                }
+                : new HeroContentHeadingOptions { Text = Heading?.Text, Size = HeadingSize, Level = HeadingLevel, Classes = HeadingClasses };
+            _rows.Insert(0, new Row(heading, Text, Html, ChildContent, null, Default(Width, "two-thirds"), null));
+        }
+    }
+
+    private Attrs SectionAttributes
+    {
+        get
+        {
+            var classNames = "nhsuk-hero";
+            if (Truthy(_backgroundSrc)) classNames += " nhsuk-hero--image" + (Heading is not null ? " nhsuk-hero--image-description" : "");
+            else if (Border != false) classNames += " nhsuk-hero--border";
+            var attrs = new Attrs().Add("class", Append(classNames, Classes)).Optional("id", Id);
+            if (Truthy(_backgroundSrc)) attrs.Add("style", "background-image: url('" + _backgroundSrc + "');");
+            return attrs.AddUser(Attributes, AdditionalAttributes);
+        }
+    }
+}

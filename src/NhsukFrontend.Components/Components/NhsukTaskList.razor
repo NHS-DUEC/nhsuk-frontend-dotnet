@@ -1,0 +1,52 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/task-list/template.njk *@
+<ul @attributes="@(new Attrs().Add("class", Append("nhsuk-task-list", Classes)).Optional("id", Id).AddUser(Attributes, AdditionalAttributes))">
+    @for (var i = 0; i < (Items?.Count ?? 0); i++)
+    {
+        if (Items![i] is { } item) { @Item(item, i + 1) }
+    }
+</ul>
+
+@code {
+    private RenderFragment Item(TaskListItemsItem item, int index)
+    {
+        var idPrefix = Truthy(IdPrefix) ? IdPrefix : "task-list";
+        var hintId = $"{idPrefix}-{index}-hint";
+        var statusId = $"{idPrefix}-{index}-status";
+        var hasLink = Truthy(item.Href);
+
+        // A heading object replaces the deprecated title option; a heading string only replaces the text.
+        var heading = item.Heading is { IsShorthand: false } ? item.Heading : new TaskListItemsHeadingOptions
+        {
+            Text = item.Heading?.Text ?? item.Title?.Text, Html = item.Title?.Html, Classes = item.Title?.Classes,
+        };
+        var hasHint = Truthy(item.Hint?.Text) || Truthy(item.Hint?.Html);
+
+        var headingAttributes = new NhsukAttributes();
+        if (hasLink)
+        {
+            headingAttributes["href"] = item.Href;
+            headingAttributes["aria-describedby"] = (hasHint ? hintId + " " : "") + statusId;
+        }
+        if (heading.Attributes is not null) foreach (var (k, v) in heading.Attributes) headingAttributes[k] = v;
+
+        return @<li class="@("nhsuk-task-list__item" + (hasLink ? " nhsuk-task-list__item--with-link" : "") + (Truthy(item.Classes) ? " " + item.Classes : ""))">
+            <div class="nhsuk-task-list__name-and-hint">
+                <NhsukHeading Id="@heading.Id" Text="@heading.Text" Html="@heading.Html" VisuallyHiddenText="@heading.VisuallyHiddenText"
+                              ClassName="@(hasLink ? "nhsuk-task-list__link" : "")" Classes="@((hasLink ? "nhsuk-link" : "") + (heading.Classes ?? ""))"
+                              Attributes="@headingAttributes" Element="@(hasLink ? "a" : "div")" />
+                @if (hasHint)
+                {
+                    <div class="nhsuk-task-list__hint" id="@hintId">@Render.HtmlOrText(item.Hint!.Html?.Trim(), item.Hint.Text?.Trim())</div>
+                }
+            </div>
+            <div class="@Append("nhsuk-task-list__status", item.Status?.Classes)" id="@statusId">
+                @if (item.Status?.Tag is { } tag)
+                {
+                    <NhsukTag Id="@tag.Id" Text="@tag.Text" Html="@tag.Html" Classes="@tag.Classes" Attributes="@tag.Attributes" Colour="@tag.Colour" Border="@tag.Border" />
+                }
+                else if (item.Status is not null) { @Render.HtmlOrText(item.Status.Html?.Trim(), item.Status.Text?.Trim()) }
+            </div>
+        </li>;
+    }
+}

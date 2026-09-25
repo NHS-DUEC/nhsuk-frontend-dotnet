@@ -82,7 +82,7 @@ public partial class NhsukButton
 
     /// <summary>Can be used to add an icon to the button component.</summary>
     /// <remarks>Macro option <c>icon</c>, released in 10.5.0.</remarks>
-    [Parameter, MacroOption("icon")] public ButtonIconOptions? Icon { get; set; }
+    [Parameter, MacroOption("icon"), KeepFalse] public ButtonIconOptions? Icon { get; set; }
 
     /// <summary>Razor convenience: any unmatched attribute is merged into <see cref="Attributes"/>.</summary>
     [Parameter(CaptureUnmatchedValues = true)] public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
@@ -154,7 +154,7 @@ public sealed partial class ButtonOptions : NhsukOptions, IShorthandOptions<Butt
 
     /// <summary>Can be used to add an icon to the button component.</summary>
     /// <remarks>Macro option <c>icon</c>, released in 10.5.0.</remarks>
-    [JsonPropertyName("icon")] public ButtonIconOptions? Icon { get; set; }
+    [JsonPropertyName("icon"), KeepFalse] public ButtonIconOptions? Icon { get; set; }
 
     /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
     public static implicit operator ButtonOptions(bool value) => value ? new() { IsTrue = true } : null!;

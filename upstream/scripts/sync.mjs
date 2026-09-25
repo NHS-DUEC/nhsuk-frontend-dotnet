@@ -43,7 +43,7 @@ const pascal = (s) => s.replace(/(^|[-_ ])(\w)/g, (_, __, c) => c.toUpperCase())
 const kebab = (s) => s.replace(/[A-Z]/g, (c) => '-' + c.toLowerCase())
 const componentClass = (name) => 'Nhsuk' + pascal(name)
 const optionsClass = (name) => pascal(name) + 'Options'
-const xml = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+const xml = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\s*\n\s*/g, ' ')
 const csString = (s) => JSON.stringify(String(s)) // JSON string escapes are valid C#
 
 // ---------------------------------------------------------------------------
@@ -52,6 +52,9 @@ const csString = (s) => JSON.stringify(String(s)) // JSON string escapes are val
 function loadOptions(component) {
   return JSON.parse(fs.readFileSync(path.join(distNhsuk, 'components', component, 'macro-options.json'), 'utf8'))
 }
+
+const shorthandClasses = new Set()
+const tagHelperSpecs = []
 
 function generateComponent(component) {
   const nested = [] // extra classes emitted alongside
@@ -91,7 +94,7 @@ function generateComponent(component) {
     const name = pascal(component) + pathParts.map(pascal).join('') + (isItem ? 'Item' : 'Options')
     const key = [component, ...pathParts].join('/')
     if (!nested.some((n) => n.name === name)) {
-      nested.push({ name, params: withAlias(param), pathParts, shorthand: config.overrides[key]?.shorthand, shorthandDefaults: config.overrides[key]?.shorthandDefaults })
+      nested.push({ name, params: [...withAlias(param), ...(config.additionalOptions?.[key] ?? [])], pathParts, shorthand: config.overrides[key]?.shorthand, shorthandDefaults: config.overrides[key]?.shorthandDefaults })
     }
     return name
   }
@@ -128,6 +131,7 @@ function generateComponent(component) {
       .map((p) => property(p, [...pathParts, p.name], { isParameter: false }))
     const shorthandParam = shorthand ?? (params.some((p) => p.name === 'text') ? 'text' : null)
     const iface = shorthandParam ? `, IShorthandOptions<${className}>` : ''
+    if (shorthandParam) shorthandClasses.add(className)
     const lines = [`public sealed partial class ${className} : NhsukOptions${iface}`, '{']
     lines.push(props.join('\n\n'))
     lines.push('')
@@ -146,6 +150,7 @@ function generateComponent(component) {
 
   const cls = componentClass(component)
   const parameters = options.map((p) => property(p, [p.name], { isParameter: true }))
+  tagHelperSpecs.push({ component, options: options.map((p) => ({ param: p, type: typeFor(p, [p.name]) })) })
   const hasAttributes = options.some((p) => p.name === 'attributes')
 
   const body = []
@@ -174,6 +179,75 @@ function generateComponent(component) {
   }
 
   return header() + body.join('\n') + '\n'
+}
+
+// ---------------------------------------------------------------------------
+// Tag helpers for MVC and Razor Pages: <nhsuk-panel heading="…" text="…" />
+
+const attrName = (s) => s.replace(/URL/g, 'Url').replace(/ALT/g, 'Alt').replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()
+const reservedTagHelperNames = new Set(['ViewContext', 'Options', 'Order', 'Init', 'Process', 'ProcessAsync'])
+
+function generateTagHelper({ component, options }) {
+  const cls = componentClass(component)
+  const bindable = (config.bindable ?? []).includes(component)
+  const base = bindable ? `NhsukFieldTagHelper<${cls}>` : `NhsukComponentTagHelper<${cls}>`
+  const elements = [`nhsuk-${component}`, ...(config.tagAliases?.[component] ?? []).map((a) => `nhsuk-${a}`)]
+  const props = []
+  const sets = []
+  const seen = new Set()
+  const add = (name) => {
+    if (seen.has(name) || reservedTagHelperNames.has(name) || (bindable && name === 'For')) throw new Error(`Tag helper property ${cls}.${name} clashes; add an override.`)
+    seen.add(name)
+    return name
+  }
+
+  for (const { param, type } of options) {
+    // `caller` is the tag's content; deprecated options are left out of the Razor API.
+    if (param.type === 'nunjucks-block' || param.deprecated) continue
+    const attr = attrName(param.name)
+    const summary = xml(param.description)
+    const optionsType = type.replace(/\?$/, '')
+    if (shorthandClasses.has(optionsType)) {
+      const textProp = add(pascal(param.name))
+      const objProp = add(pascal(param.name) + 'Options')
+      props.push(
+        `    /// <summary>${summary} Plain text; use <c>${attr}-options</c> for every option.</summary>`,
+        `    [HtmlAttributeName(${csString(attr)})] public string? ${textProp} { get; set; }`,
+        '',
+        `    /// <summary>${summary}</summary>`,
+        `    [HtmlAttributeName(${csString(attr + '-options')})] public ${type} ${objProp} { get; set; }`,
+        '')
+      sets.push(`        Set(parameters, ${csString(pascal(param.name))}, ${textProp});`)
+      sets.push(`        Set(parameters, ${csString(pascal(param.name))}, ${objProp});`)
+    } else {
+      const prop = add(pascal(param.name))
+      props.push(
+        `    /// <summary>${summary}</summary>`,
+        `    [HtmlAttributeName(${csString(attr)})] public ${type} ${prop} { get; set; }`,
+        '')
+      sets.push(`        Set(parameters, ${csString(pascal(param.name))}, ${prop});`)
+    }
+  }
+
+  return header().replace('namespace NhsukFrontend.Components;', 'namespace NhsukFrontend.Components.TagHelpers;')
+    .replace('using NhsukFrontend.Components.Infrastructure;', 'using Microsoft.AspNetCore.Razor.TagHelpers;\nusing NhsukFrontend.Components.Infrastructure;') + [
+    `/// <summary>`,
+    `/// Renders the NHS.UK frontend <c>${component}</c> component in MVC and Razor Pages.`,
+    `/// Tag content becomes the component's content, and any other HTML attributes are passed through.`,
+    bindable ? `/// Bind to a model property with <c>asp-for</c>.` : null,
+    `/// </summary>`,
+    `/// <remarks>Generated from <c>components/${component}/macro-options.json</c> in nhsuk-frontend ${version}.</remarks>`,
+    ...elements.map((e) => `[HtmlTargetElement(${csString(e)})]`),
+    `public sealed partial class ${cls}TagHelper : ${base}`,
+    '{',
+    ...props,
+    '    protected override void AddParameters(IDictionary<string, object?> parameters)',
+    '    {',
+    ...sets,
+    '    }',
+    '}',
+    ''
+  ].filter((l) => l !== null).join('\n')
 }
 
 function header() {
@@ -301,6 +375,9 @@ const generatedDir = path.join(componentsProject, 'Generated')
 ownDir(generatedDir)
 for (const component of ported) {
   emit(path.join(generatedDir, `${componentClass(component)}.g.cs`), generateComponent(component))
+}
+for (const spec of tagHelperSpecs) {
+  emit(path.join(generatedDir, 'TagHelpers', `${componentClass(spec.component)}TagHelper.g.cs`), generateTagHelper(spec))
 }
 emit(path.join(generatedDir, 'IconPaths.g.cs'), generateIcons())
 const headerTemplate = fs.readFileSync(path.join(distNhsuk, 'components/header/template.njk'), 'utf8')

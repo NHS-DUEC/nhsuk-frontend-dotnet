@@ -1,0 +1,47 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/code/template.njk *@
+<div @attributes="CodeAttributes">
+    @if (Button is not null)
+    {
+        <NhsukButton Text="@_buttonText" AriaLabel="@(Button.AriaLabel ?? (Truthy(_buttonText) ? null : "Copy code"))" Id="@Button.Id" Href="@Button.Href"
+                     Name="@Button.Name" Value="@Button.Value" Type="@DefaultIfFalsy(Button.Type, "button")" Icon="@Button.Icon"
+                     PreventDoubleClick="@Button.PreventDoubleClick" Disabled="@Button.Disabled" Classes="@ButtonClasses" Attributes="@Hidden" />
+    }
+    @* Whitespace matters inside <pre>, so the content sits directly inside <code>. Upstream escapes `html`
+       unless it is already marked safe, so it is shown as text here; use child content for markup. *@
+    <pre class="nhsuk-code__container"><code class="nhsuk-code__content">@if (ChildContent is not null) {@ChildContent} else if (Truthy(Html)) {@Html} else if (Truthy(Text)) {@Text}</code></pre>
+</div>
+
+@code {
+    private static readonly NhsukAttributes Hidden = new() { ["hidden"] = new AttributeValue(true, Optional: true) };
+
+    private string _buttonText = "";
+
+    protected override void OnParametersSet() => _buttonText = CopyButtonText ?? Button?.Text ?? "Copy code";
+
+    private string ButtonClasses
+    {
+        get
+        {
+            var list = CopyButtonClassList ?? [Variant == "reverse" ? "nhsuk-button--reverse" : "nhsuk-button--secondary", "nhsuk-button--small"];
+            return Append(string.Join(" ", list) + " nhsuk-code__button nhsuk-js-code-button", Button?.Classes);
+        }
+    }
+
+    private Attrs CodeAttributes
+    {
+        get
+        {
+            var classNames = "nhsuk-code";
+            if (Button is not null) classNames += " nhsuk-code--button";
+            if (Variant == "reverse" && !Contains(Classes, "nhsuk-code--reverse")) classNames += " nhsuk-code--reverse";
+            if (Truthy(Background)) classNames += " nhsuk-code--background-" + Background;
+            if (Border == false && !Contains(Classes, "nhsuk-code--no-border")) classNames += " nhsuk-code--no-border";
+            var attrs = new Attrs().Optional("id", Id).Add("class", Append(classNames, Classes));
+            if (Truthy(CopyButtonText ?? Button?.Text)) attrs.Add("data-i18n.copy-button", CopyButtonText ?? Button?.Text);
+            if (Truthy(CopiedButtonText)) attrs.Add("data-i18n.copied-button", CopiedButtonText);
+            if (Truthy(CopiedAnnouncementText)) attrs.Add("data-i18n.copied-announcement", CopiedAnnouncementText);
+            return attrs.AddUser(Attributes, AdditionalAttributes).Add("data-module", "nhsuk-code");
+        }
+    }
+}

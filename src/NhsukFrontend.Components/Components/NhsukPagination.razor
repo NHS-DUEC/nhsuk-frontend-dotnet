@@ -1,0 +1,113 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/pagination/template.njk *@
+<nav @attributes="NavAttributes">
+    @if (_numbered)
+    {
+        @if (Truthy(_previous?.Href))
+        {
+            <a href="@_previous!.Href" class="nhsuk-pagination__previous" rel="prev">
+                <NhsukIcon Name="arrow-left" />
+                <span class="nhsuk-pagination__title">@Title(_previous.Html, _previous.Text, "Previous")</span>
+            </a>
+        }
+        <ul class="nhsuk-pagination__list">
+            @foreach (var item in Items!)
+            {
+                if (item is null) continue;
+                <li class="@PageItemClasses(item)">
+                    @if (item.Ellipsis == true)
+                    {
+                        @((MarkupString)"&ctdot;")
+                    }
+                    else
+                    {
+                        <a class="nhsuk-pagination__link" href="@item.Href" aria-label="@(item.AriaLabel ?? item.VisuallyHiddenText ?? "Page " + item.Number)"
+                           aria-current="@(item.Current == true ? "page" : null)" @attributes="new Attrs().AddUser(item.Attributes)">@item.Number</a>
+                    }
+                </li>
+            }
+        </ul>
+        @if (Truthy(_next?.Href))
+        {
+            <a href="@_next!.Href" class="nhsuk-pagination__next" rel="next">
+                <span class="nhsuk-pagination__title">@Title(_next.Html, _next.Text, "Next")</span>
+                <NhsukIcon Name="arrow-right" />
+            </a>
+        }
+    }
+    else
+    {
+        <ul class="nhsuk-list nhsuk-pagination__list">
+            @if (Truthy(_previous?.Href))
+            {
+                <li class="nhsuk-pagination-item--previous">
+                    <a class="nhsuk-pagination__link nhsuk-pagination__link--prev" href="@_previous!.Href" rel="prev" @attributes="new Attrs().AddUser(_previous.Attributes)">
+                        <span class="nhsuk-pagination__title">@Title(_previous.Html, _previous.Text, "Previous")</span>
+                        @PageLabel(_previous.Label, _previous.LabelText)
+                        <NhsukIcon Name="arrow-left" />
+                    </a>
+                </li>
+            }
+            @if (Truthy(_next?.Href))
+            {
+                <li class="nhsuk-pagination-item--next">
+                    <a class="nhsuk-pagination__link nhsuk-pagination__link--next" href="@_next!.Href" rel="next" @attributes="new Attrs().AddUser(_next.Attributes)">
+                        <span class="nhsuk-pagination__title">@Title(_next.Html, _next.Text, "Next")</span>
+                        @PageLabel(_next.Label, _next.LabelText)
+                        <NhsukIcon Name="arrow-right" />
+                    </a>
+                </li>
+            }
+        </ul>
+    }
+</nav>
+
+@code {
+    private sealed record Link(string? Href, string? Text, string? Html, string? LabelText, IShorthandLabel? Label, NhsukAttributes? Attributes);
+
+    /// <summary>The previous and next label options have the same shape but different generated types.</summary>
+    private interface IShorthandLabel { string? Text { get; } string? Html { get; } bool IsShorthand { get; } }
+    private sealed record LabelView(string? Text, string? Html, bool IsShorthand) : IShorthandLabel;
+
+    private bool _numbered;
+    private Link? _previous, _next;
+
+    protected override void OnParametersSet()
+    {
+        _numbered = Items is { Count: > 0 };
+        _previous = Truthy(PreviousUrl) || Truthy(PreviousPage)
+            ? new Link(PreviousUrl, null, null, PreviousPage, null, null)
+            : Previous is { } p ? new Link(p.Href, p.Text, p.Html, p.LabelText, p.Label is { } l ? new LabelView(l.Text, l.Html, l.IsShorthand) : null, p.Attributes) : null;
+        _next = Truthy(NextUrl) || Truthy(NextPage)
+            ? new Link(NextUrl, null, null, NextPage, null, null)
+            : Next is { } n ? new Link(n.Href, n.Text, n.Html, n.LabelText, n.Label is { } l2 ? new LabelView(l2.Text, l2.Html, l2.IsShorthand) : null, n.Attributes) : null;
+    }
+
+    private Attrs NavAttributes => new Attrs()
+        .Add("class", Append("nhsuk-pagination" + (_numbered ? " nhsuk-pagination--numbered" : ""), Classes))
+        .Optional("id", Id)
+        .Add("role", "navigation")
+        .Add("aria-label", DefaultIfFalsy(DefaultIfFalsy(AriaLabel, LandmarkLabel ?? ""), "Pagination"))
+        .AddUser(Attributes, AdditionalAttributes);
+
+    private static string PageItemClasses(PaginationItemsItem item) => Append("nhsuk-pagination__item"
+        + (item.Current == true ? " nhsuk-pagination__item--current" : "")
+        + (item.Ellipsis == true ? " nhsuk-pagination__item--ellipsis" : ""), item.Classes);
+
+    private static RenderFragment Title(string? html, string? text, string fallback) => builder =>
+    {
+        if (Truthy(html)) builder.AddMarkupContent(0, html!.Trim());
+        else if (Truthy(text)) builder.AddContent(1, text!.Trim());
+        else builder.AddMarkupContent(2, fallback + "<span class=\"nhsuk-u-visually-hidden\"> page</span>");
+    };
+
+    private static RenderFragment? PageLabel(IShorthandLabel? label, string? labelText)
+    {
+        // A label object replaces labelText; a label string only replaces the text.
+        var text = label is { IsShorthand: false } ? label.Text : label?.Text ?? labelText;
+        var html = label is { IsShorthand: false } ? label.Html : null;
+        if (!Truthy(text) && !Truthy(html)) return null;
+        return @<text><span class="nhsuk-u-visually-hidden">:</span>
+            <span class="nhsuk-pagination__page">@Render.HtmlOrText(html?.Trim(), text?.Trim())</span></text>;
+    }
+}

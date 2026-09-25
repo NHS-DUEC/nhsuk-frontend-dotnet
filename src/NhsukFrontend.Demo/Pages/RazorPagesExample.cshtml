@@ -6,32 +6,35 @@
 }
 
 @section BeforeContent {
-    <component type="typeof(NhsukBackLink)" render-mode="Static" param-Href='"/"' />
+    <nhsuk-back-link href="/" />
 }
 
 @if (Model.Submitted)
 {
-    <component type="typeof(NhsukHeading)" render-mode="Static" param-Text='"Check your answers"' param-Size='"l"' />
-    <component type="typeof(NhsukSummaryList)" render-mode="Static" param-Rows='Model.Details.Summary("/examples/razor-pages")' />
-    <component type="typeof(NhsukInsetText)" render-mode="Static"
-               param-Text='"Nothing has been stored or sent. This is a Razor Page: every field is a tag helper bound with asp-for, and the errors come from ModelState."' />
+    <nhsuk-panel heading="Request sent" text="This is a demonstration: nothing has been stored or sent." />
+    <nhsuk-heading text="Check your answers" size="m" level="2" />
+    <nhsuk-summary-list rows='@Model.Details.Summary("/examples/razor-pages")' />
+    <nhsuk-inset-text>
+        <p>This is a Razor Page. Every field is a tag helper bound with <code>asp-for</code>, and the errors come from ModelState.</p>
+    </nhsuk-inset-text>
+    <nhsuk-button href="/examples/razor-pages" text="Start again" variant="secondary" />
 }
 else
 {
     <form method="post" novalidate>
         <nhsuk-error-summary />
 
-        <component type="typeof(NhsukHeading)" render-mode="Static" param-Text='"Book an appointment"' param-Size='"l"' />
+        <nhsuk-heading text="Book an appointment" size="l" />
         <p>This page is a Razor Page, not a Blazor component. It uses the same model as the Blazor example, with tag helpers bound by <code>asp-for</code>.</p>
 
         <nhsuk-input asp-for="Details.FullName" autocomplete="name" spellcheck="false" />
         <nhsuk-input asp-for="Details.NhsNumber" hint="This is a 10 digit number, like 999 123 4567"
-                     width="10" inputmode="numeric" spellcheck="false" options="@(new InputOptions { Code = true })" />
+                     width="10" inputmode="numeric" spellcheck="false" code="true" />
         <nhsuk-date-input asp-for="Details.DateOfBirth" hint="For example, 15 3 1984" />
         <nhsuk-radios asp-for="Details.Contact" items="AppointmentRequest.ContactOptions!" />
         <nhsuk-checkboxes asp-for="Details.Needs" items="AppointmentRequest.NeedOptions!" hint="Select all that apply" />
         <nhsuk-character-count asp-for="Details.Notes" maxlength="200" />
 
-        <component type="typeof(NhsukButton)" render-mode="Static" param-Text='"Continue"' param-PreventDoubleClick="true" />
+        <nhsuk-button text="Continue" prevent-double-click="true" />
     </form>
 }

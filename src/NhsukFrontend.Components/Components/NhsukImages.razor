@@ -1,0 +1,28 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/images/template.njk *@
+<figure @attributes="FigureAttributes">
+    @if (ChildContent is not null) { @ChildContent }
+    else if (Truthy(Html)) { @((MarkupString)Html!.Trim()) }
+    else if (Truthy(Src))
+    {
+        <img @attributes="@(new Attrs().Add("class", "nhsuk-image__img").Add("src", Src).Add("alt", Alt ?? "").Optional("sizes", Sizes).Optional("srcset", Srcset))">
+    }
+    @if (Caption is not null && !(Caption.IsShorthand && !Truthy(Caption.Text)))
+    {
+        <figcaption class="@Append("nhsuk-image__caption", Caption.Classes)">@Render.HtmlOrText(Caption.Html?.Trim(), Caption.Text?.Trim())</figcaption>
+    }
+</figure>
+
+@code {
+    private Attrs FigureAttributes
+    {
+        get
+        {
+            var classNames = "nhsuk-image";
+            if (Border == false && !Contains(Classes, "nhsuk-image--no-border")) classNames += " nhsuk-image--no-border";
+            if (Background == "false" && !Contains(Classes, "nhsuk-image--no-background")) classNames += " nhsuk-image--no-background";
+            if (Truthy(Width) && !Contains(Classes, "nhsuk-u-width-" + Width)) classNames += " nhsuk-u-width-" + Width;
+            return new Attrs().Add("class", Append(classNames, Classes)).Optional("id", Id).AddUser(Attributes, AdditionalAttributes);
+        }
+    }
+}

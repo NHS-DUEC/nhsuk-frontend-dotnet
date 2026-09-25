@@ -50,6 +50,7 @@ jobs:
           build=$?
           dotnet run -c Release --no-build --project tools/NhsukFrontend.ParityCheck -- --verbose > parity.log 2>&1
           parity=$?
+          dotnet run -c Release --no-build --project tools/NhsukFrontend.ParityCheck -- --tag-helpers >> parity.log 2>&1 || parity=1
           dotnet test NhsukFrontend.sln -c Release --no-build --logger "console;verbosity=minimal" > test.log 2>&1
           echo "Test summary: $(grep -E 'Passed!|Failed!' test.log | tail -1)" >> parity.log
           {

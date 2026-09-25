@@ -123,7 +123,7 @@ public static class NhsukJson
     {
         public override List<T?>? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (reader.TokenType == JsonTokenType.Null) return null;
+            if (reader.TokenType is JsonTokenType.Null or JsonTokenType.False) return null;
             if (reader.TokenType == JsonTokenType.StartObject) return [JsonSerializer.Deserialize<T>(ref reader, options)];
 
             var list = new List<T?>();

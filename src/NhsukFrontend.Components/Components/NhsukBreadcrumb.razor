@@ -1,0 +1,46 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/breadcrumb/template.njk *@
+<nav @attributes="NavAttributes">
+    <ol class="nhsuk-breadcrumb__list">
+        @foreach (var item in Items ?? [])
+        {
+            if (item is null || !Truthy(item.Href)) continue;
+            <li class="nhsuk-breadcrumb__list-item">
+                <a class="nhsuk-breadcrumb__link" href="@item.Href" @attributes="new Attrs().AddUser(item.Attributes)">@Render.HtmlOrText(item.Html, item.Text)</a>
+            </li>
+        }
+        @if (Truthy(Href))
+        {
+            <li class="nhsuk-breadcrumb__list-item">
+                <a class="nhsuk-breadcrumb__link" href="@Href">@Text?.Trim()</a>
+            </li>
+        }
+    </ol>
+    @{
+        // The back link (shown on small screens) goes to the current parent: `href` or the last item.
+        var last = Truthy(Href) ? null : Items?.LastOrDefault();
+        var lastHref = Truthy(Href) ? Href : last?.Href;
+        var lastText = Truthy(Href) ? Text : last?.Text;
+        var hasOwnContent = Truthy(BackLink?.Html) || Truthy(BackLink?.Text);
+    }
+    <NhsukBackLink Id="@BackLink?.Id" VisuallyHiddenText="@(BackLink?.VisuallyHiddenText ?? "Back to")"
+                   Text="@(hasOwnContent ? BackLink!.Text : lastText)" Html="@(hasOwnContent ? BackLink!.Html : null)"
+                   Href="@(BackLink?.Href ?? lastHref)" Type="@BackLink?.Type" Classes="@BackLink?.Classes"
+                   Attributes="@(BackLink?.Attributes ?? last?.Attributes)" Variant="@(BackLink?.Variant ?? Variant)" Element="@BackLink?.Element" />
+</nav>
+
+@code {
+    private Attrs NavAttributes
+    {
+        get
+        {
+            var classNames = "nhsuk-breadcrumb";
+            if (Variant == "reverse" && !Contains(Classes, "nhsuk-breadcrumb--reverse")) classNames += " nhsuk-breadcrumb--reverse";
+            return new Attrs()
+                .Add("class", Append(classNames, Classes))
+                .Optional("id", Id)
+                .Add("aria-label", DefaultIfFalsy(DefaultIfFalsy(AriaLabel, LabelText ?? ""), "Breadcrumb"))
+                .AddUser(Attributes, AdditionalAttributes);
+        }
+    }
+}

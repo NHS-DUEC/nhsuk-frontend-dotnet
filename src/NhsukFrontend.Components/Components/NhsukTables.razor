@@ -1,0 +1,200 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/tables/template.njk *@
+@if (Card is not null || Panel == true)
+{
+    <NhsukCard Id="@Card?.Id" Heading="@CardHeading" Href="@Card?.Href" Actions="@Card?.Actions" Classes="@(PanelClasses ?? Card?.Classes)"
+               Attributes="@Card?.Attributes" Variant="@(Card?.Variant ?? (Panel == true ? "feature" : null))">@ScrollOrTable</NhsukCard>
+}
+else
+{
+    @ScrollOrTable
+}
+
+@code {
+    /// <summary>One cell as upstream's <c>_tableCell</c> macro receives it.</summary>
+    private sealed record Cell(
+        string Element, string? Text, string? Html, string? VisuallyHiddenText, string? Href, string? Format, string? Scope, string? Role,
+        int? Colspan, int? Rowspan, string? Align, string? Width, string? Classes, Attrs Attributes, string? Header);
+
+    private static readonly string[] Alignments = ["left", "centre", "right"];
+
+    private List<TablesHeadItem> _head = [];
+    private List<List<TablesRowsItem>> _rows = [];
+    private TablesCaptionOptions _caption = new();
+    private string _classNames = "";
+    private string? _captionId, _captionHiddenText;
+    private bool _isSortable, _isSortableOnServer;
+
+    protected override void OnParametersSet()
+    {
+        _head = Head?.Where(h => h is not null).Select(h => h!).ToList() ?? [];
+        _rows = Rows?.Where(r => r is not null).Select(r => r!.Where(c => c is not null).Select(c => c!).ToList()).ToList() ?? [];
+
+        // A caption object replaces captionSize / captionClasses; a caption string only replaces the text.
+        _caption = Caption is { IsShorthand: false } ? Caption : new TablesCaptionOptions { Text = Caption?.Text, Size = CaptionSize, Classes = CaptionClasses };
+
+        var classNames = "nhsuk-table";
+        if (Variant == "reverse" && !Contains(Classes, "nhsuk-table--reverse") && !Contains(Classes, "nhsuk-table-responsive--reverse"))
+            classNames += " nhsuk-table--reverse";
+        if (Compact == true && !Contains(Classes, "nhsuk-table--compact")) classNames += " nhsuk-table--compact";
+        if (Responsive == true && !Contains(Classes, "nhsuk-table--responsive")) classNames += " nhsuk-table--responsive";
+        if (Border == false && !Contains(Classes, "nhsuk-table--no-border")) classNames += " nhsuk-table--no-border";
+        else if (LastRowBorder == false && !Contains(Classes, "nhsuk-table--no-last-row-border")) classNames += " nhsuk-table--no-last-row-border";
+
+        _isSortable = _isSortableOnServer = false;
+        foreach (var item in _head)
+        {
+            _isSortable = SortOf(item) is not null || _isSortable;
+            _isSortableOnServer = (_isSortable && Truthy(item.Href)) || _isSortableOnServer;
+        }
+        if (_isSortable && !Contains(Classes, "nhsuk-table--sortable")) classNames += " nhsuk-table--sortable";
+        if (Striped == true && !Contains(Classes, "nhsuk-table--striped")) classNames += " nhsuk-table--striped";
+        var extra = Truthy(Classes) ? Classes : TableClasses;
+        _classNames = Truthy(extra) ? classNames + " " + extra : classNames;
+
+        _captionId = _caption.Id
+            ?? (Scroll == true && Truthy(Id) ? Id + "-caption" : null)
+            ?? (Scroll == true && Truthy(_caption.Text) ? "table-" + Truncate(_caption.Text!.Replace(" ", "-").ToLowerInvariant(), 40) + "-caption" : null);
+        _captionHiddenText = (Caption is { IsShorthand: false } ? Caption.VisuallyHiddenText : null)
+            ?? (Contains(_classNames, "nhsuk-table--sortable") ? "Column headers are sortable" : null);
+    }
+
+    /// <summary><c>sort: true</c> means "sortable, not sorted yet"; a string is the current direction.</summary>
+    private static string? SortOf(TablesHeadItem item) => item.Sort switch
+    {
+        null or "" or "false" => null,
+        "true" => "none",
+        var direction => direction,
+    };
+
+    /// <summary>Nunjucks' <c>truncate(length, killwords: true, end: "")</c>.</summary>
+    private static string Truncate(string s, int length) => s.Length <= length ? s : s[..length];
+
+    private CardHeadingOptions CardHeading => Card?.Heading is { IsShorthand: false } heading
+        ? heading
+        : new CardHeadingOptions { Text = Card?.Heading?.Text ?? Heading, Level = HeadingLevel };
+
+    private RenderFragment ScrollOrTable => Scroll == true
+        ? @<NhsukScroll LabelledBy="@_captionId" Variant="@Variant">@Table</NhsukScroll>
+        : Table;
+
+    private Attrs TableAttributes
+    {
+        get
+        {
+            var attrs = new Attrs()
+                .Add("class", _classNames)
+                .Optional("id", Id)
+                .Optional("data-module", Contains(_classNames, "nhsuk-table--sortable") && !_isSortableOnServer ? "nhsuk-table" : null);
+            I18n.Message(attrs, "sort-announcement", SortAnnouncementText);
+            I18n.Message(attrs, "ascending", AscendingText);
+            I18n.Message(attrs, "descending", DescendingText);
+            return attrs.Optional("role", Responsive == true ? "table" : null).AddUser(Attributes, AdditionalAttributes);
+        }
+    }
+
+    private RenderFragment Table => @<table @attributes="TableAttributes">
+        @if (Truthy(_caption.Text) || Truthy(_caption.Html))
+        {
+            <NhsukHeading Id="@_captionId" Text="@_caption.Text" Html="@_caption.Html"
+                          VisuallyHiddenText="@(Truthy(_captionHiddenText) ? "(" + _captionHiddenText + ")" : null)"
+                          Caption="@_caption.Caption" Size="@_caption.Size" Sizes="@(["s", "m", "l", "xl"])" ClassName="nhsuk-table__caption"
+                          ClassPrefix="nhsuk-table__caption--" Classes="@_caption.Classes" Attributes="@_caption.Attributes" Element="caption" />
+        }
+        @if (_head.Count > 0)
+        {
+            <thead class="nhsuk-table__head" role="@(Responsive == true ? "rowgroup" : null)">
+                <tr class="nhsuk-table__row" role="@(Responsive == true ? "row" : null)">
+                    @for (var i = 0; i < _head.Count; i++) { @CellFragment(HeadCell(_head[i]), i) }
+                </tr>
+            </thead>
+        }
+        <tbody class="nhsuk-table__body">
+            @foreach (var row in _rows)
+            {
+                <tr class="nhsuk-table__row" role="@(Responsive == true ? "row" : null)">
+                    @for (var i = 0; i < row.Count; i++) { @CellFragment(BodyCell(row[i], i), i) }
+                </tr>
+            }
+        </tbody>
+    </table>;
+
+    private Cell HeadCell(TablesHeadItem item)
+    {
+        var sort = SortOf(item);
+        var attrs = new Attrs()
+            .Optional("data-sort", sort is not null && _isSortable ? true : null)
+            .Optional("data-sort-next", Truthy(item.SortNext) && _isSortable && !_isSortableOnServer ? item.SortNext : null)
+            .Optional("aria-sort", sort is not null && sort != "none" && _isSortable ? sort : null)
+            .AddUser(item.Attributes);
+        return new Cell("th", item.Text, item.Html, item.VisuallyHiddenText, item.Href, item.Format, "col",
+            Responsive == true ? "columnheader" : null, Responsive == true ? null : item.Colspan, item.Rowspan,
+            item.Align, item.Width, item.Classes, attrs, null);
+    }
+
+    private Cell BodyCell(TablesRowsItem item, int index)
+    {
+        var header = index < _head.Count ? _head[index] : null;
+        var isRowHeader = index == 0 && FirstCellIsHeader == true;
+        var attrs = new Attrs().Optional("data-sort-value", Truthy(item.SortValue) ? item.SortValue : null).AddUser(item.Attributes);
+        return new Cell(isRowHeader ? "th" : "td", item.Text, item.Html, item.VisuallyHiddenText, item.Href, item.Format ?? header?.Format,
+            isRowHeader ? "row" : null, Responsive == true ? (isRowHeader ? "rowheader" : "cell") : null,
+            Responsive == true ? null : item.Colspan, item.Rowspan,
+            item.Align ?? (item.Format == "string" && header?.Format == "numeric" ? "right" : header?.Align),
+            item.Width, item.Classes, attrs, item.Header);
+    }
+
+    private RenderFragment CellFragment(Cell cell, int index)
+    {
+        var baseClass = cell.Element == "th" ? "nhsuk-table__header" : "nhsuk-table__cell";
+        var classNames = baseClass;
+        if (cell.Format == "numeric" && !Contains(cell.Classes, baseClass + "--numeric")) classNames += " " + baseClass + "--numeric";
+        if (Truthy(cell.Align) && Alignments.Contains(cell.Align) && !Alignments.Any(a => Contains(cell.Classes, "nhsuk-u-text-align-" + a)))
+            classNames += " nhsuk-u-text-align-" + cell.Align;
+        if (Truthy(cell.Width) && !Contains(cell.Classes, "nhsuk-u-width-" + cell.Width)) classNames += " nhsuk-u-width-" + cell.Width;
+        classNames = Append(classNames, cell.Classes);
+
+        var attrs = new Attrs().Add("class", classNames).Optional("scope", cell.Scope).Optional("role", cell.Role)
+            .Optional("colspan", cell.Colspan).Optional("rowspan", cell.Rowspan);
+        foreach (var (name, value) in cell.Attributes) attrs.AddUser(null, new Dictionary<string, object> { [name] = value });
+
+        // Upstream looks up the column header by position for every cell, including header cells.
+        var header = index < _head.Count ? _head[index] : null;
+        var showHeading = Responsive == true && (header is not null || Truthy(cell.Header));
+
+        RenderFragment inner = Truthy(cell.Href)
+            ? @<a class="nhsuk-link" href="@cell.Href">@Value(cell.Text, cell.Html, cell.VisuallyHiddenText)</a>
+            : Value(cell.Text, cell.Html, cell.VisuallyHiddenText);
+
+        return @<NhsukElement Tag="@cell.Element" Attributes="attrs">
+            @if (showHeading)
+            {
+                <span class="nhsuk-table__heading" aria-hidden="true">@Value(header?.Text ?? cell.Header, header?.Html, header?.VisuallyHiddenText) </span>
+                @if (Truthy(cell.Html)) { <span>@inner</span> } else { @inner }
+            }
+            else
+            {
+                @inner
+            }
+        </NhsukElement>;
+    }
+
+    /// <summary>Port of the <c>_tableValue</c> macro.</summary>
+    private static RenderFragment Value(string? text, string? html, string? visuallyHiddenText) => builder =>
+    {
+        var hidden = visuallyHiddenText;
+        if (Truthy(html) || Truthy(text))
+        {
+            if (Truthy(hidden)) hidden = " " + hidden;
+            if (Truthy(html)) builder.AddMarkupContent(0, html);
+            else builder.AddContent(1, text);
+        }
+        if (Truthy(hidden))
+        {
+            builder.OpenElement(2, "span");
+            builder.AddAttribute(3, "class", "nhsuk-u-visually-hidden");
+            builder.AddContent(4, hidden);
+            builder.CloseElement();
+        }
+    };
+}

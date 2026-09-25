@@ -1,0 +1,40 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/search-input/template.njk: an input with a search button. *@
+<NhsukInput Label="@Label" Hint="@Hint" ErrorMessage="@ErrorMessage" Id="@(Truthy(Id) ? Id : Name)" Name="@Name" Value="@Value"
+            Placeholder="@Placeholder" Type="search"
+            Prefix="@(Prefix is { } p ? new InputPrefixOptions { Text = p.Text, Html = p.Html, Classes = p.Classes, Attributes = p.Attributes } : null)"
+            Suffix="@(Suffix is { } s ? new InputSuffixOptions { Text = s.Text, Html = s.Html, Classes = s.Classes, Attributes = s.Attributes } : null)"
+            Code="@Code" Width="@Width" Large="@Large" Autocomplete="@(Autocomplete ?? "off")" Disabled="@Disabled" DescribedBy="@DescribedBy"
+            Classes="@Append("nhsuk-search-input__input", Classes)" Attributes="@Attributes" AdditionalAttributes="@AdditionalAttributes"
+            InputWrapper="@(new InputInputWrapperOptions { Classes = Append("nhsuk-search-input__wrapper", InputWrapper?.Classes), Attributes = InputWrapper?.Attributes })"
+            FormGroup="@FormGroupOptions" AfterInputContent="@SearchButton" />
+
+@code {
+    private InputFormGroupOptions FormGroupOptions
+    {
+        get
+        {
+            var classNames = "nhsuk-search-input";
+            if (Large == true && !Contains(Classes, "nhsuk-search-input--large")) classNames += " nhsuk-search-input--large";
+            return new InputFormGroupOptions
+            {
+                Classes = Append(classNames, FormGroup?.Classes),
+                Attributes = FormGroup?.Attributes,
+                BeforeInput = FormGroup?.BeforeInput is { } b ? new InputFormGroupBeforeInputOptions { Html = b.Html, Text = b.Text } : null,
+            };
+        }
+    }
+
+    // Upstream shows the button unless `button` is "", null or false.
+    private RenderFragment SearchButton => @<text>
+        @if (Button is not { IsFalse: true })
+        {
+            <NhsukButton Html="@Button?.Html" Text="@Button?.Text" AriaLabel="@(Button?.AriaLabel ?? "Search")" Id="@Button?.Id" Href="@Button?.Href"
+                         Name="@Button?.Name" Value="@Button?.Value" Type="@DefaultIfFalsy(Button?.Type, "submit")"
+                         Icon="@(Button?.Icon ?? ButtonIconOptions.FromShorthand("search"))" Small="@(Button?.Small ?? Large != true)"
+                         PreventDoubleClick="@Button?.PreventDoubleClick" Disabled="@(Button?.Disabled ?? Disabled)"
+                         Classes="@Append("nhsuk-search-input__button", Button?.Classes)" Attributes="@Button?.Attributes" Variant="@Button?.Variant" />
+        }
+        @if (FormGroup?.AfterInput is { } after) { @Render.HtmlOrText(after.Html?.Trim(), after.Text) }
+    </text>;
+}

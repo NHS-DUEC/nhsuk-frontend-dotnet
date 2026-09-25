@@ -1,5 +1,5 @@
 @*
-    A conventional Razor Pages / MVC layout using the ported components through the <component> tag helper.
+    A conventional Razor Pages / MVC layout built with the nhsuk-* tag helpers.
     Existing MVC apps can adopt the components without moving to Blazor.
 *@
 <!DOCTYPE html>
@@ -16,14 +16,13 @@
 <body>
     <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' nhsuk-frontend-supported' : '');</script>
 
-    <component type="typeof(NhsukSkipLink)" render-mode="Static" />
-    <component type="typeof(NhsukHeader)" render-mode="Static"
-               param-Service='new HeaderServiceOptions { Text = "NHS.UK frontend for .NET", Href = "/" }'
-               param-Navigation='new HeaderNavigationOptions { Items = [
-                   new() { Text = "Components", Href = "/" },
-                   new() { Text = "Form example", Href = "/examples/form" },
-                   new() { Text = "Razor Pages", Href = "/examples/razor-pages", Current = true },
-                   new() { Text = "Keeping up with upstream", Href = "/about" } ] }' />
+    <nhsuk-skip-link />
+    <nhsuk-header service-options="@(new HeaderServiceOptions { Text = "NHS.UK frontend for .NET", Href = "/" })"
+                  navigation="@(new HeaderNavigationOptions { Items = [
+                      new() { Text = "Components", Href = "/" },
+                      new() { Text = "Form example", Href = "/examples/form" },
+                      new() { Text = "Razor Pages", Href = "/examples/razor-pages", Current = true },
+                      new() { Text = "Keeping up with upstream", Href = "/about" } ] })" />
 
     <div class="nhsuk-width-container">
         @RenderSection("BeforeContent", required: false)
@@ -32,9 +31,7 @@
         </main>
     </div>
 
-    <component type="typeof(NhsukFooter)" render-mode="Static"
-               param-Meta='new FooterMetaOptions { Text = "Rendered by Razor Pages." }'
-               param-Copyright='new FooterCopyrightOptions { Text = "" }' />
+    <nhsuk-footer meta="Rendered by Razor Pages with the nhsuk-* tag helpers." copyright="" />
 
     @Html.Raw(NhsukFrontendAssets.BodyEndHtml)
 </body>

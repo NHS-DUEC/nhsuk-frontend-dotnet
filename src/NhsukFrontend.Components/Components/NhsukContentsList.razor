@@ -1,0 +1,36 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/contents-list/template.njk *@
+<nav @attributes="NavAttributes">
+    <h2 class="nhsuk-u-visually-hidden">@DefaultIfFalsy(VisuallyHiddenText, "Contents")</h2>
+    @List(Items)
+</nav>
+
+@code {
+    private Attrs NavAttributes => new Attrs()
+        .Add("class", Append("nhsuk-contents-list", Classes))
+        .Optional("id", Id)
+        .Add("role", "navigation")
+        .Add("aria-label", DefaultIfFalsy(DefaultIfFalsy(AriaLabel, LandmarkLabel ?? ""), "Pages in this guide"))
+        .AddUser(Attributes, AdditionalAttributes);
+
+    private RenderFragment List(List<ContentsListItemsItem?>? items) => @<ol class="nhsuk-contents-list__list">
+        @foreach (var item in items ?? [])
+        {
+            if (item is null) continue;
+            <li class="nhsuk-contents-list__item" aria-current="@(item.Current == true ? "page" : null)">
+                @if (item.Current == true)
+                {
+                    <span class="@Append("nhsuk-contents-list__current", item.Classes)" @attributes="new Attrs().AddUser(item.Attributes)">@ItemContent(item)</span>
+                }
+                else
+                {
+                    <a class="@Append("nhsuk-contents-list__link", item.Classes)" href="@item.Href" @attributes="new Attrs().AddUser(item.Attributes)">@ItemContent(item)</a>
+                }
+                @if (item.Items is { Count: > 0 }) { @List(item.Items) }
+            </li>
+        }
+    </ol>;
+
+    private static RenderFragment ItemContent(ContentsListItemsItem item) =>
+        Truthy(item.Html) ? Render.HtmlOrText(item.Html!.Trim(), null) : Render.HtmlOrText(null, item.Text);
+}

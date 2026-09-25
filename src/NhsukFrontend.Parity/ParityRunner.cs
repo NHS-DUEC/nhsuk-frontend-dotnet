@@ -55,7 +55,7 @@ public sealed class ParityRunner : IAsyncDisposable
         return all;
     }
 
-    public async Task<ComponentParity> RunAsync(FixtureSet set)
+    public async Task<ComponentParity> RunAsync(FixtureSet set, bool throughTagHelper = false)
     {
         ComponentRegistry.ByName.TryGetValue(set.Component, out var type);
         var results = new List<ParityResult>();
@@ -63,17 +63,19 @@ public sealed class ParityRunner : IAsyncDisposable
         {
             results.Add(type is null
                 ? ParityResult.Failed(set.Component, fixture, "No .NET component has been written for this upstream component yet.")
-                : await CheckAsync(set.Component, type, fixture));
+                : await CheckAsync(set.Component, type, fixture, throughTagHelper));
         }
         return new ComponentParity(set.Component, set.Name, type, results);
     }
 
-    public async Task<ParityResult> CheckAsync(string component, Type type, Fixture fixture)
+    public async Task<ParityResult> CheckAsync(string component, Type type, Fixture fixture, bool throughTagHelper = false)
     {
         string actual;
         try
         {
-            actual = await RenderAsync(type, fixture);
+            actual = throughTagHelper
+                ? await TagHelperParity.RenderAsync(type, fixture, _services)
+                : await RenderAsync(type, fixture);
         }
         catch (Exception ex)
         {

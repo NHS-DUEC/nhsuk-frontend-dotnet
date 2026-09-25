@@ -1,0 +1,72 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/file-upload/template.njk *@
+<div @attributes="FormGroupAttributes">
+    <NhsukLabel Html="@Label?.Html" Text="@Label?.Text" Id="@Label?.Id" For="@(Label?.For ?? _id)" Size="@Label?.Size"
+                IsPageHeading="@Label?.IsPageHeading" Classes="@Label?.Classes" Attributes="@Label?.Attributes" />
+    @if (_hasHint)
+    {
+        <NhsukHint Html="@Hint!.Html" Text="@Hint.Text" Id="@_hintId" Classes="@Hint.Classes" Attributes="@Hint.Attributes" />
+    }
+    @if (_hasError)
+    {
+        <NhsukErrorMessage Html="@ErrorMessage!.Html" Text="@ErrorMessage.Text" VisuallyHiddenText="@ErrorMessage.VisuallyHiddenText"
+                           Id="@_errorId" Classes="@ErrorMessage.Classes" Attributes="@ErrorMessage.Attributes" />
+    }
+    @if (FormGroup?.BeforeInput is { } before) { @Render.HtmlOrText(before.Html?.Trim(), before.Text) }
+    <input @attributes="InputAttributes">
+    @if (FormGroup?.AfterInput is { } after) { @Render.HtmlOrText(after.Html?.Trim(), after.Text) }
+</div>
+
+@code {
+    private string _id = "", _describedBy = "";
+    private string? _hintId, _errorId;
+    private bool _hasHint, _hasError;
+
+    protected override void OnParametersSet()
+    {
+        _id = Truthy(Id) ? Id! : Name ?? "";
+        _describedBy = Truthy(DescribedBy) ? DescribedBy! : "";
+        _hasHint = Truthy(Hint?.Text) || Truthy(Hint?.Html);
+        _hasError = Truthy(ErrorMessage?.Text) || Truthy(ErrorMessage?.Html);
+        if (_hasHint)
+        {
+            _hintId = Hint!.Id ?? _id + "-hint";
+            _describedBy = (_describedBy + " " + _hintId).Trim();
+        }
+        if (_hasError)
+        {
+            _errorId = ErrorMessage!.Id ?? _id + "-error";
+            _describedBy = (_describedBy + " " + _errorId).Trim();
+        }
+    }
+
+    private Attrs FormGroupAttributes
+    {
+        get
+        {
+            var classNames = "nhsuk-form-group" + (_hasError || ErrorMessage?.IsTrue == true ? " nhsuk-form-group--error" : "");
+            var attrs = new Attrs()
+                .Add("class", Append(classNames, FormGroup?.Classes) + " nhsuk-file-upload")
+                .Add("data-module", "nhsuk-file-upload")
+                .Optional("data-choose-files-button-class-list",
+                    ChooseFilesButtonClassList is null ? null : System.Text.Json.JsonSerializer.Serialize(ChooseFilesButtonClassList));
+            I18n.Message(attrs, "choose-files-button", ChooseFilesButtonText);
+            I18n.Message(attrs, "no-file-chosen", NoFileChosenText);
+            I18n.Messages(attrs, "multiple-files-chosen", MultipleFilesChosenText);
+            I18n.Message(attrs, "drop-instruction", DropInstructionText);
+            I18n.Message(attrs, "entered-drop-zone", EnteredDropZoneText);
+            I18n.Message(attrs, "left-drop-zone", LeftDropZoneText);
+            return attrs.AddUser(FormGroup?.Attributes);
+        }
+    }
+
+    private Attrs InputAttributes => new Attrs()
+        .Add("class", Append("nhsuk-file-upload__input", Classes))
+        .Add("id", _id)
+        .Add("name", Name)
+        .Add("type", "file")
+        .Optional("disabled", Disabled)
+        .Optional("multiple", Multiple)
+        .Optional("aria-describedby", Truthy(_describedBy) ? _describedBy : null)
+        .AddUser(Attributes, AdditionalAttributes);
+}

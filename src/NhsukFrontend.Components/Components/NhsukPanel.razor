@@ -1,0 +1,34 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/panel/template.njk *@
+<div @attributes="PanelAttributes">
+    <NhsukHeading Id="@_heading.Id" Text="@_heading.Text" Html="@_heading.Html" VisuallyHiddenText="@_heading.VisuallyHiddenText"
+                  Caption="@_heading.Caption" Href="@_heading.Href" Level="@_heading.Level" Size="@_heading.Size" Sizes="@(["m", "l", "xl"])"
+                  ClassName="nhsuk-panel__title" ClassPrefix="nhsuk-panel__title--" Classes="@_heading.Classes" Attributes="@_heading.Attributes" />
+    @if (ChildContent is not null || Truthy(Html) || Truthy(Text))
+    {
+        <div class="nhsuk-panel__body"><NhsukContent Caller="ChildContent" Html="@Html" Text="@Text" /></div>
+    }
+</div>
+
+@code {
+    private PanelHeadingOptions _heading = new();
+
+    protected override void OnParametersSet()
+    {
+        // A heading object replaces the deprecated title* options; a heading string only replaces the text.
+        _heading = Heading is { IsShorthand: false } ? Heading : new PanelHeadingOptions
+        {
+            Text = Heading?.Text ?? TitleText, Html = TitleHtml, Level = HeadingLevel, Size = TitleSize, Classes = TitleClasses,
+        };
+    }
+
+    private Attrs PanelAttributes
+    {
+        get
+        {
+            var classNames = "nhsuk-panel";
+            if (Variant == "interruption" && !Contains(Classes, "nhsuk-panel--interruption")) classNames += " nhsuk-panel--interruption";
+            return new Attrs().Add("class", Append(classNames, Classes)).Optional("id", Id).AddUser(Attributes, AdditionalAttributes);
+        }
+    }
+}

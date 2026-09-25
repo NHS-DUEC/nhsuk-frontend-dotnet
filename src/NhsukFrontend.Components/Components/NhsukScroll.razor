@@ -1,0 +1,22 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/scroll/template.njk *@
+<div @attributes="ScrollAttributes">
+    <div class="nhsuk-scroll__content" role="region" aria-labelledby="@(Truthy(LabelledBy) ? LabelledBy : null)">
+        @if (ChildContent is not null) { @ChildContent }
+        else if (Truthy(Html)) { @((MarkupString)Html!.Trim()) }
+        else if (Truthy(Text)) { <p>@Text!.Trim()</p> }
+    </div>
+</div>
+
+@code {
+    private Attrs ScrollAttributes
+    {
+        get
+        {
+            var classNames = "nhsuk-scroll";
+            if (Variant == "reverse" && !Contains(Classes, "nhsuk-scroll--reverse")) classNames += " nhsuk-scroll--reverse";
+            return new Attrs().Add("class", Append(classNames, Classes)).Optional("id", Id).Add("data-module", "nhsuk-scroll")
+                .AddUser(Attributes, AdditionalAttributes);
+        }
+    }
+}

@@ -22,7 +22,7 @@ public static class Snippets
             foreach (var option in fixture.Context.EnumerateObject())
             {
                 if (!properties.TryGetValue(option.Name, out var property)) continue;
-                attributes.Add($"{property.Name}={Attribute(property.PropertyType, option.Value)}");
+                attributes.Add($"{property.Name}={Attribute(property.PropertyType, option.Value, property.GetCustomAttribute<KeepFalseAttribute>() is not null)}");
             }
         }
 
@@ -53,6 +53,65 @@ public static class Snippets
         return sb.Append("</").Append(name).Append('>').ToString();
     }
 
+    /// <summary>
+    /// The same example as an MVC / Razor Pages tag helper, or null for the page template (a layout in MVC).
+    /// Plain text uses the short attribute (<c>heading="…"</c>); anything richer uses <c>heading-options</c>.
+    /// Deprecated options have no attribute, so they go in the <c>options</c> object.
+    /// </summary>
+    public static string? TagHelper(Type componentType, Fixture fixture)
+    {
+        var helperType = TagHelperParity.TagHelperFor(componentType);
+        if (helperType is null) return null;
+        var tag = helperType.GetCustomAttributes<Microsoft.AspNetCore.Razor.TagHelpers.HtmlTargetElementAttribute>().First().Tag;
+        var names = helperType.GetProperties()
+            .Select(p => (p, attr: p.GetCustomAttribute<Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeNameAttribute>()?.Name))
+            .Where(x => x.attr is not null)
+            .ToDictionary(x => x.p.Name, x => x.attr!);
+        var parameters = componentType.GetProperties()
+            .Select(p => (p, attr: p.GetCustomAttribute<MacroOptionAttribute>()))
+            .Where(x => x.attr is not null)
+            .ToDictionary(x => x.attr!.Name, x => x.p);
+
+        var attributes = new List<string>();
+        var leftovers = new Dictionary<string, JsonElement>();
+        if (fixture.Context.ValueKind == JsonValueKind.Object)
+        {
+            foreach (var option in fixture.Context.EnumerateObject())
+            {
+                if (!parameters.TryGetValue(option.Name, out var parameter)) continue;
+                var keepFalse = parameter.GetCustomAttribute<KeepFalseAttribute>() is not null;
+                var hasPair = names.ContainsKey(parameter.Name + "Options");
+                if (hasPair && option.Value.ValueKind == JsonValueKind.String && names.TryGetValue(parameter.Name, out var text))
+                    attributes.Add($"{text}={Attribute(typeof(string), option.Value)}");
+                else if (hasPair && IsTextOnly(option.Value) && names.TryGetValue(parameter.Name, out var shortName))
+                    attributes.Add($"{shortName}={Attribute(typeof(string), option.Value.GetProperty("text"))}"); // { text: "…" }
+                else if (hasPair)
+                    attributes.Add($"{names[parameter.Name + "Options"]}={Attribute(parameter.PropertyType, option.Value, keepFalse)}");
+                else if (names.TryGetValue(parameter.Name, out var name))
+                    attributes.Add($"{name}={Attribute(parameter.PropertyType, option.Value, keepFalse)}");
+                else
+                    leftovers[option.Name] = option.Value;
+            }
+        }
+        if (leftovers.Count > 0)
+        {
+            var optionsType = componentType.Assembly.GetType($"NhsukFrontend.Components.{componentType.Name["Nhsuk".Length..]}Options")!;
+            attributes.Add($"options={Attribute(optionsType, JsonSerializer.SerializeToElement(leftovers))}");
+        }
+
+        var sb = new StringBuilder("<").Append(tag);
+        var multiline = attributes.Sum(a => a.Length) > 70 || attributes.Count > 3;
+        foreach (var attribute in attributes) sb.Append(multiline ? "\n    " : " ").Append(attribute);
+        if (fixture.CallBlock is null) return sb.Append(multiline ? "\n/>" : " />").ToString();
+        sb.Append(multiline ? "\n>" : ">");
+        sb.Append("\n    ").Append(fixture.CallBlock.Trim().Replace("\n", "\n    ")).Append('\n');
+        return sb.Append("</").Append(tag).Append('>').ToString();
+    }
+
+    private static bool IsTextOnly(JsonElement value) =>
+        value.ValueKind == JsonValueKind.Object && value.EnumerateObject().Count() == 1
+        && value.TryGetProperty("text", out var text) && text.ValueKind == JsonValueKind.String;
+
     public static string Nunjucks(string component, Fixture fixture)
     {
         var json = JsonSerializer.Serialize(fixture.Context, new JsonSerializerOptions
@@ -69,7 +128,7 @@ public static class Snippets
             : $"{import}{{% call {macro}({json}) %}}\n  {fixture.CallBlock.Trim()}\n{{% endcall %}}";
     }
 
-    private static string Attribute(Type type, JsonElement value)
+    private static string Attribute(Type type, JsonElement value, bool keepFalse = false)
     {
         var target = Nullable.GetUnderlyingType(type) ?? type;
         if (target == typeof(string) && value.ValueKind == JsonValueKind.String)
@@ -78,11 +137,11 @@ public static class Snippets
             return s.Contains('"') || s.Contains('@') || s.Contains('\n') ? $"@({CSharp(type, value)})" : $"\"{s}\"";
         }
         if (target == typeof(bool) || target == typeof(int)) return $"\"{value.GetRawText().Trim('"').ToLowerInvariant()}\"";
-        return $"\"@({CSharp(type, value, 1)})\"";
+        return $"\"@({CSharp(type, value, 1, keepFalse)})\"";
     }
 
     /// <summary>Renders a JSON value as a C# expression of the given parameter type.</summary>
-    private static string CSharp(Type type, JsonElement value, int depth = 0)
+    private static string CSharp(Type type, JsonElement value, int depth = 0, bool keepFalse = false)
     {
         var target = Nullable.GetUnderlyingType(type) ?? type;
         var indent = new string(' ', 4 * (depth + 1));
@@ -102,6 +161,8 @@ public static class Snippets
         if (typeof(NhsukOptions).IsAssignableFrom(target))
         {
             if (value.ValueKind == JsonValueKind.String) return Literal(value.GetString()!); // implicit string conversion
+            // `false` usually means "absent", but for [KeepFalse] options it means "leave this out".
+            if (value.ValueKind == JsonValueKind.False && keepFalse) return $"new {target.Name} {{ IsFalse = true }}";
             if (value.ValueKind is JsonValueKind.True or JsonValueKind.False) return value.ValueKind == JsonValueKind.True ? "true" : "null";
             var props = target.GetProperties()
                 .Select(p => (p, name: p.GetCustomAttribute<JsonPropertyNameAttribute>()?.Name))
@@ -109,7 +170,7 @@ public static class Snippets
                 .ToDictionary(x => x.name!, x => x.p);
             var entries = value.EnumerateObject()
                 .Where(p => props.ContainsKey(p.Name))
-                .Select(p => $"{indent}{props[p.Name].Name} = {CSharp(props[p.Name].PropertyType, p.Value, depth + 1)},");
+                .Select(p => $"{indent}{props[p.Name].Name} = {CSharp(props[p.Name].PropertyType, p.Value, depth + 1, props[p.Name].GetCustomAttribute<KeepFalseAttribute>() is not null)},");
             return $"new {target.Name}\n{closing}{{\n{string.Join("\n", entries)}\n{closing}}}";
         }
 

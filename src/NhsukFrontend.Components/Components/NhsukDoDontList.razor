@@ -1,0 +1,35 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/do-dont-list/template.njk: a feature card containing a tick or cross list. *@
+<NhsukCard Id="@Id" Heading="@CardHeading" Classes="@Classes" Attributes="@Attributes" AdditionalAttributes="@AdditionalAttributes" Variant="feature">
+    <ul class="@("nhsuk-list nhsuk-list--" + _icon)" role="list">
+        @foreach (var data in Items ?? [])
+        {
+            if (data is null) continue;
+            var (text, html) = Truthy(data.Item) ? (data.Item, (string?)null) : (data.Text, data.Html);
+            <li>
+                <NhsukIcon Name="@_icon" />
+                @if (HidePrefix != true && (Truthy(PrefixText) || _icon == "cross")) { @((Truthy(PrefixText) ? PrefixText : "do not") + " ") }
+                @Render.HtmlOrText(html?.Trim(), text?.Trim())
+            </li>
+        }
+    </ul>
+</NhsukCard>
+
+@code {
+    private string _icon = "tick";
+
+    protected override void OnParametersSet() => _icon = (Truthy(Icon) ? Icon : Type) == "cross" ? "cross" : "tick";
+
+    private CardHeadingOptions CardHeading
+    {
+        get
+        {
+            var heading = Heading is { IsShorthand: false } ? Heading : new DoDontListHeadingOptions { Text = Heading?.Text ?? Title, Level = HeadingLevel };
+            return new CardHeadingOptions
+            {
+                Id = heading.Id, Text = heading.Text, Html = heading.Html, VisuallyHiddenText = heading.VisuallyHiddenText,
+                Level = heading.Level ?? 3, Classes = heading.Classes, Attributes = heading.Attributes,
+            };
+        }
+    }
+}

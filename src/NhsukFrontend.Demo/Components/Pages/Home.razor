@@ -47,9 +47,16 @@
             </tbody>
         </table>
 
-        <h2>Not ported yet</h2>
-        <p>These upstream components have generated-ready options and fixtures, but no Razor markup yet:</p>
-        <p>@string.Join(", ", FixtureStore.Manifest.NotYetPorted)</p>
+        @if (FixtureStore.Manifest.NotYetPorted.Count > 0)
+        {
+            <h2>Not ported yet</h2>
+            <p>These upstream components have generated-ready options and fixtures, but no Razor markup yet:</p>
+            <p>@string.Join(", ", FixtureStore.Manifest.NotYetPorted)</p>
+        }
+        else
+        {
+            <p>Every component in nhsuk-frontend @NhsukFrontendUpstream.Version is ported.</p>
+        }
     }
 </DemoPage>
 

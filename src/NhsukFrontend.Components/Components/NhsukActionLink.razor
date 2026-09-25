@@ -1,0 +1,26 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/action-link/template.njk *@
+<NhsukElement Tag="@_element" Attributes="LinkAttributes">
+    <NhsukIcon Name="arrow-right-circle" />
+    <span class="nhsuk-action-link__text"><NhsukContent Caller="ChildContent" Html="@Html" Text="@Text" /></span>
+</NhsukElement>
+
+@code {
+    private string _element = "a";
+
+    protected override void OnParametersSet() =>
+        _element = Truthy(Element) ? Element!.ToLowerInvariant() : Truthy(Href) && !Truthy(Type) ? "a" : "button";
+
+    private Attrs LinkAttributes
+    {
+        get
+        {
+            var classNames = "nhsuk-action-link";
+            if (Variant == "reverse" && !Contains(Classes, "nhsuk-action-link--reverse")) classNames += " nhsuk-action-link--reverse";
+            var attrs = new Attrs().Add("class", Append(classNames, Classes)).Optional("id", Id);
+            if (_element == "button") attrs.Add("type", Default(Type, "submit"));
+            else if (_element == "a") attrs.Add("href", Default(Href, "#")).Optional("target", OpenInNewWindow == true ? "_blank" : null);
+            return attrs.AddUser(Attributes, AdditionalAttributes);
+        }
+    }
+}

@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
   <!--
-    Compiles every Razor snippet shown on the demo site, to prove the documented usage is valid.
+    Compiles every Razor and tag helper snippet shown on the demo site, to prove the documented usage is valid.
     CI writes AllSnippets.razor here first by running the ParityCheck tool with the emit-snippets flag
     (see .github/workflows/ci.yml).
     Deliberately not in the solution, so Heroku never builds it.
@@ -10,6 +10,10 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <IsPackable>false</IsPackable>
+    <!-- Also compile AllTagHelperSnippets.cshtml, the same examples as MVC tag helpers. -->
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <!-- Upstream examples deliberately use deprecated options; users of them do get this warning. -->
+    <NoWarn>$(NoWarn);CS0618</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />

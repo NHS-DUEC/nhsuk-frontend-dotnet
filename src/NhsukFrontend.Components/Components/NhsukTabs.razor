@@ -1,0 +1,38 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/tabs/template.njk *@
+<div @attributes="TabsAttributes">
+    <NhsukHeading Text="@(VisuallyHiddenText ?? Title ?? "Contents")" Level="2" ClassName="nhsuk-tabs__title" />
+    @if (Items is { Count: > 0 })
+    {
+        <ul class="nhsuk-tabs__list">
+            @for (var i = 0; i < Items.Count; i++)
+            {
+                if (Items[i] is not { } item) continue;
+                var index = i + 1;
+                <li class="@("nhsuk-tabs__list-item" + (index == 1 ? " nhsuk-tabs__list-item--selected" : ""))">
+                    <a class="nhsuk-tabs__tab" href="@("#" + PanelId(item, index))" @attributes="new Attrs().AddUser(item.Attributes)">@item.Label</a>
+                </li>
+            }
+        </ul>
+        @for (var i = 0; i < Items.Count; i++)
+        {
+            if (Items[i] is not { } item) continue;
+            var index = i + 1;
+            <div class="@("nhsuk-tabs__panel" + (index > 1 ? " nhsuk-tabs__panel--hidden" : ""))" id="@PanelId(item, index)" @attributes="new Attrs().AddUser(item.Panel?.Attributes)">
+                @if (Truthy(item.Panel?.Html)) { @((MarkupString)item.Panel!.Html!.Trim()) }
+                else if (Truthy(item.Panel?.Text)) { <p>@item.Panel!.Text!.Trim()</p> }
+            </div>
+        }
+    }
+</div>
+
+@code {
+    // Upstream falls back to "undefined-1" and so on when neither item.id nor idPrefix is given.
+    private string PanelId(TabsItemsItem item, int index) => Truthy(item.Id) ? item.Id! : (Truthy(IdPrefix) ? IdPrefix : "undefined") + "-" + index;
+
+    private Attrs TabsAttributes => new Attrs()
+        .Add("class", Append("nhsuk-tabs", Classes))
+        .Optional("id", Id)
+        .Add("data-module", "nhsuk-tabs")
+        .AddUser(Attributes, AdditionalAttributes);
+}
