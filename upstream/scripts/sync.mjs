@@ -53,12 +53,22 @@ function loadOptions(component) {
   return JSON.parse(fs.readFileSync(path.join(distNhsuk, 'components', component, 'macro-options.json'), 'utf8'))
 }
 
+// Adds the options from port.config.json's additionalOptions, skipping any that upstream now declares itself
+// (upstream fixed its option file), with a note to delete the workaround.
+const redundantAdditions = []
+function withAdditions(params, key) {
+  const declared = new Set(params.map((p) => p.name))
+  const extra = config.additionalOptions?.[key] ?? []
+  for (const p of extra) if (declared.has(p.name)) redundantAdditions.push(`${key}: ${p.name}`)
+  return [...params, ...extra.filter((p) => !declared.has(p.name))]
+}
+
 const shorthandClasses = new Set()
 const tagHelperSpecs = []
 
 function generateComponent(component) {
   const nested = [] // extra classes emitted alongside
-  const options = [...loadOptions(component), ...(config.additionalOptions?.[component] ?? [])]
+  const options = withAdditions(loadOptions(component), component)
 
   function typeFor(param, pathParts) {
     const key = [component, ...pathParts].join('/')
@@ -94,7 +104,7 @@ function generateComponent(component) {
     const name = pascal(component) + pathParts.map(pascal).join('') + (isItem ? 'Item' : 'Options')
     const key = [component, ...pathParts].join('/')
     if (!nested.some((n) => n.name === name)) {
-      nested.push({ name, params: [...withAlias(param), ...(config.additionalOptions?.[key] ?? [])], pathParts, shorthand: config.overrides[key]?.shorthand, shorthandDefaults: config.overrides[key]?.shorthandDefaults })
+      nested.push({ name, params: withAdditions(withAlias(param), key), pathParts, shorthand: config.overrides[key]?.shorthand, shorthandDefaults: config.overrides[key]?.shorthandDefaults })
     }
     return name
   }
@@ -449,6 +459,12 @@ for (const dir of outputDirs) {
 for (const [file, content] of outputs) {
   const expected = Buffer.isBuffer(content) ? content : Buffer.from(content)
   if (!fs.existsSync(file) || !fs.readFileSync(file).equals(expected)) stale.push(`outdated: ${path.relative(repoRoot, file)}`)
+}
+
+if (redundantAdditions.length) {
+  console.warn(`nhsuk-frontend ${version} now declares these options itself, so their additionalOptions entries in port.config.json`)
+  console.warn('are ignored and can be deleted (and their rows in UPSTREAM-NOTES.md):')
+  for (const r of [...new Set(redundantAdditions)]) console.warn(`  ${r}`)
 }
 
 if (checkOnly) {

@@ -34,12 +34,17 @@ jobs:
           echo "current=$current" >> "$GITHUB_OUTPUT"
           echo "latest=$latest" >> "$GITHUB_OUTPUT"
 
+      # A sync failure is reported in the pull request rather than stopping the job, so every release gets a PR.
       - name: Bump pin and sync
         if: steps.versions.outputs.current != steps.versions.outputs.latest
+        id: sync
         working-directory: upstream
         run: |
           npm install --save-exact nhsuk-frontend@${{ steps.versions.outputs.latest }}
-          npm run sync
+          set +e
+          npm run sync > "$RUNNER_TEMP/sync.log" 2>&1
+          echo "exit=$?" >> "$GITHUB_OUTPUT"
+          cat "$RUNNER_TEMP/sync.log"
 
       - name: Build and run parity check
         if: steps.versions.outputs.current != steps.versions.outputs.latest
@@ -55,7 +60,15 @@ jobs:
           echo "Test summary: $(grep -E 'Passed!|Failed!' test.log | tail -1)" >> parity.log
           {
             echo 'report<<EOF'
+            if [ "${{ steps.sync.outputs.exit }}" != "0" ]; then
+              echo "**Sync failed** (exit code ${{ steps.sync.outputs.exit }}), so only the version pin has changed. Run \`npm run sync\` in /upstream to see why."
+              echo
+            fi
             echo "Build exit code: $build (non-zero usually means an option was renamed or removed upstream)"
+            echo
+            echo '```'
+            tail -n 40 "$RUNNER_TEMP/sync.log"
+            echo '```'
             echo
             echo '```'
             grep -E "error|FAIL|PASS|match upstream|^ +[-+] " build.log parity.log | head -300
