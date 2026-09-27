@@ -1,18 +1,6 @@
-# Third-party notices
-
-## NHS.UK frontend
-
-`src/NhsukFrontend.Components/wwwroot/`, `upstream/snapshot/` and `src/NhsukFrontend.Parity/Fixtures/`
-contain files copied from [nhsuk-frontend](https://github.com/nhsuk/nhsuk-frontend), and the Razor
-components are ports of its Nunjucks templates.
-
-nhsuk-frontend is released under the MIT License. Its licence and copyright notice, which apply to those
-files and to the ported templates, are reproduced here:
-
-```
 MIT License
 
-Copyright (c) 2019 NHS England
+Copyright (c) 2026 nhsuk-frontend-dotnet contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -31,8 +19,5 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-```
 
-The NHS logo and identity are not covered by that licence. Their use is governed by the
-[NHS identity guidelines](https://www.england.nhs.uk/nhsidentity/). The Frutiger font is loaded from
-`assets.nhs.uk` and is not redistributed here.
+The NHS logo and identity are not covered by this licence. See THIRD-PARTY-NOTICES.md.

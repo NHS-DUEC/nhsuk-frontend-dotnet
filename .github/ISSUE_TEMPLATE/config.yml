@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: A problem with a component's design, content or accessibility
+    url: https://github.com/nhsuk/nhsuk-frontend/issues
+    about: This port renders nhsuk-frontend's HTML exactly, so design issues belong upstream.
+  - name: Security vulnerability
+    url: https://github.com/NHS-DUEC/nhsuk-frontend-dotnet/security/advisories/new
+    about: Please report security problems privately.

@@ -274,3 +274,28 @@ public static class MvcFields
     }
 }
 
+
+/// <summary><c>&lt;nhsuk-frontend-styles /&gt;</c> in <c>&lt;head&gt;</c>: the NHS.UK frontend stylesheet.</summary>
+[HtmlTargetElement("nhsuk-frontend-styles", TagStructure = TagStructure.WithoutEndTag)]
+public sealed class NhsukFrontendStylesTagHelper : TagHelper
+{
+    public override void Process(TagHelperContext context, TagHelperOutput output)
+    {
+        output.TagName = null;
+        output.Content.SetHtmlContent(NhsukFrontendAssets.HeadHtml);
+    }
+}
+
+/// <summary>
+/// <c>&lt;nhsuk-frontend-scripts /&gt;</c> at the end of <c>&lt;body&gt;</c>: loads NHS.UK frontend's JavaScript
+/// and initialises every component on the page.
+/// </summary>
+[HtmlTargetElement("nhsuk-frontend-scripts", TagStructure = TagStructure.WithoutEndTag)]
+public sealed class NhsukFrontendScriptsTagHelper : TagHelper
+{
+    public override void Process(TagHelperContext context, TagHelperOutput output)
+    {
+        output.TagName = null;
+        output.Content.SetHtmlContent(NhsukFrontendAssets.BodyEndHtml);
+    }
+}

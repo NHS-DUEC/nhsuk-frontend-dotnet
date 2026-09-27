@@ -1,0 +1,38 @@
+name: Bug in the .NET port
+description: The HTML differs from nhsuk-frontend, an option doesn't work, or something breaks in .NET.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: code
+    attributes:
+      label: Your Razor code
+      description: The tag helper or component you used.
+      render: cshtml
+    validations:
+      required: true
+  - type: textarea
+    id: html
+    attributes:
+      label: The HTML it produced, and what nhsuk-frontend produces (if you know)
+      render: html
+  - type: dropdown
+    id: stack
+    attributes:
+      label: How are you using it?
+      options:
+        - Razor Pages or MVC (tag helpers)
+        - Blazor
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      placeholder: 10.6.0-beta.1

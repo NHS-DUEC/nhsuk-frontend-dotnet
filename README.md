@@ -1,13 +1,33 @@
-# NHS.UK frontend for ASP.NET Core (proof of concept)
+# nhsuk-frontend-dotnet
 
-Razor components that render the same HTML as the [NHS.UK frontend](https://github.com/nhsuk/nhsuk-frontend)
-Nunjucks macros. They are generated from, and tested against, a pinned upstream release (currently **10.6.0**).
+**NHS.UK frontend for ASP.NET Core.** Tag helpers for Razor Pages and MVC, and Razor components for Blazor, that
+render the same HTML as the [NHS.UK frontend](https://github.com/nhsuk/nhsuk-frontend) Nunjucks macros. They are
+generated from, and tested against, a pinned upstream release (currently **10.6.0**).
+
+> **A community project.** nhsuk-frontend-dotnet is not maintained by NHS England or the NHS design system team.
+> It is looked after by volunteers on a best-efforts basis. For the design system itself, see the
+> [NHS digital service manual](https://service-manual.nhs.uk/design-system) and
+> [nhsuk-frontend](https://github.com/nhsuk/nhsuk-frontend). Use of the NHS logo is governed by the
+> [NHS identity guidelines](https://www.england.nhs.uk/nhsidentity/), not by this project's licence.
 
 - **All 43 components** in nhsuk-frontend and the page template are ported.
 - All **864** examples match upstream's HTML: 859 from upstream's own fixtures, plus 5 page template examples
-  rendered from `template.njk`. Upstream's JavaScript runs unchanged against the output.
-- The components work in Blazor (static server rendering) and in Razor Pages / MVC, and form components bind
-  to a model: names, values, labels and validation errors come from the model, in both stacks.
+  rendered from `template.njk`. The tag helpers are tested against the same examples. Upstream's JavaScript runs
+  unchanged against the output.
+- Form components bind to a model: names, values, labels and validation errors come from the model, in both
+  Razor Pages/MVC and Blazor.
+
+## Installing
+
+The package will be published to NuGet as **`nhsuk-frontend-dotnet`**. Until then, reference
+`src/NhsukFrontend.Components` from your solution. Once published:
+
+```sh
+dotnet add package nhsuk-frontend-dotnet --prerelease
+```
+
+The package version follows the nhsuk-frontend release it is generated from: `10.6.0-beta.1` is the first beta
+built from nhsuk-frontend 10.6.0. The C# namespace is `NhsukFrontend.Components`.
 
 ## How it stays in step with upstream
 
@@ -88,6 +108,32 @@ In `_ViewImports.cshtml`:
 @using NhsukFrontend.Components
 ```
 
+A minimal `_Layout.cshtml`. The page template is a layout in MVC; the demo's
+`src/NhsukFrontend.Demo/Pages/Shared/_NhsukLayout.cshtml` is a fuller example.
+
+```cshtml
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>@ViewData["Title"] – Your service – NHS</title>
+    <link rel="icon" href="/assets/images/favicon.ico" sizes="48x48">
+    <nhsuk-frontend-styles />
+</head>
+<body>
+    <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' nhsuk-frontend-supported' : '');</script>
+    <nhsuk-skip-link />
+    <nhsuk-header service="Your service" />
+    <div class="nhsuk-width-container">
+        <main class="nhsuk-main-wrapper" id="maincontent">@RenderBody()</main>
+    </div>
+    <nhsuk-footer />
+    <nhsuk-frontend-scripts />
+</body>
+</html>
+```
+
 Each component is a tag named after it, with an attribute for each Nunjucks option (`isPageHeading` becomes
 `is-page-heading`), so the [design system documentation](https://service-manual.nhs.uk/design-system) applies directly:
 
@@ -110,7 +156,6 @@ Each component is a tag named after it, with an attribute for each Nunjucks opti
 - Any other HTML attribute on the tag (`data-*`, `aria-*`, `required`…) is passed to the component's main element.
 - `options="@(new PanelOptions { … })"` passes a whole options object built in C#; attributes on the tag win over it.
   Deprecated upstream options are only available this way.
-- The page template is a layout in MVC: see `src/NhsukFrontend.Demo/Pages/Shared/_NhsukLayout.cshtml`.
 
 The demo site shows every upstream example as a tag helper, a Blazor component and the original Nunjucks, and CI
 compiles all of them. The tag helpers are generated from upstream's `macro-options.json`, like the C# option classes,
@@ -222,18 +267,24 @@ Review Apps; `app.json` configures them. Upstream-upgrade pull requests then get
 ## GitHub setup
 
 - Settings → Actions → General: allow GitHub Actions to create and approve pull requests (for the upgrade workflow).
+- Settings → Advanced Security: turn on private vulnerability reporting, which `SECURITY.md` relies on.
 - Pull requests opened with the default token don't trigger other workflows, so CI won't run on upgrade PRs
   until you add a fine-grained personal access token (contents and pull requests: read and write) as the
   `UPSTREAM_PR_TOKEN` repository secret. The upgrade PR body includes its own parity and test report either way.
 
-## Known limitations of the proof of concept
+## Known limitations
 
 - A summary list inside a card is supported; summary list `html`/`caller` content is not (upstream doesn't declare it).
 - Blazor binding covers static server rendering with `EditForm`. It should work with interactive render modes
   but hasn't been tested there.
 - An `attributes` option that repeats an attribute the component already sets (such as `class`) renders once in
   Razor (last value wins) but twice in Nunjucks (the browser uses the first). No upstream fixture does this.
-- The xUnit project and GitHub workflows were written where NuGet and GitHub were unreachable: the tests were
-  compiled and run against a stand-in for xUnit, and their first real run will be in CI.
 
-See `THIRD-PARTY-NOTICES.md` for upstream licensing, and the NHS identity guidelines for use of the NHS logo.
+## Contributing, security and licence
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for how to raise issues and propose changes, and [SECURITY.md](SECURITY.md)
+for reporting vulnerabilities privately.
+
+Released under the [MIT licence](LICENSE). Files copied or ported from nhsuk-frontend are also MIT-licensed,
+copyright NHS England; see [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md). The NHS logo and identity are not
+covered by either licence.

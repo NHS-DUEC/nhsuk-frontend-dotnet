@@ -65,3 +65,7 @@ jobs:
           (cd src/NhsukFrontend.Demo/bin/publish && ./NhsukFrontend.Demo --urls http://127.0.0.1:5000 > /tmp/site.log 2>&1 &)
           for i in $(seq 1 30); do curl -sf http://127.0.0.1:5000/healthz > /dev/null && break; sleep 1; done
           tools/smoke-test.sh http://127.0.0.1:5000 || { cat /tmp/site.log; exit 1; }
+
+      # Pack the NuGet package, install it into a brand-new Razor Pages app, publish and check it works.
+      - name: Install the package into a new app
+        run: tools/package-test.sh
