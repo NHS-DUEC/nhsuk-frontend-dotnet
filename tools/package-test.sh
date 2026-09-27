@@ -11,6 +11,7 @@ trap 'kill "${APP_PID:-0}" 2>/dev/null || true; rm -rf "$WORK"' EXIT
 
 dotnet pack "$ROOT/src/NhsukFrontend.Components" -c Release -o "$WORK/packages" -v q ${PACK_ARGS:-}
 cd "$WORK"
+echo "Using .NET SDK $(dotnet --version)"
 dotnet new webapp -n TrialService -o app --no-restore > /dev/null
 cd app
 cat > nuget.config <<XML
@@ -24,7 +25,18 @@ cat > nuget.config <<XML
 </configuration>
 XML
 dotnet add package nhsuk-frontend-dotnet --prerelease > /dev/null
-sed -i 's|^app.UseStaticFiles();|app.UseNhsukFrontendAssets();\napp.UseStaticFiles();|' Program.cs
+# Our own Program.cs rather than editing the template's, which differs between .NET versions
+# (from .NET 9 it uses MapStaticAssets instead of UseStaticFiles).
+cat > Program.cs <<'CS'
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddRazorPages();
+var app = builder.Build();
+app.UseNhsukFrontendAssets();
+app.UseStaticFiles();
+app.UseRouting();
+app.MapRazorPages();
+app.Run();
+CS
 printf '@addTagHelper *, NhsukFrontend.Components\n@using NhsukFrontend.Components\n' >> Pages/_ViewImports.cshtml
 cat > Pages/Index.cshtml <<'CSHTML'
 @page
@@ -47,8 +59,12 @@ for _ in $(seq 1 30); do curl -sf -o /dev/null "http://127.0.0.1:$PORT/" && brea
 
 html=$(curl -sf "http://127.0.0.1:$PORT/")
 grep -q 'class="nhsuk-panel"' <<<"$html" || { echo "FAIL  the panel tag helper did not render"; cat ../app.log; exit 1; }
-for path in $(grep -oE '(href|src|from )["'"'"'][^"'"'"']*_content[^"'"'"']*' <<<"$html" | sed -E "s/^(href|src|from )[\"']//") /assets/images/favicon.ico; do
+CSS=/_content/NhsukFrontend.Components/nhsuk-frontend.min.css
+JS=/_content/NhsukFrontend.Components/nhsuk-frontend.min.js
+grep -qF "href=\"$CSS\"" <<<"$html" || { echo "FAIL  <nhsuk-frontend-styles /> did not link $CSS"; exit 1; }
+grep -qF "$JS" <<<"$html" || { echo "FAIL  <nhsuk-frontend-scripts /> did not load $JS"; exit 1; }
+for path in "$CSS" "$JS" /assets/images/favicon.ico; do
   code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$PORT$path")
-  [[ "$code" == 200 ]] && echo "ok    $path" || { echo "FAIL  $path returned $code"; exit 1; }
+  [[ "$code" == 200 ]] && echo "ok    $path" || { echo "FAIL  $path returned $code"; cat ../app.log; exit 1; }
 done
 echo "The package installs and works in a new Razor Pages app."
