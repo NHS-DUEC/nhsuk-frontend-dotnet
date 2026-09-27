@@ -36,6 +36,8 @@ NUGET_ORG="${NUGET_ORG_SOURCE-https://api.nuget.org/v3/index.json}"
 } > nuget.config
 dotnet add package nhsuk-frontend-dotnet --prerelease
 # Use the template's own Program.cs, whichever .NET version made it, adding just the one setup line.
+# The official templates use Windows line endings, so normalise them first or the anchors below never match.
+sed -i 's/\r$//' Program.cs
 grep -q '^var builder = WebApplication.CreateBuilder(args);$' Program.cs || { echo "FAIL  unexpected Program.cs template"; cat Program.cs; exit 1; }
 sed -i 's|^var builder = WebApplication.CreateBuilder(args);$|&\nbuilder.Services.AddNhsukFrontend();|' Program.cs
 printf '@addTagHelper *, NhsukFrontend.Components\n@using NhsukFrontend.Components\n' >> Pages/_ViewImports.cshtml

@@ -92,12 +92,14 @@ dotnet run --project src/NhsukFrontend.Demo
 Every component works in **Razor Pages and MVC** as a tag helper, and in **Blazor** as a Razor component. Both
 render the same HTML, and both are tested against every upstream example.
 
-In `Program.cs`:
+In `Program.cs`, anywhere before `builder.Build()`:
 
 ```csharp
-app.UseNhsukFrontendAssets(); // serves images at /assets, where the compiled CSS expects them
-app.UseStaticFiles();
+builder.Services.AddNhsukFrontend(); // serves images at /assets, where the compiled CSS expects them
 ```
+
+This works with the startup code from any .NET template (8, 9 or 10), whatever order the rest of `Program.cs` is in.
+Apps already calling `app.UseNhsukFrontendAssets()` keep working; that line must come before `app.UseRouting()`.
 
 ### Razor Pages and MVC
 

@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Static server-side rendering only: no WebSockets or WebAssembly needed on Heroku.
 builder.Services.AddRazorComponents();
 builder.Services.AddRazorPages();
+builder.Services.AddNhsukFrontend();
 builder.Services.AddSingleton<ParityReport>();
 
 var app = builder.Build();
@@ -26,7 +27,6 @@ if (!app.Environment.IsDevelopment())
 // Static rendering can't use the Router's NotFound content, so re-run the pipeline for a proper 404 page.
 app.UseStatusCodePagesWithReExecute("/not-found");
 
-app.UseNhsukFrontendAssets();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
