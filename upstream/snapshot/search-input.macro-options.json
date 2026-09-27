@@ -14,6 +14,20 @@
     "released": "10.5.0"
   },
   {
+    "name": "type",
+    "type": "string",
+    "required": false,
+    "description": "Type of input control, for example, an email input control. Defaults to `\"search\"`.",
+    "released": "10.5.0"
+  },
+  {
+    "name": "inputmode",
+    "type": "string",
+    "required": false,
+    "description": "Optional value for [the `inputmode` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode).",
+    "released": "10.5.0"
+  },
+  {
     "name": "value",
     "type": "string",
     "required": false,
@@ -237,10 +251,24 @@
     "released": "10.5.0"
   },
   {
-    "name": "pattern",
+    "name": "placeholder",
     "type": "string",
     "required": false,
-    "description": "Attribute to provide a regular expression pattern, used to match allowed character combinations for the input value.",
+    "description": "Attribute to provide placeholder text for the search input.",
+    "released": "10.5.0"
+  },
+  {
+    "name": "spellcheck",
+    "type": "boolean",
+    "required": false,
+    "description": "Optional field to enable or disable the `spellcheck` attribute on the search input.",
+    "released": "10.5.0"
+  },
+  {
+    "name": "autocapitalize",
+    "type": "string",
+    "required": false,
+    "description": "Optional field to enable or disable autocapitalisation of user input. See the [Autocapitalization section in the HTML standard](https://html.spec.whatwg.org/multipage/interaction.html#autocapitalization) for a full list of values that can be used.",
     "released": "10.5.0"
   },
   {

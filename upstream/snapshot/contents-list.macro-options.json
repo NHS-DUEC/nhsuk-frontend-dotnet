@@ -10,14 +10,14 @@
     "name": "items",
     "type": "array",
     "required": true,
-    "description": "Array of content list items objects.",
+    "description": "Array of contents list items objects.",
     "released": "1.0.0",
     "params": [
       {
         "name": "href",
         "type": "string",
         "required": true,
-        "description": "The `href` attribute for the content list item label. Required unless `item.current` is set.",
+        "description": "The contents list item `href` attribute. Required unless `item.current` is set.",
         "released": "1.0.0"
       },
       {
@@ -31,28 +31,28 @@
         "name": "text",
         "type": "string",
         "required": true,
-        "description": "If `html` is set, this is not required. Text to use within each content list item label. If `html` is provided, the `text` argument will be ignored.",
+        "description": "If `html` is set, this is not required. Text to use within each contents list item. If `html` is provided, the `text` option will be ignored.",
         "released": "1.0.0"
       },
       {
         "name": "html",
         "type": "string",
         "required": true,
-        "description": "If `text` is set, this is not required. HTML to use within each content list item label. If `html` is provided, the `text` argument will be ignored.",
+        "description": "If `text` is set, this is not required. HTML to use within each contents list item. If `html` is provided, the `text` option will be ignored.",
         "released": "10.2.0"
       },
       {
         "name": "classes",
         "type": "string",
         "required": false,
-        "description": "Classes to add to the content list item label.",
+        "description": "Classes to add to the contents list item.",
         "released": "10.2.0"
       },
       {
         "name": "attributes",
         "type": "object",
         "required": false,
-        "description": "HTML attributes (for example data attributes) to add to the content list item label.",
+        "description": "HTML attributes (for example data attributes) to add to the contents list item.",
         "released": "10.2.0"
       }
     ]
@@ -61,14 +61,14 @@
     "name": "classes",
     "type": "string",
     "required": false,
-    "description": "Classes to add to the content list container.",
+    "description": "Classes to add to the contents list container.",
     "released": "1.0.0"
   },
   {
     "name": "attributes",
     "type": "object",
     "required": false,
-    "description": "HTML attributes (for example data attributes) to add to the content list container.",
+    "description": "HTML attributes (for example data attributes) to add to the contents list container.",
     "released": "1.0.0"
   },
   {

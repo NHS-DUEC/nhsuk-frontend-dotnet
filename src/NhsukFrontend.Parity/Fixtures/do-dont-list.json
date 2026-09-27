@@ -5,7 +5,9 @@
     {
       "name": "(do) with custom prefix",
       "context": {
-        "title": "Do",
+        "heading": {
+          "text": "Do"
+        },
         "icon": "tick",
         "prefixText": "always",
         "items": [
@@ -48,7 +50,9 @@
     {
       "name": "(do) with empty items",
       "context": {
-        "title": "Do",
+        "heading": {
+          "text": "Do"
+        },
         "icon": "tick",
         "items": [
           {
@@ -67,7 +71,9 @@
     {
       "name": "(don't)",
       "context": {
-        "title": "Don't",
+        "heading": {
+          "text": "Don't"
+        },
         "icon": "cross",
         "items": [
           {
@@ -97,7 +103,9 @@
     {
       "name": "(don't) with custom prefix",
       "context": {
-        "title": "Never",
+        "heading": {
+          "text": "Never"
+        },
         "icon": "cross",
         "prefixText": "never",
         "items": [
@@ -146,7 +154,9 @@
     {
       "name": "(don't) with empty items",
       "context": {
-        "title": "Don't",
+        "heading": {
+          "text": "Don't"
+        },
         "icon": "cross",
         "items": [
           {
@@ -168,7 +178,9 @@
     {
       "name": "(don't) with hidden prefix",
       "context": {
-        "title": "Don't",
+        "heading": {
+          "text": "Don't"
+        },
         "icon": "cross",
         "hidePrefix": true,
         "items": [
@@ -193,7 +205,9 @@
     {
       "name": "default",
       "context": {
-        "title": "Do",
+        "heading": {
+          "text": "Do"
+        },
         "icon": "tick",
         "items": [
           {
@@ -216,6 +230,75 @@
       },
       "options": {},
       "html": "<div class=\"nhsuk-card nhsuk-card--feature\">\n  <div class=\"nhsuk-card__content\">\n    <h3 class=\"nhsuk-card__heading\">\n      Do\n    </h3>\n    <ul class=\"nhsuk-list nhsuk-list--tick\" role=\"list\">\n      <li>\n        <svg class=\"nhsuk-icon nhsuk-icon--tick\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" focusable=\"false\" aria-hidden=\"true\">\n          <path d=\"M11.4 17.5a2 2 0 0 1-2.7.1h-.1L4 12.8a1.5 1.5 0 0 1 2.1-2L10 14.7l8.1-8.1a1.5 1.5 0 1 1 2.2 2l-8.9 9Z\"/>\n        </svg>\n        cover blisters with a soft plaster or padded dressing\n      </li>\n      <li>\n        <svg class=\"nhsuk-icon nhsuk-icon--tick\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" focusable=\"false\" aria-hidden=\"true\">\n          <path d=\"M11.4 17.5a2 2 0 0 1-2.7.1h-.1L4 12.8a1.5 1.5 0 0 1 2.1-2L10 14.7l8.1-8.1a1.5 1.5 0 1 1 2.2 2l-8.9 9Z\"/>\n        </svg>\n        wash your hands before touching a burst blister\n      </li>\n      <li>\n        <svg class=\"nhsuk-icon nhsuk-icon--tick\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" focusable=\"false\" aria-hidden=\"true\">\n          <path d=\"M11.4 17.5a2 2 0 0 1-2.7.1h-.1L4 12.8a1.5 1.5 0 0 1 2.1-2L10 14.7l8.1-8.1a1.5 1.5 0 1 1 2.2 2l-8.9 9Z\"/>\n        </svg>\n        allow the fluid in a burst blister to drain before covering it with a plaster or dressing\n      </li>\n    </ul>\n  </div>\n</div>"
+    },
+    {
+      "name": "with heading as string",
+      "context": {
+        "heading": "Do",
+        "icon": "tick",
+        "items": [
+          {
+            "text": "cover blisters with a soft plaster or padded dressing"
+          },
+          {
+            "text": "wash your hands before touching a burst blister"
+          },
+          {
+            "text": "allow the fluid in a burst blister to drain before covering it with a plaster or dressing"
+          }
+        ]
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<div class=\"nhsuk-card nhsuk-card--feature\">\n  <div class=\"nhsuk-card__content\">\n    <h3 class=\"nhsuk-card__heading\">\n      Do\n    </h3>\n    <ul class=\"nhsuk-list nhsuk-list--tick\" role=\"list\">\n      <li>\n        <svg class=\"nhsuk-icon nhsuk-icon--tick\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" focusable=\"false\" aria-hidden=\"true\">\n          <path d=\"M11.4 17.5a2 2 0 0 1-2.7.1h-.1L4 12.8a1.5 1.5 0 0 1 2.1-2L10 14.7l8.1-8.1a1.5 1.5 0 1 1 2.2 2l-8.9 9Z\"/>\n        </svg>\n        cover blisters with a soft plaster or padded dressing\n      </li>\n      <li>\n        <svg class=\"nhsuk-icon nhsuk-icon--tick\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" focusable=\"false\" aria-hidden=\"true\">\n          <path d=\"M11.4 17.5a2 2 0 0 1-2.7.1h-.1L4 12.8a1.5 1.5 0 0 1 2.1-2L10 14.7l8.1-8.1a1.5 1.5 0 1 1 2.2 2l-8.9 9Z\"/>\n        </svg>\n        wash your hands before touching a burst blister\n      </li>\n      <li>\n        <svg class=\"nhsuk-icon nhsuk-icon--tick\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" focusable=\"false\" aria-hidden=\"true\">\n          <path d=\"M11.4 17.5a2 2 0 0 1-2.7.1h-.1L4 12.8a1.5 1.5 0 0 1 2.1-2L10 14.7l8.1-8.1a1.5 1.5 0 1 1 2.2 2l-8.9 9Z\"/>\n        </svg>\n        allow the fluid in a burst blister to drain before covering it with a plaster or dressing\n      </li>\n    </ul>\n  </div>\n</div>"
+    },
+    {
+      "name": "with heading level 1",
+      "context": {
+        "heading": {
+          "text": "Do",
+          "level": 1
+        },
+        "icon": "tick",
+        "items": [
+          {
+            "text": "cover blisters with a soft plaster or padded dressing"
+          },
+          {
+            "text": "wash your hands before touching a burst blister"
+          },
+          {
+            "text": "allow the fluid in a burst blister to drain before covering it with a plaster or dressing"
+          }
+        ]
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<div class=\"nhsuk-card nhsuk-card--feature\">\n  <div class=\"nhsuk-card__content\">\n    <h1 class=\"nhsuk-card__heading\">\n      Do\n    </h1>\n    <ul class=\"nhsuk-list nhsuk-list--tick\" role=\"list\">\n      <li>\n        <svg class=\"nhsuk-icon nhsuk-icon--tick\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" focusable=\"false\" aria-hidden=\"true\">\n          <path d=\"M11.4 17.5a2 2 0 0 1-2.7.1h-.1L4 12.8a1.5 1.5 0 0 1 2.1-2L10 14.7l8.1-8.1a1.5 1.5 0 1 1 2.2 2l-8.9 9Z\"/>\n        </svg>\n        cover blisters with a soft plaster or padded dressing\n      </li>\n      <li>\n        <svg class=\"nhsuk-icon nhsuk-icon--tick\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" focusable=\"false\" aria-hidden=\"true\">\n          <path d=\"M11.4 17.5a2 2 0 0 1-2.7.1h-.1L4 12.8a1.5 1.5 0 0 1 2.1-2L10 14.7l8.1-8.1a1.5 1.5 0 1 1 2.2 2l-8.9 9Z\"/>\n        </svg>\n        wash your hands before touching a burst blister\n      </li>\n      <li>\n        <svg class=\"nhsuk-icon nhsuk-icon--tick\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" focusable=\"false\" aria-hidden=\"true\">\n          <path d=\"M11.4 17.5a2 2 0 0 1-2.7.1h-.1L4 12.8a1.5 1.5 0 0 1 2.1-2L10 14.7l8.1-8.1a1.5 1.5 0 1 1 2.2 2l-8.9 9Z\"/>\n        </svg>\n        allow the fluid in a burst blister to drain before covering it with a plaster or dressing\n      </li>\n    </ul>\n  </div>\n</div>"
+    },
+    {
+      "name": "with heading level 2",
+      "context": {
+        "heading": {
+          "text": "Do",
+          "level": 2
+        },
+        "icon": "tick",
+        "items": [
+          {
+            "text": "cover blisters with a soft plaster or padded dressing"
+          },
+          {
+            "text": "wash your hands before touching a burst blister"
+          },
+          {
+            "text": "allow the fluid in a burst blister to drain before covering it with a plaster or dressing"
+          }
+        ]
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<div class=\"nhsuk-card nhsuk-card--feature\">\n  <div class=\"nhsuk-card__content\">\n    <h2 class=\"nhsuk-card__heading\">\n      Do\n    </h2>\n    <ul class=\"nhsuk-list nhsuk-list--tick\" role=\"list\">\n      <li>\n        <svg class=\"nhsuk-icon nhsuk-icon--tick\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" focusable=\"false\" aria-hidden=\"true\">\n          <path d=\"M11.4 17.5a2 2 0 0 1-2.7.1h-.1L4 12.8a1.5 1.5 0 0 1 2.1-2L10 14.7l8.1-8.1a1.5 1.5 0 1 1 2.2 2l-8.9 9Z\"/>\n        </svg>\n        cover blisters with a soft plaster or padded dressing\n      </li>\n      <li>\n        <svg class=\"nhsuk-icon nhsuk-icon--tick\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" focusable=\"false\" aria-hidden=\"true\">\n          <path d=\"M11.4 17.5a2 2 0 0 1-2.7.1h-.1L4 12.8a1.5 1.5 0 0 1 2.1-2L10 14.7l8.1-8.1a1.5 1.5 0 1 1 2.2 2l-8.9 9Z\"/>\n        </svg>\n        wash your hands before touching a burst blister\n      </li>\n      <li>\n        <svg class=\"nhsuk-icon nhsuk-icon--tick\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" focusable=\"false\" aria-hidden=\"true\">\n          <path d=\"M11.4 17.5a2 2 0 0 1-2.7.1h-.1L4 12.8a1.5 1.5 0 0 1 2.1-2L10 14.7l8.1-8.1a1.5 1.5 0 1 1 2.2 2l-8.9 9Z\"/>\n        </svg>\n        allow the fluid in a burst blister to drain before covering it with a plaster or dressing\n      </li>\n    </ul>\n  </div>\n</div>"
     }
   ]
 }

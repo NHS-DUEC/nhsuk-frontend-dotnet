@@ -128,11 +128,31 @@
       "html": "<div class=\"nhsuk-notification-banner\" data-module=\"nhsuk-notification-banner\" role=\"region\" aria-labelledby=\"nhsuk-notification-banner-title\">\n  <div class=\"nhsuk-notification-banner__header\">\n    <h2 class=\"nhsuk-notification-banner__title\" id=\"nhsuk-notification-banner-title\">\n      Important information\n    </h2>\n  </div>\n  <div class=\"nhsuk-notification-banner__content\">\n    <p class=\"nhsuk-notification-banner__heading\">\n      The patient record was updated.\n    </p>\n  </div>\n</div>"
     },
     {
+      "name": "with custom title as string",
+      "context": {
+        "title": "Important information",
+        "text": "The patient record was updated."
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<div class=\"nhsuk-notification-banner\" data-module=\"nhsuk-notification-banner\" role=\"region\" aria-labelledby=\"nhsuk-notification-banner-title\">\n  <div class=\"nhsuk-notification-banner__header\">\n    <h2 class=\"nhsuk-notification-banner__title\" id=\"nhsuk-notification-banner-title\">\n      Important information\n    </h2>\n  </div>\n  <div class=\"nhsuk-notification-banner__content\">\n    <p class=\"nhsuk-notification-banner__heading\">\n      The patient record was updated.\n    </p>\n  </div>\n</div>"
+    },
+    {
       "name": "with HTML",
       "context": {
         "heading": {
           "text": "The patient record was updated"
         },
+        "html": "<p class=\"nhsuk-body\">\n  Contact <a class=\"nhsuk-notification-banner__link\" href=\"#\">example@nhs.uk</a> if you think there's a problem.\n</p>"
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<div class=\"nhsuk-notification-banner\" data-module=\"nhsuk-notification-banner\" role=\"region\" aria-labelledby=\"nhsuk-notification-banner-title\">\n  <div class=\"nhsuk-notification-banner__header\">\n    <h2 class=\"nhsuk-notification-banner__title\" id=\"nhsuk-notification-banner-title\">\n      Important\n    </h2>\n  </div>\n  <div class=\"nhsuk-notification-banner__content\">\n    <h3 class=\"nhsuk-notification-banner__heading\">\n      The patient record was updated\n    </h3>\n    <p class=\"nhsuk-body\">\n      Contact <a class=\"nhsuk-notification-banner__link\" href=\"#\">example@nhs.uk</a> if you think there's a problem.\n    </p>\n  </div>\n</div>"
+    },
+    {
+      "name": "with HTML and heading as string",
+      "context": {
+        "heading": "The patient record was updated",
         "html": "<p class=\"nhsuk-body\">\n  Contact <a class=\"nhsuk-notification-banner__link\" href=\"#\">example@nhs.uk</a> if you think there's a problem.\n</p>"
       },
       "screenshot": false,

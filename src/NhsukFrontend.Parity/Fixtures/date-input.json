@@ -7,9 +7,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "l"
           }
         },
         "hint": {
@@ -26,9 +25,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "l"
           }
         },
         "hint": {
@@ -46,9 +44,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "l"
           }
         },
         "hint": {
@@ -68,9 +65,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "l"
           }
         },
         "hint": {
@@ -102,9 +98,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "l"
           }
         },
         "hint": {
@@ -125,9 +120,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your birthday?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your birthday?",
+            "size": "l"
           }
         },
         "hint": {
@@ -145,9 +139,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your birthday?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your birthday?",
+            "size": "l"
           }
         },
         "hint": {
@@ -174,9 +167,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your birthday?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your birthday?",
+            "size": "l"
           }
         },
         "hint": {
@@ -205,9 +197,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "s",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "s"
           }
         },
         "hint": {
@@ -225,9 +216,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "m",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "m"
           }
         },
         "hint": {
@@ -245,9 +235,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "l"
           }
         },
         "hint": {
@@ -265,9 +254,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "xl",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "xl"
           }
         },
         "hint": {
@@ -280,13 +268,34 @@
       "html": "<div class=\"nhsuk-form-group\">\n  <fieldset class=\"nhsuk-fieldset\" role=\"group\" aria-describedby=\"custom-size-hint\">\n    <legend class=\"nhsuk-fieldset__legend nhsuk-fieldset__legend--xl\">\n      <h1 class=\"nhsuk-fieldset__heading\">\n        What is your date of birth?\n      </h1>\n    </legend>\n    <div class=\"nhsuk-hint\" id=\"custom-size-hint\">\n      For example, 31 3 1980\n    </div>\n    <div class=\"nhsuk-date-input\" id=\"custom-size\">\n      <div class=\"nhsuk-date-input__item\">\n        <div class=\"nhsuk-form-group\">\n          <label class=\"nhsuk-label nhsuk-date-input__label\" for=\"custom-size-day\">\n            Day\n          </label>\n          <input class=\"nhsuk-input nhsuk-input--width-2 nhsuk-date-input__input\" id=\"custom-size-day\" name=\"day\" type=\"text\" inputmode=\"numeric\">\n        </div>\n      </div>\n      <div class=\"nhsuk-date-input__item\">\n        <div class=\"nhsuk-form-group\">\n          <label class=\"nhsuk-label nhsuk-date-input__label\" for=\"custom-size-month\">\n            Month\n          </label>\n          <input class=\"nhsuk-input nhsuk-input--width-2 nhsuk-date-input__input\" id=\"custom-size-month\" name=\"month\" type=\"text\" inputmode=\"numeric\">\n        </div>\n      </div>\n      <div class=\"nhsuk-date-input__item\">\n        <div class=\"nhsuk-form-group\">\n          <label class=\"nhsuk-label nhsuk-date-input__label\" for=\"custom-size-year\">\n            Year\n          </label>\n          <input class=\"nhsuk-input nhsuk-input--width-4 nhsuk-date-input__input\" id=\"custom-size-year\" name=\"year\" type=\"text\" inputmode=\"numeric\">\n        </div>\n      </div>\n    </div>\n  </fieldset>\n</div>"
     },
     {
+      "name": "legend",
+      "description": "with id attribute on",
+      "context": {
+        "fieldset": {
+          "legend": {
+            "heading": "What is your date of birth?",
+            "size": "l",
+            "id": "custom-id"
+          }
+        },
+        "hint": {
+          "text": "For example, 31 3 1980"
+        },
+        "id": "custom-size"
+      },
+      "screenshot": false,
+      "options": {
+        "hidden": true
+      },
+      "html": "<div class=\"nhsuk-form-group\">\n  <fieldset class=\"nhsuk-fieldset\" role=\"group\" aria-describedby=\"custom-size-hint\">\n    <legend class=\"nhsuk-fieldset__legend nhsuk-fieldset__legend--l\" id=\"custom-id\">\n      <h1 class=\"nhsuk-fieldset__heading\">\n        What is your date of birth?\n      </h1>\n    </legend>\n    <div class=\"nhsuk-hint\" id=\"custom-size-hint\">\n      For example, 31 3 1980\n    </div>\n    <div class=\"nhsuk-date-input\" id=\"custom-size\">\n      <div class=\"nhsuk-date-input__item\">\n        <div class=\"nhsuk-form-group\">\n          <label class=\"nhsuk-label nhsuk-date-input__label\" for=\"custom-size-day\">\n            Day\n          </label>\n          <input class=\"nhsuk-input nhsuk-input--width-2 nhsuk-date-input__input\" id=\"custom-size-day\" name=\"day\" type=\"text\" inputmode=\"numeric\">\n        </div>\n      </div>\n      <div class=\"nhsuk-date-input__item\">\n        <div class=\"nhsuk-form-group\">\n          <label class=\"nhsuk-label nhsuk-date-input__label\" for=\"custom-size-month\">\n            Month\n          </label>\n          <input class=\"nhsuk-input nhsuk-input--width-2 nhsuk-date-input__input\" id=\"custom-size-month\" name=\"month\" type=\"text\" inputmode=\"numeric\">\n        </div>\n      </div>\n      <div class=\"nhsuk-date-input__item\">\n        <div class=\"nhsuk-form-group\">\n          <label class=\"nhsuk-label nhsuk-date-input__label\" for=\"custom-size-year\">\n            Year\n          </label>\n          <input class=\"nhsuk-input nhsuk-input--width-4 nhsuk-date-input__input\" id=\"custom-size-year\" name=\"year\" type=\"text\" inputmode=\"numeric\">\n        </div>\n      </div>\n    </div>\n  </fieldset>\n</div>"
+    },
+    {
       "name": "month and year",
       "context": {
         "fieldset": {
           "legend": {
-            "text": "When did you start your job?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "When did you start your job?",
+            "size": "l"
           }
         },
         "hint": {
@@ -304,9 +313,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "When did you start your job?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "When did you start your job?",
+            "size": "l"
           }
         },
         "hint": {
@@ -333,9 +341,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "When did you start your job?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "When did you start your job?",
+            "size": "l"
           }
         },
         "hint": {
@@ -363,9 +370,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "When did you start your job?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "When did you start your job?",
+            "size": "l"
           }
         },
         "hint": {
@@ -389,9 +395,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "When did you start your job?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "When did you start your job?",
+            "size": "l"
           }
         },
         "hint": {
@@ -419,9 +424,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "When did you start your job?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "When did you start your job?",
+            "size": "l"
           }
         },
         "hint": {
@@ -443,9 +447,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "l"
           }
         },
         "hint": {
@@ -471,9 +474,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "l"
           }
         },
         "hint": {
@@ -507,9 +509,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "l"
           }
         },
         "hint": {
@@ -527,9 +528,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "l"
           }
         },
         "errorMessage": {
@@ -546,9 +546,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "l"
           }
         },
         "hint": {
@@ -564,13 +563,62 @@
       "html": "<div class=\"nhsuk-form-group nhsuk-form-group--error\">\n  <fieldset class=\"nhsuk-fieldset\" role=\"group\" aria-describedby=\"example-hint example-error\">\n    <legend class=\"nhsuk-fieldset__legend nhsuk-fieldset__legend--l\">\n      <h1 class=\"nhsuk-fieldset__heading\">\n        What is your date of birth?\n      </h1>\n    </legend>\n    <div class=\"nhsuk-hint\" id=\"example-hint\">\n      For example, 31 3 1980\n    </div>\n    <span class=\"nhsuk-error-message\" id=\"example-error\">\n      <span class=\"nhsuk-u-visually-hidden\">Error: </span>Enter your date of birth\n    </span>\n    <div class=\"nhsuk-date-input\" id=\"example\">\n      <div class=\"nhsuk-date-input__item\">\n        <div class=\"nhsuk-form-group nhsuk-form-group--error\">\n          <label class=\"nhsuk-label nhsuk-date-input__label\" for=\"example-day\">\n            Day\n          </label>\n          <input class=\"nhsuk-input nhsuk-input--error nhsuk-input--width-2 nhsuk-date-input__input\" id=\"example-day\" name=\"day\" type=\"text\" inputmode=\"numeric\">\n        </div>\n      </div>\n      <div class=\"nhsuk-date-input__item\">\n        <div class=\"nhsuk-form-group nhsuk-form-group--error\">\n          <label class=\"nhsuk-label nhsuk-date-input__label\" for=\"example-month\">\n            Month\n          </label>\n          <input class=\"nhsuk-input nhsuk-input--error nhsuk-input--width-2 nhsuk-date-input__input\" id=\"example-month\" name=\"month\" type=\"text\" inputmode=\"numeric\">\n        </div>\n      </div>\n      <div class=\"nhsuk-date-input__item\">\n        <div class=\"nhsuk-form-group nhsuk-form-group--error\">\n          <label class=\"nhsuk-label nhsuk-date-input__label\" for=\"example-year\">\n            Year\n          </label>\n          <input class=\"nhsuk-input nhsuk-input--error nhsuk-input--width-4 nhsuk-date-input__input\" id=\"example-year\" name=\"year\" type=\"text\" inputmode=\"numeric\">\n        </div>\n      </div>\n    </div>\n  </fieldset>\n</div>"
     },
     {
+      "name": "with error message and hint as strings",
+      "context": {
+        "fieldset": {
+          "legend": {
+            "heading": "What is your date of birth?",
+            "size": "l"
+          }
+        },
+        "hint": "For example, 31 3 1980",
+        "errorMessage": "Enter your date of birth",
+        "id": "example"
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<div class=\"nhsuk-form-group nhsuk-form-group--error\">\n  <fieldset class=\"nhsuk-fieldset\" role=\"group\" aria-describedby=\"example-hint example-error\">\n    <legend class=\"nhsuk-fieldset__legend nhsuk-fieldset__legend--l\">\n      <h1 class=\"nhsuk-fieldset__heading\">\n        What is your date of birth?\n      </h1>\n    </legend>\n    <div class=\"nhsuk-hint\" id=\"example-hint\">\n      For example, 31 3 1980\n    </div>\n    <span class=\"nhsuk-error-message\" id=\"example-error\">\n      <span class=\"nhsuk-u-visually-hidden\">Error: </span>Enter your date of birth\n    </span>\n    <div class=\"nhsuk-date-input\" id=\"example\">\n      <div class=\"nhsuk-date-input__item\">\n        <div class=\"nhsuk-form-group nhsuk-form-group--error\">\n          <label class=\"nhsuk-label nhsuk-date-input__label\" for=\"example-day\">\n            Day\n          </label>\n          <input class=\"nhsuk-input nhsuk-input--error nhsuk-input--width-2 nhsuk-date-input__input\" id=\"example-day\" name=\"day\" type=\"text\" inputmode=\"numeric\">\n        </div>\n      </div>\n      <div class=\"nhsuk-date-input__item\">\n        <div class=\"nhsuk-form-group nhsuk-form-group--error\">\n          <label class=\"nhsuk-label nhsuk-date-input__label\" for=\"example-month\">\n            Month\n          </label>\n          <input class=\"nhsuk-input nhsuk-input--error nhsuk-input--width-2 nhsuk-date-input__input\" id=\"example-month\" name=\"month\" type=\"text\" inputmode=\"numeric\">\n        </div>\n      </div>\n      <div class=\"nhsuk-date-input__item\">\n        <div class=\"nhsuk-form-group nhsuk-form-group--error\">\n          <label class=\"nhsuk-label nhsuk-date-input__label\" for=\"example-year\">\n            Year\n          </label>\n          <input class=\"nhsuk-input nhsuk-input--error nhsuk-input--width-4 nhsuk-date-input__input\" id=\"example-year\" name=\"year\" type=\"text\" inputmode=\"numeric\">\n        </div>\n      </div>\n    </div>\n  </fieldset>\n</div>"
+    },
+    {
+      "name": "with error message and hint, without heading",
+      "context": {
+        "fieldset": {
+          "legend": "What is your date of birth?"
+        },
+        "hint": {
+          "text": "For example, 31 3 1980"
+        },
+        "errorMessage": {
+          "text": "Enter your date of birth"
+        },
+        "id": "example"
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<div class=\"nhsuk-form-group nhsuk-form-group--error\">\n  <fieldset class=\"nhsuk-fieldset\" role=\"group\" aria-describedby=\"example-hint example-error\">\n    <legend class=\"nhsuk-fieldset__legend\">\n      What is your date of birth?\n    </legend>\n    <div class=\"nhsuk-hint\" id=\"example-hint\">\n      For example, 31 3 1980\n    </div>\n    <span class=\"nhsuk-error-message\" id=\"example-error\">\n      <span class=\"nhsuk-u-visually-hidden\">Error: </span>Enter your date of birth\n    </span>\n    <div class=\"nhsuk-date-input\" id=\"example\">\n      <div class=\"nhsuk-date-input__item\">\n        <div class=\"nhsuk-form-group nhsuk-form-group--error\">\n          <label class=\"nhsuk-label nhsuk-date-input__label\" for=\"example-day\">\n            Day\n          </label>\n          <input class=\"nhsuk-input nhsuk-input--error nhsuk-input--width-2 nhsuk-date-input__input\" id=\"example-day\" name=\"day\" type=\"text\" inputmode=\"numeric\">\n        </div>\n      </div>\n      <div class=\"nhsuk-date-input__item\">\n        <div class=\"nhsuk-form-group nhsuk-form-group--error\">\n          <label class=\"nhsuk-label nhsuk-date-input__label\" for=\"example-month\">\n            Month\n          </label>\n          <input class=\"nhsuk-input nhsuk-input--error nhsuk-input--width-2 nhsuk-date-input__input\" id=\"example-month\" name=\"month\" type=\"text\" inputmode=\"numeric\">\n        </div>\n      </div>\n      <div class=\"nhsuk-date-input__item\">\n        <div class=\"nhsuk-form-group nhsuk-form-group--error\">\n          <label class=\"nhsuk-label nhsuk-date-input__label\" for=\"example-year\">\n            Year\n          </label>\n          <input class=\"nhsuk-input nhsuk-input--error nhsuk-input--width-4 nhsuk-date-input__input\" id=\"example-year\" name=\"year\" type=\"text\" inputmode=\"numeric\">\n        </div>\n      </div>\n    </div>\n  </fieldset>\n</div>"
+    },
+    {
+      "name": "with error message, without heading",
+      "context": {
+        "fieldset": {
+          "legend": "What is your date of birth?"
+        },
+        "errorMessage": {
+          "text": "Enter your date of birth"
+        },
+        "id": "example"
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<div class=\"nhsuk-form-group nhsuk-form-group--error\">\n  <fieldset class=\"nhsuk-fieldset\" role=\"group\" aria-describedby=\"example-error\">\n    <legend class=\"nhsuk-fieldset__legend\">\n      What is your date of birth?\n    </legend>\n    <span class=\"nhsuk-error-message\" id=\"example-error\">\n      <span class=\"nhsuk-u-visually-hidden\">Error: </span>Enter your date of birth\n    </span>\n    <div class=\"nhsuk-date-input\" id=\"example\">\n      <div class=\"nhsuk-date-input__item\">\n        <div class=\"nhsuk-form-group nhsuk-form-group--error\">\n          <label class=\"nhsuk-label nhsuk-date-input__label\" for=\"example-day\">\n            Day\n          </label>\n          <input class=\"nhsuk-input nhsuk-input--error nhsuk-input--width-2 nhsuk-date-input__input\" id=\"example-day\" name=\"day\" type=\"text\" inputmode=\"numeric\">\n        </div>\n      </div>\n      <div class=\"nhsuk-date-input__item\">\n        <div class=\"nhsuk-form-group nhsuk-form-group--error\">\n          <label class=\"nhsuk-label nhsuk-date-input__label\" for=\"example-month\">\n            Month\n          </label>\n          <input class=\"nhsuk-input nhsuk-input--error nhsuk-input--width-2 nhsuk-date-input__input\" id=\"example-month\" name=\"month\" type=\"text\" inputmode=\"numeric\">\n        </div>\n      </div>\n      <div class=\"nhsuk-date-input__item\">\n        <div class=\"nhsuk-form-group nhsuk-form-group--error\">\n          <label class=\"nhsuk-label nhsuk-date-input__label\" for=\"example-year\">\n            Year\n          </label>\n          <input class=\"nhsuk-input nhsuk-input--error nhsuk-input--width-4 nhsuk-date-input__input\" id=\"example-year\" name=\"year\" type=\"text\" inputmode=\"numeric\">\n        </div>\n      </div>\n    </div>\n  </fieldset>\n</div>"
+    },
+    {
       "name": "with error on day input",
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "l"
           }
         },
         "hint": {
@@ -599,9 +647,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "l"
           }
         },
         "hint": {
@@ -638,9 +685,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "l"
           }
         },
         "errorMessage": true,
@@ -655,9 +701,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "l"
           }
         },
         "hint": {
@@ -694,9 +739,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "l"
           }
         },
         "hint": {
@@ -725,9 +769,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "l"
           }
         },
         "hint": {
@@ -756,9 +799,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "l"
           }
         },
         "hint": {
@@ -795,9 +837,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "l"
           }
         },
         "id": "example",
@@ -820,9 +861,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "l"
           }
         },
         "id": "example",
@@ -849,7 +889,7 @@
       "html": "<div class=\"nhsuk-form-group nhsuk-form-group--error\">\n  <fieldset class=\"nhsuk-fieldset\" role=\"group\">\n    <legend class=\"nhsuk-fieldset__legend nhsuk-fieldset__legend--l\">\n      <h1 class=\"nhsuk-fieldset__heading\">\n        What is your date of birth?\n      </h1>\n    </legend>\n    <div class=\"nhsuk-date-input\" id=\"example\">\n      <div class=\"nhsuk-date-input__item\">\n        <div class=\"nhsuk-form-group nhsuk-form-group--error\">\n          <label class=\"nhsuk-label nhsuk-date-input__label\" for=\"example-day\">\n            Day\n          </label>\n          <input class=\"nhsuk-input nhsuk-input--error nhsuk-input--width-2 nhsuk-date-input__input\" id=\"example-day\" name=\"day\" type=\"text\" inputmode=\"numeric\">\n        </div>\n      </div>\n      <div class=\"nhsuk-date-input__item\">\n        <div class=\"nhsuk-form-group nhsuk-form-group--error\">\n          <label class=\"nhsuk-label nhsuk-date-input__label\" for=\"example-month\">\n            Month\n          </label>\n          <input class=\"nhsuk-input nhsuk-input--error nhsuk-input--width-2 nhsuk-date-input__input\" id=\"example-month\" name=\"month\" type=\"text\" inputmode=\"numeric\">\n        </div>\n      </div>\n      <div class=\"nhsuk-date-input__item\">\n        <div class=\"nhsuk-form-group nhsuk-form-group--error\">\n          <label class=\"nhsuk-label nhsuk-date-input__label\" for=\"example-year\">\n            Year\n          </label>\n          <input class=\"nhsuk-input nhsuk-input--error nhsuk-input--width-4 nhsuk-date-input__input\" id=\"example-year\" name=\"year\" type=\"text\" inputmode=\"numeric\">\n        </div>\n      </div>\n    </div>\n  </fieldset>\n</div>"
     },
     {
-      "name": "without page heading",
+      "name": "without heading",
       "context": {
         "fieldset": {
           "legend": "What is your date of birth?"
@@ -865,9 +905,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "Beth yw eich dyddiad geni?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "Beth yw eich dyddiad geni?",
+            "size": "l"
           }
         },
         "hint": {
@@ -893,9 +932,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What is your date of birth?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What is your date of birth?",
+            "size": "l"
           }
         },
         "hint": {

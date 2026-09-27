@@ -7,9 +7,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "l"
           }
         },
         "hint": {
@@ -47,9 +46,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "m",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "m"
           }
         },
         "hint": {
@@ -87,9 +85,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "l"
           }
         },
         "hint": {
@@ -123,9 +120,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "m",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "m"
           }
         },
         "hint": {
@@ -159,9 +155,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "l"
           }
         },
         "hint": {
@@ -195,9 +190,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "m",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "m"
           }
         },
         "hint": {
@@ -231,9 +225,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "l"
           }
         },
         "hint": {
@@ -268,9 +261,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "m",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "m"
           }
         },
         "hint": {
@@ -305,9 +297,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "Which nipple has changed?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "Which nipple has changed?",
+            "size": "l"
           }
         },
         "idPrefix": "inline",
@@ -340,9 +331,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "Which nipple has changed?",
-            "size": "m",
-            "isPageHeading": true
+            "heading": "Which nipple has changed?",
+            "size": "m"
           }
         },
         "idPrefix": "inline",
@@ -507,13 +497,49 @@
       "html": "<div class=\"nhsuk-form-group\">\n  <fieldset class=\"nhsuk-fieldset\" aria-describedby=\"custom-size-hint\">\n  <legend class=\"nhsuk-fieldset__legend nhsuk-fieldset__legend--xl\">\n    How do you want to be contacted about this?\n  </legend>\n  <div class=\"nhsuk-hint\" id=\"custom-size-hint\">\n    Select all options that are relevant to you\n  </div>\n  <div class=\"nhsuk-checkboxes\" data-module=\"nhsuk-checkboxes\">\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"custom-size\" name=\"example\" type=\"checkbox\" value=\"email\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"custom-size\">\n        Email\n      </label>\n    </div>\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"custom-size-2\" name=\"example\" type=\"checkbox\" value=\"phone\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"custom-size-2\">\n        Phone\n      </label>\n    </div>\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"custom-size-3\" name=\"example\" type=\"checkbox\" value=\"text message\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"custom-size-3\">\n        Text message\n      </label>\n    </div>\n  </div>\n</fieldset>\n</div>"
     },
     {
+      "name": "legend",
+      "description": "with id attribute on",
+      "context": {
+        "fieldset": {
+          "legend": {
+            "text": "How do you want to be contacted about this?",
+            "size": "l",
+            "id": "custom-id"
+          }
+        },
+        "hint": {
+          "text": "Select all options that are relevant to you"
+        },
+        "idPrefix": "custom-size",
+        "name": "example",
+        "items": [
+          {
+            "value": "email",
+            "text": "Email"
+          },
+          {
+            "value": "phone",
+            "text": "Phone"
+          },
+          {
+            "value": "text message",
+            "text": "Text message"
+          }
+        ]
+      },
+      "screenshot": false,
+      "options": {
+        "hidden": true
+      },
+      "html": "<div class=\"nhsuk-form-group\">\n  <fieldset class=\"nhsuk-fieldset\" aria-describedby=\"custom-size-hint\">\n  <legend class=\"nhsuk-fieldset__legend nhsuk-fieldset__legend--l\" id=\"custom-id\">\n    How do you want to be contacted about this?\n  </legend>\n  <div class=\"nhsuk-hint\" id=\"custom-size-hint\">\n    Select all options that are relevant to you\n  </div>\n  <div class=\"nhsuk-checkboxes\" data-module=\"nhsuk-checkboxes\">\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"custom-size\" name=\"example\" type=\"checkbox\" value=\"email\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"custom-size\">\n        Email\n      </label>\n    </div>\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"custom-size-2\" name=\"example\" type=\"checkbox\" value=\"phone\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"custom-size-2\">\n        Phone\n      </label>\n    </div>\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"custom-size-3\" name=\"example\" type=\"checkbox\" value=\"text message\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"custom-size-3\">\n        Text message\n      </label>\n    </div>\n  </div>\n</fieldset>\n</div>"
+    },
+    {
       "name": "with \"all\" option",
       "context": {
         "fieldset": {
           "legend": {
-            "text": "Which vaccines would you like to include?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "Which vaccines would you like to include?",
+            "size": "l"
           }
         },
         "idPrefix": "all",
@@ -576,9 +602,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "Which vaccines would you like to include?",
-            "size": "m",
-            "isPageHeading": true
+            "heading": "Which vaccines would you like to include?",
+            "size": "m"
           }
         },
         "idPrefix": "all",
@@ -641,9 +666,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "Which vaccines would you like to include?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "Which vaccines would you like to include?",
+            "size": "l"
           }
         },
         "idPrefix": "all",
@@ -717,9 +741,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "Which vaccines would you like to include?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "Which vaccines would you like to include?",
+            "size": "l"
           }
         },
         "idPrefix": "all",
@@ -802,9 +825,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "l"
           }
         },
         "hint": {
@@ -846,9 +868,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "m",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "m"
           }
         },
         "hint": {
@@ -890,9 +911,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "l"
           }
         },
         "hint": {
@@ -937,9 +957,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "m",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "m"
           }
         },
         "hint": {
@@ -984,9 +1003,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "l"
           }
         },
         "hint": {
@@ -1041,9 +1059,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "m",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "m"
           }
         },
         "hint": {
@@ -1098,9 +1115,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "l"
           }
         },
         "hint": {
@@ -1144,9 +1160,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "m",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "m"
           }
         },
         "hint": {
@@ -1190,9 +1205,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "l"
           }
         },
         "errorMessage": {
@@ -1235,9 +1249,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "m",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "m"
           }
         },
         "errorMessage": {
@@ -1280,9 +1293,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "l"
           }
         },
         "hint": {
@@ -1318,9 +1330,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "m",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "m"
           }
         },
         "hint": {
@@ -1352,13 +1363,220 @@
       "html": "<div class=\"nhsuk-form-group nhsuk-form-group--error\">\n  <fieldset class=\"nhsuk-fieldset\" aria-describedby=\"with-hint-error-hint with-hint-error-error\">\n  <legend class=\"nhsuk-fieldset__legend nhsuk-fieldset__legend--m\">\n    <h1 class=\"nhsuk-fieldset__heading\">\n      How do you want to be contacted about this?\n    </h1>\n  </legend>\n  <div class=\"nhsuk-hint\" id=\"with-hint-error-hint\">\n    Select all options that are relevant to you\n  </div>\n  <span class=\"nhsuk-error-message\" id=\"with-hint-error-error\">\n    <span class=\"nhsuk-u-visually-hidden\">Error: </span>Select how you want to be contacted\n  </span>\n  <div class=\"nhsuk-checkboxes nhsuk-checkboxes--small\" data-module=\"nhsuk-checkboxes\">\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"with-hint-error\" name=\"example\" type=\"checkbox\" value=\"email\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"with-hint-error\">\n        Email\n      </label>\n    </div>\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"with-hint-error-2\" name=\"example\" type=\"checkbox\" value=\"phone\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"with-hint-error-2\">\n        Phone\n      </label>\n    </div>\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"with-hint-error-3\" name=\"example\" type=\"checkbox\" value=\"text message\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"with-hint-error-3\">\n        Text message\n      </label>\n    </div>\n  </div>\n</fieldset>\n</div>"
     },
     {
-      "name": "with error only",
+      "name": "with error message and hint as strings",
+      "context": {
+        "fieldset": {
+          "legend": {
+            "heading": "How do you want to be contacted about this?",
+            "size": "l"
+          }
+        },
+        "hint": "Select all options that are relevant to you",
+        "errorMessage": "Select how you want to be contacted",
+        "idPrefix": "with-hint-error",
+        "name": "example",
+        "items": [
+          {
+            "value": "email",
+            "text": "Email"
+          },
+          {
+            "value": "phone",
+            "text": "Phone"
+          },
+          {
+            "value": "text message",
+            "text": "Text message"
+          }
+        ]
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<div class=\"nhsuk-form-group nhsuk-form-group--error\">\n  <fieldset class=\"nhsuk-fieldset\" aria-describedby=\"with-hint-error-hint with-hint-error-error\">\n  <legend class=\"nhsuk-fieldset__legend nhsuk-fieldset__legend--l\">\n    <h1 class=\"nhsuk-fieldset__heading\">\n      How do you want to be contacted about this?\n    </h1>\n  </legend>\n  <div class=\"nhsuk-hint\" id=\"with-hint-error-hint\">\n    Select all options that are relevant to you\n  </div>\n  <span class=\"nhsuk-error-message\" id=\"with-hint-error-error\">\n    <span class=\"nhsuk-u-visually-hidden\">Error: </span>Select how you want to be contacted\n  </span>\n  <div class=\"nhsuk-checkboxes\" data-module=\"nhsuk-checkboxes\">\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"with-hint-error\" name=\"example\" type=\"checkbox\" value=\"email\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"with-hint-error\">\n        Email\n      </label>\n    </div>\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"with-hint-error-2\" name=\"example\" type=\"checkbox\" value=\"phone\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"with-hint-error-2\">\n        Phone\n      </label>\n    </div>\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"with-hint-error-3\" name=\"example\" type=\"checkbox\" value=\"text message\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"with-hint-error-3\">\n        Text message\n      </label>\n    </div>\n  </div>\n</fieldset>\n</div>"
+    },
+    {
+      "name": "with error message and hint as strings",
+      "description": "small",
+      "context": {
+        "fieldset": {
+          "legend": {
+            "heading": "How do you want to be contacted about this?",
+            "size": "m"
+          }
+        },
+        "hint": "Select all options that are relevant to you",
+        "errorMessage": "Select how you want to be contacted",
+        "idPrefix": "with-hint-error",
+        "name": "example",
+        "items": [
+          {
+            "value": "email",
+            "text": "Email"
+          },
+          {
+            "value": "phone",
+            "text": "Phone"
+          },
+          {
+            "value": "text message",
+            "text": "Text message"
+          }
+        ],
+        "small": true
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<div class=\"nhsuk-form-group nhsuk-form-group--error\">\n  <fieldset class=\"nhsuk-fieldset\" aria-describedby=\"with-hint-error-hint with-hint-error-error\">\n  <legend class=\"nhsuk-fieldset__legend nhsuk-fieldset__legend--m\">\n    <h1 class=\"nhsuk-fieldset__heading\">\n      How do you want to be contacted about this?\n    </h1>\n  </legend>\n  <div class=\"nhsuk-hint\" id=\"with-hint-error-hint\">\n    Select all options that are relevant to you\n  </div>\n  <span class=\"nhsuk-error-message\" id=\"with-hint-error-error\">\n    <span class=\"nhsuk-u-visually-hidden\">Error: </span>Select how you want to be contacted\n  </span>\n  <div class=\"nhsuk-checkboxes nhsuk-checkboxes--small\" data-module=\"nhsuk-checkboxes\">\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"with-hint-error\" name=\"example\" type=\"checkbox\" value=\"email\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"with-hint-error\">\n        Email\n      </label>\n    </div>\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"with-hint-error-2\" name=\"example\" type=\"checkbox\" value=\"phone\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"with-hint-error-2\">\n        Phone\n      </label>\n    </div>\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"with-hint-error-3\" name=\"example\" type=\"checkbox\" value=\"text message\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"with-hint-error-3\">\n        Text message\n      </label>\n    </div>\n  </div>\n</fieldset>\n</div>"
+    },
+    {
+      "name": "with error message and hint, without heading",
       "context": {
         "fieldset": {
           "legend": {
             "text": "How do you want to be contacted about this?",
-            "size": "l",
-            "isPageHeading": true
+            "size": null
+          }
+        },
+        "hint": {
+          "text": "Select all options that are relevant to you"
+        },
+        "errorMessage": {
+          "text": "Select how you want to be contacted"
+        },
+        "idPrefix": "with-hint-error",
+        "name": "example",
+        "items": [
+          {
+            "value": "email",
+            "text": "Email"
+          },
+          {
+            "value": "phone",
+            "text": "Phone"
+          },
+          {
+            "value": "text message",
+            "text": "Text message"
+          }
+        ]
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<div class=\"nhsuk-form-group nhsuk-form-group--error\">\n  <fieldset class=\"nhsuk-fieldset\" aria-describedby=\"with-hint-error-hint with-hint-error-error\">\n  <legend class=\"nhsuk-fieldset__legend\">\n    How do you want to be contacted about this?\n  </legend>\n  <div class=\"nhsuk-hint\" id=\"with-hint-error-hint\">\n    Select all options that are relevant to you\n  </div>\n  <span class=\"nhsuk-error-message\" id=\"with-hint-error-error\">\n    <span class=\"nhsuk-u-visually-hidden\">Error: </span>Select how you want to be contacted\n  </span>\n  <div class=\"nhsuk-checkboxes\" data-module=\"nhsuk-checkboxes\">\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"with-hint-error\" name=\"example\" type=\"checkbox\" value=\"email\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"with-hint-error\">\n        Email\n      </label>\n    </div>\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"with-hint-error-2\" name=\"example\" type=\"checkbox\" value=\"phone\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"with-hint-error-2\">\n        Phone\n      </label>\n    </div>\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"with-hint-error-3\" name=\"example\" type=\"checkbox\" value=\"text message\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"with-hint-error-3\">\n        Text message\n      </label>\n    </div>\n  </div>\n</fieldset>\n</div>"
+    },
+    {
+      "name": "with error message and hint, without heading",
+      "description": "small",
+      "context": {
+        "fieldset": {
+          "legend": {
+            "text": "How do you want to be contacted about this?",
+            "size": null
+          }
+        },
+        "hint": {
+          "text": "Select all options that are relevant to you"
+        },
+        "errorMessage": {
+          "text": "Select how you want to be contacted"
+        },
+        "idPrefix": "with-hint-error",
+        "name": "example",
+        "items": [
+          {
+            "value": "email",
+            "text": "Email"
+          },
+          {
+            "value": "phone",
+            "text": "Phone"
+          },
+          {
+            "value": "text message",
+            "text": "Text message"
+          }
+        ],
+        "small": true
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<div class=\"nhsuk-form-group nhsuk-form-group--error\">\n  <fieldset class=\"nhsuk-fieldset\" aria-describedby=\"with-hint-error-hint with-hint-error-error\">\n  <legend class=\"nhsuk-fieldset__legend\">\n    How do you want to be contacted about this?\n  </legend>\n  <div class=\"nhsuk-hint\" id=\"with-hint-error-hint\">\n    Select all options that are relevant to you\n  </div>\n  <span class=\"nhsuk-error-message\" id=\"with-hint-error-error\">\n    <span class=\"nhsuk-u-visually-hidden\">Error: </span>Select how you want to be contacted\n  </span>\n  <div class=\"nhsuk-checkboxes nhsuk-checkboxes--small\" data-module=\"nhsuk-checkboxes\">\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"with-hint-error\" name=\"example\" type=\"checkbox\" value=\"email\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"with-hint-error\">\n        Email\n      </label>\n    </div>\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"with-hint-error-2\" name=\"example\" type=\"checkbox\" value=\"phone\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"with-hint-error-2\">\n        Phone\n      </label>\n    </div>\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"with-hint-error-3\" name=\"example\" type=\"checkbox\" value=\"text message\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"with-hint-error-3\">\n        Text message\n      </label>\n    </div>\n  </div>\n</fieldset>\n</div>"
+    },
+    {
+      "name": "with error message, without heading",
+      "context": {
+        "fieldset": {
+          "legend": {
+            "text": "How do you want to be contacted about this?",
+            "size": null
+          }
+        },
+        "errorMessage": {
+          "text": "Select how you want to be contacted"
+        },
+        "idPrefix": "with-error-message",
+        "name": "example",
+        "items": [
+          {
+            "value": "email",
+            "text": "Email"
+          },
+          {
+            "value": "phone",
+            "text": "Phone"
+          },
+          {
+            "value": "text message",
+            "text": "Text message"
+          }
+        ]
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<div class=\"nhsuk-form-group nhsuk-form-group--error\">\n  <fieldset class=\"nhsuk-fieldset\" aria-describedby=\"with-error-message-error\">\n  <legend class=\"nhsuk-fieldset__legend\">\n    How do you want to be contacted about this?\n  </legend>\n  <span class=\"nhsuk-error-message\" id=\"with-error-message-error\">\n    <span class=\"nhsuk-u-visually-hidden\">Error: </span>Select how you want to be contacted\n  </span>\n  <div class=\"nhsuk-checkboxes\" data-module=\"nhsuk-checkboxes\">\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"with-error-message\" name=\"example\" type=\"checkbox\" value=\"email\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"with-error-message\">\n        Email\n      </label>\n    </div>\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"with-error-message-2\" name=\"example\" type=\"checkbox\" value=\"phone\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"with-error-message-2\">\n        Phone\n      </label>\n    </div>\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"with-error-message-3\" name=\"example\" type=\"checkbox\" value=\"text message\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"with-error-message-3\">\n        Text message\n      </label>\n    </div>\n  </div>\n</fieldset>\n</div>"
+    },
+    {
+      "name": "with error message, without heading",
+      "description": "small",
+      "context": {
+        "fieldset": {
+          "legend": {
+            "text": "How do you want to be contacted about this?",
+            "size": null
+          }
+        },
+        "errorMessage": {
+          "text": "Select how you want to be contacted"
+        },
+        "idPrefix": "with-error-message",
+        "name": "example",
+        "items": [
+          {
+            "value": "email",
+            "text": "Email"
+          },
+          {
+            "value": "phone",
+            "text": "Phone"
+          },
+          {
+            "value": "text message",
+            "text": "Text message"
+          }
+        ],
+        "small": true
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<div class=\"nhsuk-form-group nhsuk-form-group--error\">\n  <fieldset class=\"nhsuk-fieldset\" aria-describedby=\"with-error-message-error\">\n  <legend class=\"nhsuk-fieldset__legend\">\n    How do you want to be contacted about this?\n  </legend>\n  <span class=\"nhsuk-error-message\" id=\"with-error-message-error\">\n    <span class=\"nhsuk-u-visually-hidden\">Error: </span>Select how you want to be contacted\n  </span>\n  <div class=\"nhsuk-checkboxes nhsuk-checkboxes--small\" data-module=\"nhsuk-checkboxes\">\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"with-error-message\" name=\"example\" type=\"checkbox\" value=\"email\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"with-error-message\">\n        Email\n      </label>\n    </div>\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"with-error-message-2\" name=\"example\" type=\"checkbox\" value=\"phone\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"with-error-message-2\">\n        Phone\n      </label>\n    </div>\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"with-error-message-3\" name=\"example\" type=\"checkbox\" value=\"text message\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"with-error-message-3\">\n        Text message\n      </label>\n    </div>\n  </div>\n</fieldset>\n</div>"
+    },
+    {
+      "name": "with error only",
+      "context": {
+        "fieldset": {
+          "legend": {
+            "heading": "How do you want to be contacted about this?",
+            "size": "l"
           }
         },
         "errorMessage": true,
@@ -1388,9 +1606,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What medical conditions do you have?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What medical conditions do you have?",
+            "size": "l"
           }
         },
         "hint": {
@@ -1427,9 +1644,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What medical conditions do you have?",
-            "size": "m",
-            "isPageHeading": true
+            "heading": "What medical conditions do you have?",
+            "size": "m"
           }
         },
         "hint": {
@@ -1466,9 +1682,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What medical conditions do you have?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "What medical conditions do you have?",
+            "size": "l"
           }
         },
         "hint": {
@@ -1514,9 +1729,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "What medical conditions do you have?",
-            "size": "m",
-            "isPageHeading": true
+            "heading": "What medical conditions do you have?",
+            "size": "m"
           }
         },
         "hint": {
@@ -1562,9 +1776,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "Venenatis Condimentum",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "Venenatis Condimentum",
+            "size": "l"
           }
         },
         "idPrefix": "with-long-text",
@@ -1594,9 +1807,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "Venenatis Condimentum",
-            "size": "m",
-            "isPageHeading": true
+            "heading": "Venenatis Condimentum",
+            "size": "m"
           }
         },
         "idPrefix": "with-long-text",
@@ -1626,9 +1838,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "l"
           }
         },
         "idPrefix": "none",
@@ -1666,9 +1877,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "m",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "m"
           }
         },
         "idPrefix": "none",
@@ -1706,9 +1916,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "l"
           }
         },
         "idPrefix": "none",
@@ -1755,9 +1964,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "m",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "m"
           }
         },
         "idPrefix": "none",
@@ -1804,9 +2012,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "l"
           }
         },
         "idPrefix": "none",
@@ -1843,9 +2050,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "l"
           }
         },
         "idPrefix": "none",
@@ -1894,9 +2100,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "l"
           }
         },
         "idPrefix": "none",
@@ -1991,7 +2196,7 @@
       "html": "<div class=\"nhsuk-form-group\">\n  <div class=\"nhsuk-checkboxes nhsuk-checkboxes--small\" data-module=\"nhsuk-checkboxes\">\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"without-fieldset\" name=\"colours\" type=\"checkbox\" value=\"red\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"without-fieldset\">\n        Red\n      </label>\n    </div>\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"without-fieldset-2\" name=\"colours\" type=\"checkbox\" value=\"green\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"without-fieldset-2\">\n        Green\n      </label>\n    </div>\n    <div class=\"nhsuk-checkboxes__item\">\n      <input class=\"nhsuk-checkboxes__input\" id=\"without-fieldset-3\" name=\"colours\" type=\"checkbox\" value=\"blue\">\n      <label class=\"nhsuk-label nhsuk-checkboxes__label\" for=\"without-fieldset-3\">\n        Blue\n      </label>\n    </div>\n  </div>\n</div>"
     },
     {
-      "name": "without page heading",
+      "name": "without heading",
       "context": {
         "fieldset": {
           "legend": "How do you want to be contacted about this?"
@@ -2022,9 +2227,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "l",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "l"
           }
         },
         "hint": {
@@ -2070,9 +2274,8 @@
       "context": {
         "fieldset": {
           "legend": {
-            "text": "How do you want to be contacted about this?",
-            "size": "m",
-            "isPageHeading": true
+            "heading": "How do you want to be contacted about this?",
+            "size": "m"
           }
         },
         "hint": {

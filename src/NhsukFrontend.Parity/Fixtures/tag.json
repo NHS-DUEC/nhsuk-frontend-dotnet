@@ -176,7 +176,7 @@
       "html": "<strong class=\"nhsuk-tag nhsuk-tag--green\">\n  Green\n</strong>"
     },
     {
-      "name": "colour class overriding colour param",
+      "name": "colour class overriding colour option",
       "context": {
         "text": "Not green",
         "colour": "green",
@@ -401,6 +401,20 @@
         "layout": "background-blue"
       },
       "html": "<strong class=\"nhsuk-tag nhsuk-tag--yellow nhsuk-tag--no-border\">\n  Delayed\n</strong>"
+    },
+    {
+      "name": "without colour",
+      "context": {
+        "text": "Completed",
+        "colour": false
+      },
+      "screenshot": {
+        "viewports": [
+          "mobile"
+        ]
+      },
+      "options": {},
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--no-colour\">\n  Completed\n</strong>"
     },
     {
       "name": "with text escaping",
