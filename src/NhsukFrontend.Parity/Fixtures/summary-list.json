@@ -221,6 +221,78 @@
       "html": "<dl class=\"nhsuk-summary-list\">\n  <div class=\"nhsuk-summary-list__row\">\n    <dt class=\"nhsuk-summary-list__key\">\n      Name\n    </dt>\n    <dd class=\"nhsuk-summary-list__value\">\n      Karen Francis\n    </dd>\n    <dd class=\"nhsuk-summary-list__actions\">\n      <a class=\"nhsuk-link\" href=\"#/change\">Change<span class=\"nhsuk-u-visually-hidden\"> name</span></a>\n    </dd>\n  </div>\n  <div class=\"nhsuk-summary-list__row\">\n    <dt class=\"nhsuk-summary-list__key\">\n      Date of birth\n    </dt>\n    <dd class=\"nhsuk-summary-list__value\">\n      15 March 1984\n    </dd>\n    <dd class=\"nhsuk-summary-list__actions\">\n      <a class=\"nhsuk-link\" href=\"#/change\">Change<span class=\"nhsuk-u-visually-hidden\"> date of birth</span></a>\n    </dd>\n  </div>\n  <div class=\"nhsuk-summary-list__row\">\n    <dt class=\"nhsuk-summary-list__key\">\n      Contact information\n    </dt>\n    <dd class=\"nhsuk-summary-list__value\">\n      73 Roman Rd<br>\n      Leeds<br>\n      LS2 5ZN\n    </dd>\n    <dd class=\"nhsuk-summary-list__actions\">\n      <a class=\"nhsuk-link\" href=\"#/change\">Change<span class=\"nhsuk-u-visually-hidden\"> contact information</span></a>\n    </dd>\n  </div>\n  <div class=\"nhsuk-summary-list__row\">\n    <dt class=\"nhsuk-summary-list__key\">\n      Contact details\n    </dt>\n    <dd class=\"nhsuk-summary-list__value\">\n      <p>07700 900362</p>\n      <p>karen.francis@example.com</p>\n    </dd>\n    <dd class=\"nhsuk-summary-list__actions\">\n      <a class=\"nhsuk-link\" href=\"#/change\">Change<span class=\"nhsuk-u-visually-hidden\"> contact details</span></a>\n    </dd>\n  </div>\n</dl>"
     },
     {
+      "name": "with actions array",
+      "context": {
+        "rows": [
+          {
+            "key": {
+              "text": "Name"
+            },
+            "value": {
+              "text": "Karen Francis"
+            },
+            "actions": [
+              {
+                "href": "#/change",
+                "text": "Change",
+                "visuallyHiddenText": "name"
+              }
+            ]
+          },
+          {
+            "key": {
+              "text": "Date of birth"
+            },
+            "value": {
+              "text": "15 March 1984"
+            },
+            "actions": [
+              {
+                "href": "#/change",
+                "text": "Change",
+                "visuallyHiddenText": "date of birth"
+              }
+            ]
+          },
+          {
+            "key": {
+              "text": "Contact information"
+            },
+            "value": {
+              "html": "73 Roman Rd<br>\nLeeds<br>\nLS2 5ZN"
+            },
+            "actions": {
+              "items": [
+                {
+                  "href": "#/change",
+                  "text": "Change",
+                  "visuallyHiddenText": "contact information"
+                }
+              ]
+            }
+          },
+          {
+            "key": {
+              "text": "Contact details"
+            },
+            "value": {
+              "html": "<p>07700 900362</p>\n<p>karen.francis@example.com</p>"
+            },
+            "actions": [
+              {
+                "href": "#/change",
+                "text": "Change",
+                "visuallyHiddenText": "contact details"
+              }
+            ]
+          }
+        ]
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<dl class=\"nhsuk-summary-list\">\n  <div class=\"nhsuk-summary-list__row\">\n    <dt class=\"nhsuk-summary-list__key\">\n      Name\n    </dt>\n    <dd class=\"nhsuk-summary-list__value\">\n      Karen Francis\n    </dd>\n    <dd class=\"nhsuk-summary-list__actions\">\n      <a class=\"nhsuk-link\" href=\"#/change\">Change<span class=\"nhsuk-u-visually-hidden\"> name</span></a>\n    </dd>\n  </div>\n  <div class=\"nhsuk-summary-list__row\">\n    <dt class=\"nhsuk-summary-list__key\">\n      Date of birth\n    </dt>\n    <dd class=\"nhsuk-summary-list__value\">\n      15 March 1984\n    </dd>\n    <dd class=\"nhsuk-summary-list__actions\">\n      <a class=\"nhsuk-link\" href=\"#/change\">Change<span class=\"nhsuk-u-visually-hidden\"> date of birth</span></a>\n    </dd>\n  </div>\n  <div class=\"nhsuk-summary-list__row\">\n    <dt class=\"nhsuk-summary-list__key\">\n      Contact information\n    </dt>\n    <dd class=\"nhsuk-summary-list__value\">\n      73 Roman Rd<br>\n      Leeds<br>\n      LS2 5ZN\n    </dd>\n    <dd class=\"nhsuk-summary-list__actions\">\n      <a class=\"nhsuk-link\" href=\"#/change\">Change<span class=\"nhsuk-u-visually-hidden\"> contact information</span></a>\n    </dd>\n  </div>\n  <div class=\"nhsuk-summary-list__row\">\n    <dt class=\"nhsuk-summary-list__key\">\n      Contact details\n    </dt>\n    <dd class=\"nhsuk-summary-list__value\">\n      <p>07700 900362</p>\n      <p>karen.francis@example.com</p>\n    </dd>\n    <dd class=\"nhsuk-summary-list__actions\">\n      <a class=\"nhsuk-link\" href=\"#/change\">Change<span class=\"nhsuk-u-visually-hidden\"> contact details</span></a>\n    </dd>\n  </div>\n</dl>"
+    },
+    {
       "name": "with actions as buttons",
       "context": {
         "rows": [
@@ -303,6 +375,24 @@
       },
       "options": {},
       "html": "<dl class=\"nhsuk-summary-list\">\n  <div class=\"nhsuk-summary-list__row\">\n    <dt class=\"nhsuk-summary-list__key\">\n      Name\n    </dt>\n    <dd class=\"nhsuk-summary-list__value\">\n      Karen Francis\n    </dd>\n    <dd class=\"nhsuk-summary-list__actions\">\n      <button class=\"nhsuk-link\" type=\"submit\">Change<span class=\"nhsuk-u-visually-hidden\"> name</span></button>\n    </dd>\n  </div>\n  <div class=\"nhsuk-summary-list__row\">\n    <dt class=\"nhsuk-summary-list__key\">\n      Date of birth\n    </dt>\n    <dd class=\"nhsuk-summary-list__value\">\n      15 March 1984\n    </dd>\n    <dd class=\"nhsuk-summary-list__actions\">\n      <button class=\"nhsuk-link\" type=\"submit\">Change<span class=\"nhsuk-u-visually-hidden\"> date of birth</span></button>\n    </dd>\n  </div>\n  <div class=\"nhsuk-summary-list__row\">\n    <dt class=\"nhsuk-summary-list__key\">\n      Contact information\n    </dt>\n    <dd class=\"nhsuk-summary-list__value\">\n      73 Roman Rd<br>\n      Leeds<br>\n      LS2 5ZN\n    </dd>\n    <dd class=\"nhsuk-summary-list__actions\">\n      <button class=\"nhsuk-link\" type=\"submit\">Change<span class=\"nhsuk-u-visually-hidden\"> contact information</span></button>\n    </dd>\n  </div>\n  <div class=\"nhsuk-summary-list__row\">\n    <dt class=\"nhsuk-summary-list__key\">\n      Contact details\n    </dt>\n    <dd class=\"nhsuk-summary-list__value\">\n      <p>07700 900362</p>\n      <p>karen.francis@example.com</p>\n    </dd>\n    <dd class=\"nhsuk-summary-list__actions\">\n      <button class=\"nhsuk-link\" type=\"submit\">Change<span class=\"nhsuk-u-visually-hidden\"> contact details</span></button>\n    </dd>\n  </div>\n</dl>"
+    },
+    {
+      "name": "with item strings",
+      "context": {
+        "rows": [
+          {
+            "key": "Name",
+            "value": "Karen Francis"
+          },
+          {
+            "key": "Date of birth",
+            "value": "15 March 1984"
+          }
+        ]
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<dl class=\"nhsuk-summary-list\">\n  <div class=\"nhsuk-summary-list__row\">\n    <dt class=\"nhsuk-summary-list__key\">\n      Name\n    </dt>\n    <dd class=\"nhsuk-summary-list__value\">\n      Karen Francis\n    </dd>\n  </div>\n  <div class=\"nhsuk-summary-list__row\">\n    <dt class=\"nhsuk-summary-list__key\">\n      Date of birth\n    </dt>\n    <dd class=\"nhsuk-summary-list__value\">\n      15 March 1984\n    </dd>\n  </div>\n</dl>"
     },
     {
       "name": "with item widths",

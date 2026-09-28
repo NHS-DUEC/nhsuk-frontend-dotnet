@@ -104,6 +104,7 @@
         {
             Html = item.Label?.Html,
             Text = item.Label?.Text ?? Capitalize(name),
+            VisuallyHiddenText = item.Label?.VisuallyHiddenText,
             Id = item.Label?.Id,
             For = item.Label?.For,
             Classes = Append("nhsuk-date-input__label", item.Label?.Classes),

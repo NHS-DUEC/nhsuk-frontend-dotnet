@@ -27,7 +27,7 @@
       "html": "<h1 class=\"nhsuk-heading nhsuk-heading-l\">\n  What is your full name?\n</h1>"
     },
     {
-      "name": "size class overriding size param",
+      "name": "size class overriding size option",
       "context": {
         "text": "What is your full name?",
         "classes": "nhsuk-heading-l",

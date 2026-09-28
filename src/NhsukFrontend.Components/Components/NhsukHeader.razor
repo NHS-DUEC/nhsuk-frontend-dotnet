@@ -109,7 +109,8 @@
     {
         // The logo and service name share one link when they'd otherwise both point to the same place.
         var serviceHref = Service?.Href;
-        _combineLinks = Truthy(serviceHref) && (!Truthy(Logo?.Href) || serviceHref == Logo!.Href);
+        // From 10.6.1 a service href without service text no longer takes over the logo link.
+        _combineLinks = (Truthy(Service?.Text) && Truthy(serviceHref) && !Truthy(Logo?.Href)) || (Truthy(serviceHref) && serviceHref == Logo?.Href);
         _logoAlt = Default(Logo?.Alt, "NHS");
         _logoHref = _combineLinks ? serviceHref : Logo?.Href;
     }
@@ -167,7 +168,7 @@
         @<text>
             @if (Truthy(Logo?.Src))
             {
-                <img class="nhsuk-header__organisation-logo" src="@(BaseUrl + Logo!.Src)" width="280" alt="@_logoAlt">
+                <img class="nhsuk-header__organisation-logo" src="@Logo!.Src" width="280" alt="@_logoAlt">
             }
             else
             {
@@ -183,8 +184,9 @@
             }
         </text>;
 
-    private static RenderFragment ServiceName(string? text, string? href) => Truthy(href)
-        ? @<a class="nhsuk-header__service-name" href="@href">@text</a>
+    private static RenderFragment ServiceName(string? text, string? href) =>
+        !Truthy(text) ? _ => { }
+        : Truthy(href) ? @<a class="nhsuk-header__service-name" href="@href">@text</a>
         : @<span class="nhsuk-header__service-name">@text</span>;
 
     private static RenderFragment AccountItem(HeaderAccountItemsItem item) =>

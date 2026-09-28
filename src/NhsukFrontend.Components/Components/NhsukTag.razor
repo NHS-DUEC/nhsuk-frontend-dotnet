@@ -12,6 +12,9 @@
             var classNames = "nhsuk-tag";
             if (Colour is not null && Colours.Contains(Colour) && !Colours.Any(c => Contains(Classes, "nhsuk-tag--" + c)))
                 classNames += " nhsuk-tag--" + Colour;
+            // colour: false (Colour="false") asks for no colour at all.
+            if (Colour == "false" && !Contains(Classes, "nhsuk-tag--no-colour"))
+                classNames += " nhsuk-tag--no-colour";
             if (Border == false && !Contains(Classes, "nhsuk-tag--no-border"))
                 classNames += " nhsuk-tag--no-border";
             return Append(classNames, Classes);

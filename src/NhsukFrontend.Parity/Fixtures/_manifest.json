@@ -1,5 +1,5 @@
 {
-  "upstreamVersion": "10.6.0",
+  "upstreamVersion": "10.6.1",
   "ported": [
     "action-link",
     "back-link",

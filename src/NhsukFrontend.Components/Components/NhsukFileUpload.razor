@@ -2,7 +2,8 @@
 @* Port of nhsuk/components/file-upload/template.njk *@
 <div @attributes="FormGroupAttributes">
     <NhsukLabel Html="@Label?.Html" Text="@Label?.Text" Id="@Label?.Id" For="@(Label?.For ?? _id)" Size="@Label?.Size"
-                IsPageHeading="@Label?.IsPageHeading" Classes="@Label?.Classes" Attributes="@Label?.Attributes" />
+                IsPageHeading="@Label?.IsPageHeading" Classes="@Label?.Classes" Attributes="@Label?.Attributes"
+                VisuallyHiddenText="@Label?.VisuallyHiddenText" Caption="@Label?.Caption" Heading="@Label?.Heading" />
     @if (_hasHint)
     {
         <NhsukHint Html="@Hint!.Html" Text="@Hint.Text" Id="@_hintId" Classes="@Hint.Classes" Attributes="@Hint.Attributes" />

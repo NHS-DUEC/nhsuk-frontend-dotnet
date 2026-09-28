@@ -8,7 +8,7 @@
     "check": "node scripts/sync.mjs --check"
   },
   "dependencies": {
-    "nhsuk-frontend": "10.6.0"
+    "nhsuk-frontend": "10.6.1"
   },
   "devDependencies": {
     "nunjucks": "^3.2.4"

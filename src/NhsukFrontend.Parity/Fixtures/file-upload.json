@@ -6,9 +6,8 @@
       "name": "default",
       "context": {
         "label": {
-          "text": "Upload a file",
-          "size": "l",
-          "isPageHeading": true
+          "heading": "Upload a file",
+          "size": "l"
         },
         "id": "file-upload",
         "name": "file-upload"
@@ -28,9 +27,8 @@
       "name": "disabled",
       "context": {
         "label": {
-          "text": "Upload a file",
-          "size": "l",
-          "isPageHeading": true
+          "heading": "Upload a file",
+          "size": "l"
         },
         "id": "file-upload",
         "name": "file-upload",
@@ -52,9 +50,8 @@
       "description": "with primary",
       "context": {
         "label": {
-          "text": "Upload a file",
-          "size": "l",
-          "isPageHeading": true
+          "heading": "Upload a file",
+          "size": "l"
         },
         "id": "file-upload",
         "name": "file-upload",
@@ -69,9 +66,8 @@
       "description": "with small primary",
       "context": {
         "label": {
-          "text": "Upload a file",
-          "size": "l",
-          "isPageHeading": true
+          "heading": "Upload a file",
+          "size": "l"
         },
         "id": "file-upload",
         "name": "file-upload",
@@ -88,9 +84,8 @@
       "description": "with small secondary",
       "context": {
         "label": {
-          "text": "Upload a file",
-          "size": "l",
-          "isPageHeading": true
+          "heading": "Upload a file",
+          "size": "l"
         },
         "id": "file-upload",
         "name": "file-upload",
@@ -108,9 +103,8 @@
       "description": "with size S",
       "context": {
         "label": {
-          "text": "Upload a file",
-          "size": "s",
-          "isPageHeading": true
+          "heading": "Upload a file",
+          "size": "s"
         },
         "id": "file-upload",
         "name": "file-upload"
@@ -124,9 +118,8 @@
       "description": "with size M",
       "context": {
         "label": {
-          "text": "Upload a file",
-          "size": "m",
-          "isPageHeading": true
+          "heading": "Upload a file",
+          "size": "m"
         },
         "id": "file-upload",
         "name": "file-upload"
@@ -140,9 +133,8 @@
       "description": "with size L",
       "context": {
         "label": {
-          "text": "Upload a file",
-          "size": "l",
-          "isPageHeading": true
+          "heading": "Upload a file",
+          "size": "l"
         },
         "id": "file-upload",
         "name": "file-upload"
@@ -156,9 +148,8 @@
       "description": "with size XL",
       "context": {
         "label": {
-          "text": "Upload a file",
-          "size": "xl",
-          "isPageHeading": true
+          "heading": "Upload a file",
+          "size": "xl"
         },
         "id": "file-upload",
         "name": "file-upload"
@@ -172,9 +163,8 @@
       "description": "with id attribute on",
       "context": {
         "label": {
-          "text": "Upload a file",
+          "heading": "Upload a file",
           "size": "l",
-          "isPageHeading": true,
           "id": "custom-id"
         },
         "id": "file-upload",
@@ -190,9 +180,8 @@
       "name": "to configure in JavaScript",
       "context": {
         "label": {
-          "text": "Upload a file",
-          "size": "l",
-          "isPageHeading": true
+          "heading": "Upload a file",
+          "size": "l"
         },
         "id": "to-configure-in-javascript",
         "name": "file-upload"
@@ -207,9 +196,8 @@
       "name": "with error message",
       "context": {
         "label": {
-          "text": "Upload a file",
-          "size": "l",
-          "isPageHeading": true
+          "heading": "Upload a file",
+          "size": "l"
         },
         "errorMessage": {
           "text": "The selected file must be a JPG, BMP or TIF"
@@ -225,9 +213,8 @@
       "name": "with error message and hint",
       "context": {
         "label": {
-          "text": "Upload a file",
-          "size": "l",
-          "isPageHeading": true
+          "heading": "Upload a file",
+          "size": "l"
         },
         "id": "file-upload",
         "name": "file-upload",
@@ -250,12 +237,62 @@
       "html": "<div class=\"nhsuk-form-group nhsuk-form-group--error nhsuk-file-upload\" data-module=\"nhsuk-file-upload\">\n  <h1 class=\"nhsuk-label-wrapper\">\n    <label class=\"nhsuk-label nhsuk-label--l\" for=\"file-upload\">\n      Upload a file\n    </label>\n  </h1>\n  <div class=\"nhsuk-hint\" id=\"file-upload-hint\">\n    Your photo may be in your Pictures, Photos, Downloads or Desktop folder\n  </div>\n  <span class=\"nhsuk-error-message\" id=\"file-upload-error\">\n    <span class=\"nhsuk-u-visually-hidden\">Error: </span>The selected file must be a JPG, BMP or TIF\n  </span>\n  <input class=\"nhsuk-file-upload__input\" id=\"file-upload\" name=\"file-upload\" type=\"file\" aria-describedby=\"file-upload-hint file-upload-error\">\n</div>"
     },
     {
+      "name": "with error message and hint as strings",
+      "context": {
+        "label": {
+          "heading": "Upload a file",
+          "size": "l"
+        },
+        "id": "file-upload",
+        "name": "file-upload",
+        "hint": "Your photo may be in your Pictures, Photos, Downloads or Desktop folder",
+        "errorMessage": "The selected file must be a JPG, BMP or TIF"
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<div class=\"nhsuk-form-group nhsuk-form-group--error nhsuk-file-upload\" data-module=\"nhsuk-file-upload\">\n  <h1 class=\"nhsuk-label-wrapper\">\n    <label class=\"nhsuk-label nhsuk-label--l\" for=\"file-upload\">\n      Upload a file\n    </label>\n  </h1>\n  <div class=\"nhsuk-hint\" id=\"file-upload-hint\">\n    Your photo may be in your Pictures, Photos, Downloads or Desktop folder\n  </div>\n  <span class=\"nhsuk-error-message\" id=\"file-upload-error\">\n    <span class=\"nhsuk-u-visually-hidden\">Error: </span>The selected file must be a JPG, BMP or TIF\n  </span>\n  <input class=\"nhsuk-file-upload__input\" id=\"file-upload\" name=\"file-upload\" type=\"file\" aria-describedby=\"file-upload-hint file-upload-error\">\n</div>"
+    },
+    {
+      "name": "with error message and hint, without heading",
+      "context": {
+        "label": {
+          "text": "Upload a file"
+        },
+        "id": "file-upload",
+        "name": "file-upload",
+        "hint": {
+          "text": "Your photo may be in your Pictures, Photos, Downloads or Desktop folder"
+        },
+        "errorMessage": {
+          "text": "The selected file must be a JPG, BMP or TIF"
+        }
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<div class=\"nhsuk-form-group nhsuk-form-group--error nhsuk-file-upload\" data-module=\"nhsuk-file-upload\">\n  <label class=\"nhsuk-label\" for=\"file-upload\">\n    Upload a file\n  </label>\n  <div class=\"nhsuk-hint\" id=\"file-upload-hint\">\n    Your photo may be in your Pictures, Photos, Downloads or Desktop folder\n  </div>\n  <span class=\"nhsuk-error-message\" id=\"file-upload-error\">\n    <span class=\"nhsuk-u-visually-hidden\">Error: </span>The selected file must be a JPG, BMP or TIF\n  </span>\n  <input class=\"nhsuk-file-upload__input\" id=\"file-upload\" name=\"file-upload\" type=\"file\" aria-describedby=\"file-upload-hint file-upload-error\">\n</div>"
+    },
+    {
+      "name": "with error message, without heading",
+      "context": {
+        "label": {
+          "text": "Upload a file"
+        },
+        "errorMessage": {
+          "text": "The selected file must be a JPG, BMP or TIF"
+        },
+        "id": "file-upload",
+        "name": "file-upload"
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<div class=\"nhsuk-form-group nhsuk-form-group--error nhsuk-file-upload\" data-module=\"nhsuk-file-upload\">\n  <label class=\"nhsuk-label\" for=\"file-upload\">\n    Upload a file\n  </label>\n  <span class=\"nhsuk-error-message\" id=\"file-upload-error\">\n    <span class=\"nhsuk-u-visually-hidden\">Error: </span>The selected file must be a JPG, BMP or TIF\n  </span>\n  <input class=\"nhsuk-file-upload__input\" id=\"file-upload\" name=\"file-upload\" type=\"file\" aria-describedby=\"file-upload-error\">\n</div>"
+    },
+    {
       "name": "with error only",
       "context": {
         "label": {
-          "text": "Upload a file",
-          "size": "l",
-          "isPageHeading": true
+          "heading": "Upload a file",
+          "size": "l"
         },
         "errorMessage": true,
         "id": "file-upload",
@@ -269,9 +306,8 @@
       "name": "with hint",
       "context": {
         "label": {
-          "text": "Upload your photo",
-          "size": "l",
-          "isPageHeading": true
+          "heading": "Upload your photo",
+          "size": "l"
         },
         "hint": {
           "text": "Your photo may be in your Pictures, Photos, Downloads or Desktop folder"
@@ -287,9 +323,8 @@
       "name": "with multiple",
       "context": {
         "label": {
-          "text": "Upload multiple files",
-          "size": "l",
-          "isPageHeading": true
+          "heading": "Upload multiple files",
+          "size": "l"
         },
         "id": "file-upload",
         "name": "file-upload",
@@ -303,7 +338,7 @@
       "html": "<div class=\"nhsuk-form-group nhsuk-file-upload\" data-module=\"nhsuk-file-upload\" data-i18n.choose-files-button=\"Choose files\" data-i18n.no-file-chosen=\"No files chosen\" data-i18n.drop-instruction=\"or drop files\">\n  <h1 class=\"nhsuk-label-wrapper\">\n    <label class=\"nhsuk-label nhsuk-label--l\" for=\"file-upload\">\n      Upload multiple files\n    </label>\n  </h1>\n  <input class=\"nhsuk-file-upload__input\" id=\"file-upload\" name=\"file-upload\" type=\"file\" multiple>\n</div>"
     },
     {
-      "name": "without page heading",
+      "name": "without heading",
       "context": {
         "label": "Upload a file",
         "id": "file-upload",
@@ -317,9 +352,8 @@
       "name": "with translations",
       "context": {
         "label": {
-          "text": "Llwythwch ffeil i fyny",
-          "size": "l",
-          "isPageHeading": true
+          "heading": "Llwythwch ffeil i fyny",
+          "size": "l"
         },
         "id": "file-upload",
         "name": "file-upload",

@@ -102,7 +102,8 @@
             <div class="@("nhsuk-checkboxes__item" + notSupportedHidden)">
                 <input @attributes="input">
                 <NhsukLabel Html="@(item.Label?.Html ?? item.Html)" Text="@(item.Label?.Text ?? item.Text)" Id="@item.Label?.Id" For="@itemId"
-                            Classes="@Append("nhsuk-checkboxes__label", item.Label?.Classes)" Attributes="@item.Label?.Attributes" />
+                            Classes="@Append("nhsuk-checkboxes__label", item.Label?.Classes)" Attributes="@item.Label?.Attributes"
+                            VisuallyHiddenText="@item.Label?.VisuallyHiddenText" />
                 @if (hasHint)
                 {
                     <NhsukHint Html="@item.Hint!.Html" Text="@item.Hint.Text" Id="@hintId"

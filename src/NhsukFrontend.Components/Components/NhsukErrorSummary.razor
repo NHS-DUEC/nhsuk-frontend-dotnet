@@ -3,7 +3,7 @@
 <div @attributes="SummaryAttributes">
     <div role="alert">
         <NhsukHeading Id="@_heading?.Id" Text="@_heading?.Text" Html="@_heading?.Html" Level="2"
-                      ClassName="nhsuk-error-summary__title" Attributes="@_heading?.Attributes" />
+                      ClassName="nhsuk-error-summary__heading" Attributes="@_heading?.Attributes" />
         <div class="nhsuk-error-summary__body">
             @if (ChildContent is not null || Truthy(_description?.Text) || Truthy(_description?.Html))
             {

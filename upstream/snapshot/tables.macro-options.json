@@ -31,14 +31,14 @@
         "name": "text",
         "type": "string",
         "required": true,
-        "description": "If `html` is set, this is not required. Text for cells in table rows. If `html` is provided, the `text` argument will be ignored.",
+        "description": "If `html` is set, this is not required. Text for cells in table rows. If `html` is provided, the `text` option will be ignored.",
         "released": "1.0.0"
       },
       {
         "name": "html",
         "type": "string",
         "required": true,
-        "description": "If `text` is set, this is not required. HTML for cells in table rows. If `html` is provided, the `text` argument will be ignored.",
+        "description": "If `text` is set, this is not required. HTML for cells in table rows. If `html` is provided, the `text` option will be ignored.",
         "released": "1.0.0"
       },
       {
@@ -132,14 +132,14 @@
         "name": "text",
         "type": "string",
         "required": false,
-        "description": "If `html` is set, this is not required. Text for table head cells. If `html` is provided, the `text` argument will be ignored.",
+        "description": "If `html` is set, this is not required. Text for table head cells. If `html` is provided, the `text` option will be ignored.",
         "released": "1.0.0"
       },
       {
         "name": "html",
         "type": "string",
         "required": false,
-        "description": "If `text` is set, this is not required. HTML for table head cells. If `html` is provided, the `text` argument will be ignored.",
+        "description": "If `text` is set, this is not required. HTML for table head cells. If `html` is provided, the `text` option will be ignored.",
         "released": "1.0.0"
       },
       {
@@ -257,6 +257,14 @@
         "required": false,
         "description": "Message made available to assistive technologies to describe that the table is sortable. Defaults to `\"Column headers are sortable\"`.",
         "released": "10.6.0"
+      },
+      {
+        "name": "caption",
+        "type": "object",
+        "required": false,
+        "description": "Optional caption for the table caption.",
+        "released": "10.6.0",
+        "isComponent": true
       },
       {
         "name": "size",

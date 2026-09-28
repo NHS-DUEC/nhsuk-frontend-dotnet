@@ -81,7 +81,7 @@
     {
       "name": "with custom HTML",
       "context": {
-        "html": "<p>This is an HTML code block.</p>"
+        "html": "&lt;p&gt;This is an HTML code block.&lt;/p&gt;"
       },
       "screenshot": false,
       "options": {},
@@ -90,7 +90,7 @@
     {
       "name": "with custom HTML and button",
       "context": {
-        "html": "<p>This is an HTML code block.</p>",
+        "html": "&lt;p&gt;This is an HTML code block.&lt;/p&gt;",
         "button": true
       },
       "screenshot": false,
@@ -102,10 +102,10 @@
       "context": {
         "button": true
       },
-      "callBlock": "&lt;p&gt;This is a code block.&lt;/p&gt;",
+      "callBlock": "&lt;p&gt;This is an HTML code block.&lt;/p&gt;",
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-code nhsuk-code--button\" data-module=\"nhsuk-code\">\n  <button class=\"nhsuk-button nhsuk-button--secondary nhsuk-button--small nhsuk-code__button nhsuk-js-code-button\" data-module=\"nhsuk-button\" type=\"button\" hidden>\n    Copy code\n  </button>\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">&lt;p&gt;This is a code block.&lt;/p&gt;</code></pre>\n</div>"
+      "html": "<div class=\"nhsuk-code nhsuk-code--button\" data-module=\"nhsuk-code\">\n  <button class=\"nhsuk-button nhsuk-button--secondary nhsuk-button--small nhsuk-code__button nhsuk-js-code-button\" data-module=\"nhsuk-button\" type=\"button\" hidden>\n    Copy code\n  </button>\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">&lt;p&gt;This is an HTML code block.&lt;/p&gt;</code></pre>\n</div>"
     },
     {
       "name": "without border",
@@ -141,7 +141,7 @@
     {
       "name": "with translations",
       "context": {
-        "html": "<p>Bloc cod HTML yw hwn.</p>",
+        "html": "&lt;p&gt;Bloc cod HTML yw hwn.&lt;/p&gt;",
         "button": true,
         "copyButtonText": "Copïo cod",
         "copiedButtonText": "Cod wedi'i gopïo",

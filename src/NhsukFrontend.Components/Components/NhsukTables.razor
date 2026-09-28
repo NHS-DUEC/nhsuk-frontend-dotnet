@@ -16,10 +16,18 @@ else
         string Element, string? Text, string? Html, string? VisuallyHiddenText, string? Href, string? Format, string? Scope, string? Role,
         int? Colspan, int? Rowspan, string? Align, string? Width, string? Classes, Attrs Attributes, string? Header);
 
+    // A caption above the table caption, which must sit inside it (placement "start" or "end").
+    private CaptionOptions? CaptionCaption => _caption.Caption is not { } c ? null : new CaptionOptions
+    {
+        Id = c.Id, Text = c.Text, Html = c.Html, Placement = c.Placement is null or "start" or "end" ? c.Placement : null,
+        Size = c.Size ?? _caption.Size, Classes = c.Classes, Attributes = c.Attributes,
+    };
+
     private static readonly string[] Alignments = ["left", "centre", "right"];
 
-    private List<TablesHeadItem> _head = [];
-    private List<List<TablesRowsItem>> _rows = [];
+    // Empty head and row cells are kept so every cell lines up with its column header by position.
+    private List<TablesHeadItem?> _head = [];
+    private List<List<TablesRowsItem?>> _rows = [];
     private TablesCaptionOptions _caption = new();
     private string _classNames = "";
     private string? _captionId, _captionHiddenText;
@@ -27,8 +35,8 @@ else
 
     protected override void OnParametersSet()
     {
-        _head = Head?.Where(h => h is not null).Select(h => h!).ToList() ?? [];
-        _rows = Rows?.Where(r => r is not null).Select(r => r!.Where(c => c is not null).Select(c => c!).ToList()).ToList() ?? [];
+        _head = Head?.ToList() ?? [];
+        _rows = Rows?.Where(r => r is not null).Select(r => r!.ToList()).ToList() ?? [];
 
         // A caption object replaces captionSize / captionClasses; a caption string only replaces the text.
         _caption = Caption is { IsShorthand: false } ? Caption : new TablesCaptionOptions { Text = Caption?.Text, Size = CaptionSize, Classes = CaptionClasses };
@@ -44,6 +52,7 @@ else
         _isSortable = _isSortableOnServer = false;
         foreach (var item in _head)
         {
+            if (item is null) continue;
             _isSortable = SortOf(item) is not null || _isSortable;
             _isSortableOnServer = (_isSortable && Truthy(item.Href)) || _isSortableOnServer;
         }
@@ -98,14 +107,14 @@ else
         {
             <NhsukHeading Id="@_captionId" Text="@_caption.Text" Html="@_caption.Html"
                           VisuallyHiddenText="@(Truthy(_captionHiddenText) ? "(" + _captionHiddenText + ")" : null)"
-                          Caption="@_caption.Caption" Size="@_caption.Size" Sizes="@(["s", "m", "l", "xl"])" ClassName="nhsuk-table__caption"
+                          Caption="@CaptionCaption" Size="@_caption.Size" Sizes="@(["s", "m", "l", "xl"])" ClassName="nhsuk-table__caption"
                           ClassPrefix="nhsuk-table__caption--" Classes="@_caption.Classes" Attributes="@_caption.Attributes" Element="caption" />
         }
         @if (_head.Count > 0)
         {
             <thead class="nhsuk-table__head" role="@(Responsive == true ? "rowgroup" : null)">
                 <tr class="nhsuk-table__row" role="@(Responsive == true ? "row" : null)">
-                    @for (var i = 0; i < _head.Count; i++) { @CellFragment(HeadCell(_head[i]), i) }
+                    @for (var i = 0; i < _head.Count; i++) { if (_head[i] is { } item) { @CellFragment(HeadCell(item), false, null) } }
                 </tr>
             </thead>
         }
@@ -113,7 +122,7 @@ else
             @foreach (var row in _rows)
             {
                 <tr class="nhsuk-table__row" role="@(Responsive == true ? "row" : null)">
-                    @for (var i = 0; i < row.Count; i++) { @CellFragment(BodyCell(row[i], i), i) }
+                    @for (var i = 0; i < row.Count; i++) { if (row[i] is { } item) { @CellFragment(BodyCell(item, i), true, i < _head.Count ? _head[i] : null) } }
                 </tr>
             }
         </tbody>
@@ -144,7 +153,7 @@ else
             item.Width, item.Classes, attrs, item.Header);
     }
 
-    private RenderFragment CellFragment(Cell cell, int index)
+    private RenderFragment CellFragment(Cell cell, bool isBody, TablesHeadItem? header)
     {
         var baseClass = cell.Element == "th" ? "nhsuk-table__header" : "nhsuk-table__cell";
         var classNames = baseClass;
@@ -158,9 +167,9 @@ else
             .Optional("colspan", cell.Colspan).Optional("rowspan", cell.Rowspan);
         foreach (var (name, value) in cell.Attributes) attrs.AddUser(null, new Dictionary<string, object> { [name] = value });
 
-        // Upstream looks up the column header by position for every cell, including header cells.
-        var header = index < _head.Count ? _head[index] : null;
-        var showHeading = Responsive == true && (header is not null || Truthy(cell.Header));
+        // From 10.6.1 every body cell of a responsive table repeats its column heading (empty if there's no header),
+        // and header cells never do.
+        var showHeading = Responsive == true && isBody;
 
         RenderFragment inner = Truthy(cell.Href)
             ? @<a class="nhsuk-link" href="@cell.Href">@Value(cell.Text, cell.Html, cell.VisuallyHiddenText)</a>

@@ -7,9 +7,9 @@
                      Name="@Button.Name" Value="@Button.Value" Type="@DefaultIfFalsy(Button.Type, "button")" Icon="@Button.Icon"
                      PreventDoubleClick="@Button.PreventDoubleClick" Disabled="@Button.Disabled" Classes="@ButtonClasses" Attributes="@Hidden" />
     }
-    @* Whitespace matters inside <pre>, so the content sits directly inside <code>. Upstream escapes `html`
-       unless it is already marked safe, so it is shown as text here; use child content for markup. *@
-    <pre class="nhsuk-code__container"><code class="nhsuk-code__content">@if (ChildContent is not null) {@ChildContent} else if (Truthy(Html)) {@Html} else if (Truthy(Text)) {@Text}</code></pre>
+    @* Whitespace matters inside <pre>, so the content sits directly inside <code>. From 10.6.1 `html` is output
+       as markup, so code shown with it must already be escaped (&lt;p&gt;); `text` is escaped for you. *@
+    <pre class="nhsuk-code__container"><code class="nhsuk-code__content">@if (ChildContent is not null) {@ChildContent} else if (Truthy(Html)) {@((MarkupString)Html!)} else if (Truthy(Text)) {@Text}</code></pre>
 </div>
 
 @code {

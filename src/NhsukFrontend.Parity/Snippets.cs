@@ -168,6 +168,9 @@ public static class Snippets
                 .Select(p => (p, name: p.GetCustomAttribute<JsonPropertyNameAttribute>()?.Name))
                 .Where(x => x.name is not null)
                 .ToDictionary(x => x.name!, x => x.p);
+            // A plain list where upstream also accepts { items: [...] } (card and summary list actions).
+            if (value.ValueKind == JsonValueKind.Array && props.TryGetValue("items", out var itemsProp))
+                return $"new {target.Name}\n{closing}{{\n{indent}Items = {CSharp(itemsProp.PropertyType, value, depth + 1)},\n{closing}}}";
             var entries = value.EnumerateObject()
                 .Where(p => props.ContainsKey(p.Name))
                 .Select(p => $"{indent}{props[p.Name].Name} = {CSharp(props[p.Name].PropertyType, p.Value, depth + 1, props[p.Name].GetCustomAttribute<KeepFalseAttribute>() is not null)},");

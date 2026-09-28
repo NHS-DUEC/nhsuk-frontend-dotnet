@@ -1,7 +1,7 @@
 @namespace NhsukFrontend.Components
 @* Port of nhsuk/components/tabs/template.njk *@
 <div @attributes="TabsAttributes">
-    <NhsukHeading Text="@(VisuallyHiddenText ?? Title ?? "Contents")" Level="2" ClassName="nhsuk-tabs__title" />
+    <NhsukHeading Text="@(VisuallyHiddenText ?? Title ?? "Contents")" Level="2" ClassName="nhsuk-tabs__heading" />
     @if (Items is { Count: > 0 })
     {
         <ul class="nhsuk-tabs__list">
@@ -27,8 +27,8 @@
 </div>
 
 @code {
-    // Upstream falls back to "undefined-1" and so on when neither item.id nor idPrefix is given.
-    private string PanelId(TabsItemsItem item, int index) => Truthy(item.Id) ? item.Id! : (Truthy(IdPrefix) ? IdPrefix : "undefined") + "-" + index;
+    // Without item.id, ids come from idPrefix, then the tabs id, then upstream's literal "undefined".
+    private string PanelId(TabsItemsItem item, int index) => Truthy(item.Id) ? item.Id! : (Truthy(IdPrefix) ? IdPrefix : Truthy(Id) ? Id : "undefined") + "-" + index;
 
     private Attrs TabsAttributes => new Attrs()
         .Add("class", Append("nhsuk-tabs", Classes))
