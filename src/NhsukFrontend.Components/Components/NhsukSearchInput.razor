@@ -1,7 +1,7 @@
 @namespace NhsukFrontend.Components
 @* Port of nhsuk/components/search-input/template.njk: an input with a search button. *@
 <NhsukInput Label="@Label" Hint="@Hint" ErrorMessage="@ErrorMessage" Id="@(Truthy(Id) ? Id : Name)" Name="@Name" Value="@Value"
-            Placeholder="@Placeholder" Type="search"
+            Placeholder="@Placeholder" Type="@(Type ?? "search")" Spellcheck="@Spellcheck" Inputmode="@Inputmode" Autocapitalize="@Autocapitalize"
             Prefix="@(Prefix is { } p ? new InputPrefixOptions { Text = p.Text, Html = p.Html, Classes = p.Classes, Attributes = p.Attributes } : null)"
             Suffix="@(Suffix is { } s ? new InputSuffixOptions { Text = s.Text, Html = s.Html, Classes = s.Classes, Attributes = s.Attributes } : null)"
             Code="@Code" Width="@Width" Large="@Large" Autocomplete="@(Autocomplete ?? "off")" Disabled="@Disabled" DescribedBy="@DescribedBy"

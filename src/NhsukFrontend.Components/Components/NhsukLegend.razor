@@ -1,30 +1,66 @@
 @namespace NhsukFrontend.Components
-@* Port of nhsuk/components/legend/template.njk (note: upstream legend has no attributes option) *@
-@if (ChildContent is not null || Truthy(Html) || Truthy(Text))
+@* Port of nhsuk/components/legend/template.njk *@
+@if (ChildContent is not null || Truthy(_html) || Truthy(_text))
 {
-    <legend class="@ClassNames">
-        @if (IsPageHeading == true)
-        {
-            <NhsukHeading ClassName="nhsuk-fieldset__heading" Html="@Html" Text="@Text" ChildContent="ChildContent" />
-        }
-        else
-        {
-            <NhsukContent Caller="ChildContent" Html="@Html" Text="@Text" />
-        }
-    </legend>
+    @if (_hasHeading)
+    {
+        <legend @attributes="LegendAttributes">
+            <NhsukHeading Id="@Heading?.Id" ChildContent="Content" VisuallyHiddenText="@_visuallyHiddenText" Caption="@InsideCaption"
+                          Level="@Heading?.Level" ClassName="nhsuk-fieldset__heading" Attributes="@Heading?.Attributes" />
+        </legend>
+    }
+    else
+    {
+        <NhsukHeading Id="@Id" ChildContent="Content" VisuallyHiddenText="@_visuallyHiddenText" Caption="@InsideCaption"
+                      ClassName="@_classNames" Attributes="@Attributes" AdditionalAttributes="AdditionalAttributes" Element="legend" />
+    }
+    @if (_caption.Placement == "after")
+    {
+        <NhsukCaption Id="@_caption.Id" Element="@_caption.Element" Text="@_caption.Text" Html="@_caption.Html"
+                      Placement="@_caption.Placement" Size="@_caption.Size" Classes="@_caption.Classes" Attributes="@_caption.Attributes" />
+    }
 }
 
 @code {
     private static readonly string[] Sizes = ["s", "m", "l", "xl"];
 
-    private string ClassNames
+    private bool _hasHeading;
+    private string? _text;
+    private string? _html;
+    private string? _visuallyHiddenText;
+    private string _classNames = "";
+    private CaptionOptions _caption = new();
+
+    protected override void OnParametersSet()
     {
-        get
+        var heading = Heading is { IsFalse: true } ? null : Heading;
+        _hasHeading = (IsPageHeading == true && Heading is not { IsFalse: true }) || (IsPageHeading != false && heading is not null);
+
+        var caption = _hasHeading ? heading?.Caption ?? Caption : Caption;
+        var size = _hasHeading ? heading?.Size ?? Size : Size;
+        _caption = new CaptionOptions
         {
-            var classNames = "nhsuk-fieldset__legend";
-            if (Size is not null && Sizes.Contains(Size) && !Sizes.Any(s => Contains(Classes, "nhsuk-fieldset__legend--" + s)))
-                classNames += " nhsuk-fieldset__legend--" + Size;
-            return Append(classNames, Classes);
-        }
+            // A caption "before" a legend has to sit inside it, so it becomes "start".
+            Id = caption?.Id, Text = caption?.Text, Html = caption?.Html,
+            Placement = caption?.Placement == "before" ? "start" : caption?.Placement,
+            Size = caption?.Size ?? size, Classes = caption?.Classes, Attributes = caption?.Attributes, Element = caption?.Element,
+        };
+        _text = _hasHeading ? heading?.Text ?? Text : Text ?? heading?.Text;
+        _html = _hasHeading ? heading?.Html ?? Html : Html ?? heading?.Html;
+        _visuallyHiddenText = _hasHeading ? heading?.VisuallyHiddenText ?? VisuallyHiddenText : VisuallyHiddenText;
+
+        var classNames = "nhsuk-fieldset__legend";
+        if (size is not null && Sizes.Contains(size) && !Sizes.Any(s => Contains(Classes, "nhsuk-fieldset__legend--" + s)))
+            classNames += " nhsuk-fieldset__legend--" + size;
+        _classNames = Append(classNames, Classes);
     }
+
+    private CaptionOptions? InsideCaption => _caption.Placement is null or "start" or "end" ? _caption : null;
+
+    private RenderFragment Content => @<NhsukContent Caller="ChildContent" Html="@_html" Text="@_text" />;
+
+    private Attrs LegendAttributes => new Attrs()
+        .Add("class", _classNames)
+        .Optional("id", Truthy(Id) ? Id : null)
+        .AddUser(Attributes, AdditionalAttributes);
 }

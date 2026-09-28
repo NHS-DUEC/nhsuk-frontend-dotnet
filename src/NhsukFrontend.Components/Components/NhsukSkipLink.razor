@@ -1,7 +1,7 @@
 @namespace NhsukFrontend.Components
 @* Port of nhsuk/components/skip-link/template.njk *@
 <a @attributes="LinkAttributes">
-  @if (Truthy(Html)) { @((MarkupString)Html!) } else { @DefaultIfFalsy(Text, "Skip to main content") }
+  @if (ChildContent is not null) { @ChildContent } else if (Truthy(Html)) { @((MarkupString)Html!) } else { @DefaultIfFalsy(Text, "Skip to main content") }
 </a>
 
 @code {

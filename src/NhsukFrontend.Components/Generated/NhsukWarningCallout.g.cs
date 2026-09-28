@@ -43,7 +43,7 @@ public partial class NhsukWarningCallout
 
     /// <summary>Can be used to add actions to the warning callout.</summary>
     /// <remarks>Macro option <c>actions</c>, released in 10.3.0.</remarks>
-    [Parameter, MacroOption("actions")] public WarningCalloutActionsOptions? Actions { get; set; }
+    [Parameter, MacroOption("actions")] public CardActionsOptions? Actions { get; set; }
 
     /// <summary>Not strictly an option but supports the [`call` block](https://mozilla.github.io/nunjucks/templating.html#call) as an alternative to the `html` option. To use it, you will need to wrap the entire warning callout component in a `call` block.</summary>
     /// <remarks>Macro option <c>caller</c>, released in 9.5.0.</remarks>
@@ -96,7 +96,7 @@ public sealed partial class WarningCalloutOptions : NhsukOptions, IShorthandOpti
 
     /// <summary>Can be used to add actions to the warning callout.</summary>
     /// <remarks>Macro option <c>actions</c>, released in 10.3.0.</remarks>
-    [JsonPropertyName("actions")] public WarningCalloutActionsOptions? Actions { get; set; }
+    [JsonPropertyName("actions")] public CardActionsOptions? Actions { get; set; }
 
     /// <summary>Classes to add to the warning callout.</summary>
     /// <remarks>Macro option <c>classes</c>, released in 1.0.0.</remarks>
@@ -155,70 +155,4 @@ public sealed partial class WarningCalloutHeadingOptions : NhsukOptions, IShorth
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
     public static WarningCalloutHeadingOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator WarningCalloutHeadingOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>warning-callout.actions</c>.</summary>
-public sealed partial class WarningCalloutActionsOptions : NhsukOptions
-{
-    /// <summary>Array of actions as links for use in the warning callout.</summary>
-    /// <remarks>Macro option <c>actions.items</c>, released in 10.3.0.</remarks>
-    [JsonPropertyName("items")] public List<WarningCalloutActionsItemsItem?>? Items { get; set; }
-
-    /// <summary>Classes to add to the actions wrapper.</summary>
-    /// <remarks>Macro option <c>actions.classes</c>, released in 10.3.0.</remarks>
-    [JsonPropertyName("classes")] public string? Classes { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator WarningCalloutActionsOptions(bool value) => value ? new() { IsTrue = true } : null!;
-}
-
-/// <summary>Nested options at <c>warning-callout.actions.items</c>.</summary>
-public sealed partial class WarningCalloutActionsItemsItem : NhsukOptions, IShorthandOptions<WarningCalloutActionsItemsItem>
-{
-    /// <summary>The ID of the action item.</summary>
-    /// <remarks>Macro option <c>actions.items.id</c>, released in 10.6.0.</remarks>
-    [JsonPropertyName("id")] public string? Id { get; set; }
-
-    /// <summary>If `html` is set, this is not required. Text to use within each action item. If `html` is provided, the `text` option will be ignored.</summary>
-    /// <remarks>Macro option <c>actions.items.text</c> (required), released in 10.3.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>If `text` is set, this is not required. HTML to use within each action item. If `html` is provided, the `text` option will be ignored.</summary>
-    /// <remarks>Macro option <c>actions.items.html</c> (required), released in 10.3.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Actions rely on context from the surrounding content so may require additional accessible text. Text supplied to this option is appended to the end. Use `html` for more complicated scenarios.</summary>
-    /// <remarks>Macro option <c>actions.items.visuallyHiddenText</c>, released in 10.3.0.</remarks>
-    [JsonPropertyName("visuallyHiddenText")] public string? VisuallyHiddenText { get; set; }
-
-    /// <summary>Name for the action as a button. If `type` is set, this has no effect.</summary>
-    /// <remarks>Macro option <c>actions.items.name</c>, released in 10.6.0.</remarks>
-    [JsonPropertyName("name")] public string? Name { get; set; }
-
-    /// <summary>Type of action as a button – `"button"`, `"submit"` or `"reset"`. Defaults to `"submit"` unless `href` is provided.</summary>
-    /// <remarks>Macro option <c>actions.items.type</c>, released in 10.6.0.</remarks>
-    [JsonPropertyName("type")] public string? Type { get; set; }
-
-    /// <summary>The `value` attribute for the action as a button. If `type` is set, this has no effect.</summary>
-    /// <remarks>Macro option <c>actions.items.value</c>, released in 10.6.0.</remarks>
-    [JsonPropertyName("value")] public string? Value { get; set; }
-
-    /// <summary>The action `href` attribute. If set, the action will use an `&lt;a&gt;` tag automatically unless `type` is provided.</summary>
-    /// <remarks>Macro option <c>actions.items.href</c> (required), released in 10.3.0.</remarks>
-    [JsonPropertyName("href")] public string? Href { get; set; }
-
-    /// <summary>Classes to add to the action item.</summary>
-    /// <remarks>Macro option <c>actions.items.classes</c>, released in 10.3.0.</remarks>
-    [JsonPropertyName("classes")] public string? Classes { get; set; }
-
-    /// <summary>HTML attributes (for example data attributes) to add to the action item.</summary>
-    /// <remarks>Macro option <c>actions.items.attributes</c>, released in 10.3.0.</remarks>
-    [JsonPropertyName("attributes")] public NhsukAttributes? Attributes { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator WarningCalloutActionsItemsItem(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static WarningCalloutActionsItemsItem FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator WarningCalloutActionsItemsItem(string value) => FromShorthand(value);
 }

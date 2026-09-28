@@ -2,7 +2,7 @@
 
 **NHS.UK frontend for ASP.NET Core.** Tag helpers for Razor Pages and MVC, and Razor components for Blazor, that
 render the same HTML as the [NHS.UK frontend](https://github.com/nhsuk/nhsuk-frontend) Nunjucks macros. They are
-generated from, and tested against, a pinned upstream release (currently **10.6.0**).
+generated from, and tested against, a pinned upstream release (currently **10.6.1**).
 
 > **A community project.** nhsuk-frontend-dotnet is not maintained by NHS England or the NHS design system team.
 > It is looked after by volunteers on a best-efforts basis. For the design system itself, see the
@@ -11,7 +11,7 @@ generated from, and tested against, a pinned upstream release (currently **10.6.
 > [NHS identity guidelines](https://www.england.nhs.uk/nhsidentity/), not by this project's licence.
 
 - **All 43 components** in nhsuk-frontend and the page template are ported.
-- All **864** examples match upstream's HTML: 859 from upstream's own fixtures, plus 5 page template examples
+- All **988** examples match upstream's HTML: 983 from upstream's own fixtures, plus 5 page template examples
   rendered from `template.njk`. The tag helpers are tested against the same examples. Upstream's JavaScript runs
   unchanged against the output.
 - Form components bind to a model: names, values, labels and validation errors come from the model, in both
@@ -26,8 +26,8 @@ The package will be published to NuGet as **`nhsuk-frontend-dotnet`**. Until the
 dotnet add package nhsuk-frontend-dotnet --prerelease
 ```
 
-The package version follows the nhsuk-frontend release it is generated from: `10.6.0-beta.1` is the first beta
-built from nhsuk-frontend 10.6.0. The C# namespace is `NhsukFrontend.Components`.
+The package version follows the nhsuk-frontend release it is generated from: `10.6.1-beta.1` is the first beta
+built from nhsuk-frontend 10.6.1. The C# namespace is `NhsukFrontend.Components`.
 
 ## How it stays in step with upstream
 
@@ -136,8 +136,8 @@ A minimal `_Layout.cshtml`. The page template is a layout in MVC; the demo's
 </html>
 ```
 
-Each component is a tag named after it, with an attribute for each Nunjucks option (`isPageHeading` becomes
-`is-page-heading`), so the [design system documentation](https://service-manual.nhs.uk/design-system) applies directly:
+Each component is a tag named after it, with an attribute for each Nunjucks option (`visuallyHiddenText` becomes
+`visually-hidden-text`), so the [design system documentation](https://service-manual.nhs.uk/design-system) applies directly:
 
 ```cshtml
 <nhsuk-panel heading="Application complete" text="Your reference number is HDJ2123F" />
@@ -153,7 +153,7 @@ Each component is a tag named after it, with an attribute for each Nunjucks opti
 ```
 
 - Where upstream accepts either text or an object (`label`, `hint`, `heading`…), there are two attributes: `label`
-  for plain text, and `label-options="@(new LabelOptions { Text = "Name", IsPageHeading = true })"` for everything else.
+  for plain text, and `label-options="@(new LabelOptions { Text = "Name", Heading = true })"` for everything else.
 - Lists and objects are C# expressions: `rows="@Model.Rows"`, `items="@Model.ContactOptions"`.
 - Any other HTML attribute on the tag (`data-*`, `aria-*`, `required`…) is passed to the component's main element.
 - `options="@(new PanelOptions { … })"` passes a whole options object built in C#; attributes on the tag win over it.
@@ -175,7 +175,7 @@ per tag compared with rendering the components directly: about 0.35 ms for a for
 <NhsukInsetText><p>Child content, like a Nunjucks call block.</p></NhsukInsetText>
 ```
 
-Parameters mirror the Nunjucks options (`isPageHeading` becomes `IsPageHeading`); call blocks become child content.
+Parameters mirror the Nunjucks options (`visuallyHiddenText` becomes `VisuallyHiddenText`); call blocks become child content.
 Wrap pages in `<NhsukTemplate>`, whose `RenderFragment` parameters are the template's blocks (`<Header>`,
 `<BeforeContent>`…); see `src/NhsukFrontend.Demo/Components/Layout/DemoPage.razor`. Blazor support is tested with
 static server rendering; interactive render modes are untested.

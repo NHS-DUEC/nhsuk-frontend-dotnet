@@ -101,6 +101,14 @@ public static class NhsukJson
                         }
                     }
                     return result;
+                // From 10.6.1 card and summary list `actions` can be a plain list instead of { items: [...] }.
+                case JsonTokenType.StartArray when Properties.TryGetValue("items", out var items):
+                    using (var doc = JsonDocument.ParseValue(ref reader))
+                    {
+                        var list = new T();
+                        items.SetValue(list, ReadOption(doc.RootElement, items));
+                        return list;
+                    }
                 default:
                     throw new JsonException($"Cannot read {typeof(T).Name} from {reader.TokenType}.");
             }

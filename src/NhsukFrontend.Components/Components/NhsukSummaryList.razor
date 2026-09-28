@@ -34,7 +34,9 @@ else
     }
 
     private RenderFragment ListElement => @<dl @attributes="ListAttributes">
-        @for (var i = 0; i < _rows.Count; i++) { @Row(_rows[i], i == _rows.Count - 1) }
+        @if (ChildContent is not null) { @ChildContent }
+        else if (Truthy(Html)) { @((MarkupString)Html!.Trim()) }
+        else { for (var i = 0; i < _rows.Count; i++) { @Row(_rows[i], i == _rows.Count - 1) } }
     </dl>;
 
     private Attrs ListAttributes => new Attrs().Add("class", _classNames).Optional("id", Id).AddUser(Attributes, AdditionalAttributes);

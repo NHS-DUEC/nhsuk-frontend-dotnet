@@ -1,7 +1,7 @@
 @namespace NhsukFrontend.Components
 @* Port of nhsuk/components/warning-callout/template.njk: a card with the warning variant. *@
 <NhsukCard Id="@Id" Heading="@CardHeading" Description="@(new CardDescriptionOptions { Text = Text, Html = Html })"
-           Classes="@Classes" Attributes="@Attributes" AdditionalAttributes="@AdditionalAttributes" Variant="warning"
+           Actions="@Actions" Classes="@Classes" Attributes="@Attributes" AdditionalAttributes="@AdditionalAttributes" Variant="warning"
            ChildContent="@ChildContent" />
 
 @code {
@@ -20,7 +20,7 @@
                     ? DefaultIfFalsy(Heading!.VisuallyHiddenText ?? VisuallyHiddenText, "Important")
                     : null,
                 Level = Heading?.Level ?? HeadingLevel ?? 3,
-                Classes = Heading?.Classes,
+                Classes = Heading?.Classes ?? HeadingClasses,
                 Attributes = Heading?.Attributes,
             };
         }

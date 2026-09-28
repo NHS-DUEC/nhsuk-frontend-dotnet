@@ -35,7 +35,7 @@ public sealed partial class NhsukWarningCalloutTagHelper : NhsukComponentTagHelp
     [HtmlAttributeName("html")] public string? Html { get; set; }
 
     /// <summary>Can be used to add actions to the warning callout.</summary>
-    [HtmlAttributeName("actions")] public WarningCalloutActionsOptions? Actions { get; set; }
+    [HtmlAttributeName("actions")] public CardActionsOptions? Actions { get; set; }
 
     /// <summary>Classes to add to the warning callout.</summary>
     [HtmlAttributeName("classes")] public string? Classes { get; set; }

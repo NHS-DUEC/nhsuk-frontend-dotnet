@@ -3,7 +3,7 @@
 <div @attributes="PanelAttributes">
     <NhsukHeading Id="@_heading.Id" Text="@_heading.Text" Html="@_heading.Html" VisuallyHiddenText="@_heading.VisuallyHiddenText"
                   Caption="@_heading.Caption" Href="@_heading.Href" Level="@_heading.Level" Size="@_heading.Size" Sizes="@(["m", "l", "xl"])"
-                  ClassName="nhsuk-panel__title" ClassPrefix="nhsuk-panel__title--" Classes="@_heading.Classes" Attributes="@_heading.Attributes" />
+                  ClassName="nhsuk-panel__heading" ClassPrefix="nhsuk-panel__heading--" Classes="@_heading.Classes" Attributes="@_heading.Attributes" />
     @if (ChildContent is not null || Truthy(Html) || Truthy(Text))
     {
         <div class="nhsuk-panel__body"><NhsukContent Caller="ChildContent" Html="@Html" Text="@Text" /></div>

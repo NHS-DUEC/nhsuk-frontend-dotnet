@@ -57,6 +57,16 @@
     "footer/navigation": {
       "list": true
     },
+    "warning-callout/actions": {
+      "$comment": "Passed straight through to the card, so it shares the card's type.",
+      "type": "CardActionsOptions"
+    },
+    "label/heading": {
+      "keepFalse": true
+    },
+    "legend/heading": {
+      "keepFalse": true
+    },
     "date-input/day": {
       "type": "DateInputItemsItem",
       "keepFalse": true
@@ -103,100 +113,6 @@
   },
   "additionalOptions": {
     "$comment": "Options an upstream template reads but its macro-options.json does not declare.",
-    "character-count": [
-      {
-        "name": "charactersUnderLimitText",
-        "type": "object",
-        "required": false,
-        "description": "Message shown when under the character limit, by plural rule (for example `one`, `other`). `%{count}` is replaced with the number remaining.",
-        "released": "an undeclared option"
-      },
-      {
-        "name": "charactersAtLimitText",
-        "type": "string",
-        "required": false,
-        "description": "Message shown when at the character limit.",
-        "released": "an undeclared option"
-      },
-      {
-        "name": "charactersOverLimitText",
-        "type": "object",
-        "required": false,
-        "description": "Message shown when over the character limit, by plural rule. `%{count}` is replaced with the number over.",
-        "released": "an undeclared option"
-      },
-      {
-        "name": "wordsUnderLimitText",
-        "type": "object",
-        "required": false,
-        "description": "Message shown when under the word limit, by plural rule.",
-        "released": "an undeclared option"
-      },
-      {
-        "name": "wordsAtLimitText",
-        "type": "string",
-        "required": false,
-        "description": "Message shown when at the word limit.",
-        "released": "an undeclared option"
-      },
-      {
-        "name": "wordsOverLimitText",
-        "type": "object",
-        "required": false,
-        "description": "Message shown when over the word limit, by plural rule.",
-        "released": "an undeclared option"
-      }
-    ],
-    "password-input": [
-      {
-        "name": "prefix",
-        "type": "object",
-        "required": false,
-        "description": "Options for the prefix element, as for the input component.",
-        "released": "an undeclared option"
-      },
-      {
-        "name": "suffix",
-        "type": "object",
-        "required": false,
-        "description": "Options for the suffix element, as for the input component.",
-        "released": "an undeclared option"
-      }
-    ],
-    "search-input": [
-      {
-        "name": "placeholder",
-        "type": "string",
-        "required": false,
-        "description": "Placeholder text for the search input.",
-        "released": "an undeclared option"
-      }
-    ],
-    "scroll": [
-      {
-        "name": "labelledBy",
-        "type": "string",
-        "required": false,
-        "description": "The id of the element that labels the scrollable region, for example a table caption.",
-        "released": "an undeclared option"
-      }
-    ],
-    "tabs": [
-      {
-        "name": "classes",
-        "type": "string",
-        "required": false,
-        "description": "Classes to add to the tabs container.",
-        "released": "an undeclared option"
-      },
-      {
-        "name": "attributes",
-        "type": "object",
-        "required": false,
-        "description": "HTML attributes (for example data attributes) to add to the tabs container.",
-        "released": "an undeclared option"
-      }
-    ],
     "contents-list/items": [
       {
         "name": "items",
@@ -212,15 +128,6 @@
         "type": "string",
         "required": false,
         "description": "Classes to add to the list item.",
-        "released": "an undeclared option"
-      }
-    ],
-    "code": [
-      {
-        "name": "caller",
-        "type": "nunjucks-block",
-        "required": false,
-        "description": "Code to show, as child content. Whitespace is kept.",
         "released": "an undeclared option"
       }
     ]

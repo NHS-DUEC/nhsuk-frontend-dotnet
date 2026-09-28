@@ -1,37 +1,69 @@
 @namespace NhsukFrontend.Components
 @* Port of nhsuk/components/label/template.njk *@
-@if (ChildContent is not null || Truthy(Html) || Truthy(Text))
+@if (ChildContent is not null || Truthy(_html) || Truthy(_text))
 {
-    @if (IsPageHeading == true)
+    @if (_caption.Placement == "before") { @CaptionFragment }
+    @if (_hasHeading)
     {
-        <NhsukHeading ClassName="nhsuk-label-wrapper">@LabelElement</NhsukHeading>
+        <NhsukElement Tag="@("h" + (Heading?.Level is > 0 ? Heading.Level : 1))" Attributes="WrapperAttributes">@LabelElement</NhsukElement>
     }
     else
     {
         @LabelElement
     }
+    @if (_caption.Placement == "after") { @CaptionFragment }
 }
 
 @code {
-    private static readonly string[] Sizes = ["s", "m", "l", "xl"];
+    private bool _hasHeading;
+    private string? _text;
+    private string? _html;
+    private string? _size;
+    private CaptionOptions _caption = new();
 
-    private string ClassNames
+    protected override void OnParametersSet()
+    {
+        var heading = Heading is { IsFalse: true } ? null : Heading;
+        _hasHeading = (IsPageHeading == true && Heading is not { IsFalse: true }) || (IsPageHeading != false && heading is not null);
+
+        var caption = _hasHeading ? heading?.Caption ?? Caption : Caption;
+        _size = _hasHeading ? heading?.Size ?? Size : Size;
+        _caption = new CaptionOptions
+        {
+            Id = caption?.Id, Text = caption?.Text, Html = caption?.Html, Placement = caption?.Placement,
+            Size = caption?.Size ?? _size, Classes = caption?.Classes, Attributes = caption?.Attributes, Element = caption?.Element,
+        };
+        _text = _hasHeading ? heading?.Text ?? Text : Text ?? heading?.Text;
+        _html = _hasHeading ? heading?.Html ?? Html : Html ?? heading?.Html;
+    }
+
+    private bool CaptionInside => _caption.Placement is null or "start" or "end";
+
+    private RenderFragment LabelElement =>
+        @<NhsukHeading Id="@Id" Text="@_text" Html="@_html" ChildContent="ChildContent"
+                       VisuallyHiddenText="@(_hasHeading ? Heading?.VisuallyHiddenText ?? VisuallyHiddenText : VisuallyHiddenText)"
+                       Caption="@(CaptionInside ? _caption : null)" Size="@_size" Sizes="@LabelSizes"
+                       ClassName="nhsuk-label" ClassPrefix="nhsuk-label--" Classes="@Classes"
+                       Attributes="LabelAttributes" AdditionalAttributes="AdditionalAttributes" Element="label" />;
+
+    private static readonly List<string> LabelSizes = ["s", "m", "l", "xl"];
+
+    private NhsukAttributes LabelAttributes
     {
         get
         {
-            var classNames = "nhsuk-label";
-            if (Size is not null && Sizes.Contains(Size) && !Sizes.Any(s => Contains(Classes, "nhsuk-label--" + s)))
-                classNames += " nhsuk-label--" + Size;
-            return Append(classNames, Classes);
+            var attributes = new NhsukAttributes { ["for"] = new AttributeValue(For, Optional: true) };
+            if (Attributes is not null) foreach (var (name, value) in Attributes) attributes[name] = value;
+            return attributes;
         }
     }
 
-    private RenderFragment LabelElement =>
-        @<label @attributes="LabelAttributes"><NhsukContent Caller="ChildContent" Html="@Html" Text="@Text" /></label>;
+    private Attrs WrapperAttributes => new Attrs()
+        .Add("class", "nhsuk-label-wrapper")
+        .Optional("id", Truthy(Heading?.Id) ? Heading!.Id : null)
+        .AddUser(Heading?.Attributes);
 
-    private Attrs LabelAttributes => new Attrs()
-        .Add("class", ClassNames)
-        .Optional("id", Id)
-        .Optional("for", For)
-        .AddUser(Attributes, AdditionalAttributes);
+    private RenderFragment CaptionFragment =>
+        @<NhsukCaption Id="@_caption.Id" Element="@_caption.Element" Text="@_caption.Text" Html="@_caption.Html"
+                       Placement="@_caption.Placement" Size="@_caption.Size" Classes="@_caption.Classes" Attributes="@_caption.Attributes" />;
 }

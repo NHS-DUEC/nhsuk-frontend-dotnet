@@ -26,6 +26,7 @@
         {
             Html = Label.Html, Text = Label.Text, Id = Label.Id, For = Label.For ?? _id, Size = Label.Size,
             IsPageHeading = Label.IsPageHeading, Classes = Label.Classes, Attributes = Label.Attributes,
+            VisuallyHiddenText = Label.VisuallyHiddenText, Caption = Label.Caption, Heading = Label.Heading,
         };
 
         var formGroupClasses = Truthy(FormGroup?.Classes) ? FormGroup!.Classes + " nhsuk-character-count" : "nhsuk-character-count";

@@ -1,8 +1,9 @@
 @namespace NhsukFrontend.Components
 @* Port of nhsuk/components/fieldset/template.njk *@
 <fieldset @attributes="FieldsetAttributes">
-    <NhsukLegend Text="@Legend?.Text" Html="@Legend?.Html" Classes="@Legend?.Classes"
-                 IsPageHeading="@Legend?.IsPageHeading" Size="@Legend?.Size" />
+    <NhsukLegend Id="@Legend?.Id" Text="@Legend?.Text" Html="@Legend?.Html" VisuallyHiddenText="@Legend?.VisuallyHiddenText"
+                 Caption="@Legend?.Caption" Size="@Legend?.Size" Heading="@Legend?.Heading" IsPageHeading="@Legend?.IsPageHeading"
+                 Classes="@Legend?.Classes" Attributes="@Legend?.Attributes" />
     @if (ChildContent is not null) { @ChildContent }
     else if (Truthy(Html)) { @((MarkupString)Html!) }
 </fieldset>

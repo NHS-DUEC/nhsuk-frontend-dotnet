@@ -45,7 +45,7 @@ public partial class NhsukLegend
 
     /// <summary>Whether the legend also acts as a heading.</summary>
     /// <remarks>Macro option <c>heading</c>, released in 10.6.1.</remarks>
-    [Parameter, MacroOption("heading")] public LegendHeadingOptions? Heading { get; set; }
+    [Parameter, MacroOption("heading"), KeepFalse] public LegendHeadingOptions? Heading { get; set; }
 
     /// <summary>Replaced by the `heading` option.</summary>
     /// <remarks>Macro option <c>isPageHeading</c>, released in 10.2.0.</remarks>
@@ -93,7 +93,7 @@ public sealed partial class LegendOptions : NhsukOptions, IShorthandOptions<Lege
 
     /// <summary>Whether the legend also acts as a heading.</summary>
     /// <remarks>Macro option <c>heading</c>, released in 10.6.1.</remarks>
-    [JsonPropertyName("heading")] public LegendHeadingOptions? Heading { get; set; }
+    [JsonPropertyName("heading"), KeepFalse] public LegendHeadingOptions? Heading { get; set; }
 
     /// <summary>Replaced by the `heading` option.</summary>
     /// <remarks>Macro option <c>isPageHeading</c>, released in 10.2.0.</remarks>

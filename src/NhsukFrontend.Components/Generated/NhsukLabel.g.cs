@@ -45,7 +45,7 @@ public partial class NhsukLabel
 
     /// <summary>Whether the label also acts as a heading.</summary>
     /// <remarks>Macro option <c>heading</c>, released in 10.6.1.</remarks>
-    [Parameter, MacroOption("heading")] public LabelHeadingOptions? Heading { get; set; }
+    [Parameter, MacroOption("heading"), KeepFalse] public LabelHeadingOptions? Heading { get; set; }
 
     /// <summary>Replaced by the `heading` option.</summary>
     /// <remarks>Macro option <c>isPageHeading</c>, released in 1.0.0.</remarks>
@@ -97,7 +97,7 @@ public sealed partial class LabelOptions : NhsukOptions, IShorthandOptions<Label
 
     /// <summary>Whether the label also acts as a heading.</summary>
     /// <remarks>Macro option <c>heading</c>, released in 10.6.1.</remarks>
-    [JsonPropertyName("heading")] public LabelHeadingOptions? Heading { get; set; }
+    [JsonPropertyName("heading"), KeepFalse] public LabelHeadingOptions? Heading { get; set; }
 
     /// <summary>Replaced by the `heading` option.</summary>
     /// <remarks>Macro option <c>isPageHeading</c>, released in 1.0.0.</remarks>

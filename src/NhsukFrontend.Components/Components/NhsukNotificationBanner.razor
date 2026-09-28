@@ -3,18 +3,18 @@
 <div @attributes="BannerAttributes">
     <div class="nhsuk-notification-banner__header">
         <NhsukHeading Id="@_titleId" Text="@(_title.Text ?? (_variant == "success" ? "Success" : "Important"))" Html="@_title.Html"
-                      VisuallyHiddenText="@_title.VisuallyHiddenText" Level="@(_title.Level ?? 2)" ClassName="nhsuk-notification-banner__title"
+                      VisuallyHiddenText="@_title.VisuallyHiddenText" Level="@(_title.Level ?? _title.HeadingLevel ?? 2)" ClassName="nhsuk-notification-banner__title"
                       Classes="@_title.Classes" Attributes="@_title.Attributes" />
     </div>
     <div class="nhsuk-notification-banner__content">
-        @if (Heading is { } h)
+        @if (_hasHeading && Heading is { } h)
         {
             <NhsukHeading Id="@h.Id" Text="@h.Text" Html="@h.Html" VisuallyHiddenText="@h.VisuallyHiddenText" Caption="@h.Caption" Href="@h.Href"
                           Level="@(h.Level ?? 3)" ClassName="nhsuk-notification-banner__heading" Classes="@h.Classes" Attributes="@h.Attributes" Element="@h.Element" />
         }
         @if (ChildContent is not null) { @ChildContent }
         else if (Truthy(Html)) { @((MarkupString)Html!.Trim()) }
-        else if (Truthy(Text) && Heading is null) { <p class="nhsuk-notification-banner__heading">@Text!.Trim()</p> }
+        else if (Truthy(Text) && !_hasHeading) { <p class="nhsuk-notification-banner__heading">@Text!.Trim()</p> }
         else if (Truthy(Text)) { <p class="nhsuk-body">@Text!.Trim()</p> }
     </div>
 </div>
@@ -23,6 +23,7 @@
     private string? _variant;
     private string _titleId = "";
     private NotificationBannerTitleOptions _title = new();
+    private bool _hasHeading;
 
     protected override void OnParametersSet()
     {
@@ -33,9 +34,11 @@
             Id = TitleId,
             Text = Title?.Text ?? TitleText,
             Html = TitleHtml,
-            Level = int.TryParse(TitleHeadingLevel, out var level) ? level : null,
+            Level = TitleHeadingLevel,
         };
         _titleId = DefaultIfFalsy(_title.Id, "nhsuk-notification-banner-title");
+        // From 10.6.1 the heading is only shown when it has text or HTML.
+        _hasHeading = Truthy(Heading?.Text) || Truthy(Heading?.Html);
     }
 
     private Attrs BannerAttributes
