@@ -25,6 +25,7 @@
         "type": "object",
         "required": false,
         "description": "Heading for group of footer navigation links.",
+        "alias": "heading",
         "released": "10.6.0",
         "isComponent": true,
         "params": [
@@ -62,6 +63,13 @@
             "required": false,
             "description": "If set, the heading will become a link.",
             "released": "10.6.0"
+          },
+          {
+            "name": "openInNewTab",
+            "type": "boolean",
+            "required": false,
+            "description": "If set to `true`, then the heading link will open in a new tab.",
+            "released": "10.7.0"
           },
           {
             "name": "caption",
@@ -121,7 +129,9 @@
         "type": "array",
         "required": false,
         "description": "Contains the array of footer navigation link items for this group.",
+        "alias": "link",
         "released": "10.0.0",
+        "isComponent": true,
         "params": [
           {
             "name": "href",
@@ -129,6 +139,13 @@
             "required": true,
             "description": "Footer navigation link `href` attribute.",
             "released": "10.0.0"
+          },
+          {
+            "name": "openInNewTab",
+            "type": "boolean",
+            "required": false,
+            "description": "If set to `true`, then the footer navigation link will open in a new tab.",
+            "released": "10.7.0"
           },
           {
             "name": "text",
@@ -196,7 +213,9 @@
         "type": "array",
         "required": false,
         "description": "Contains the array of key policy footer link items.",
+        "alias": "link",
         "released": "10.0.0",
+        "isComponent": true,
         "params": [
           {
             "name": "href",
@@ -204,6 +223,13 @@
             "required": true,
             "description": "Footer meta link `href` attribute.",
             "released": "10.0.0"
+          },
+          {
+            "name": "openInNewTab",
+            "type": "boolean",
+            "required": false,
+            "description": "If set to `true`, then the footer meta link will open in a new tab.",
+            "released": "10.7.0"
           },
           {
             "name": "text",

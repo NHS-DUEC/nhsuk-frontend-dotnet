@@ -39,8 +39,30 @@
         "name": "visuallyHiddenText",
         "type": "string",
         "required": false,
-        "description": "Optional visually hidden prefix used before the heading.",
+        "description": "A visually hidden prefix used before the heading.",
         "released": "10.6.0"
+      },
+      {
+        "name": "href",
+        "type": "string",
+        "required": false,
+        "description": "If set, the heading will become a link.",
+        "released": "10.7.0"
+      },
+      {
+        "name": "openInNewTab",
+        "type": "boolean",
+        "required": false,
+        "description": "If set to `true`, then the heading link will open in a new tab.",
+        "released": "10.7.0"
+      },
+      {
+        "name": "caption",
+        "type": "object",
+        "required": false,
+        "description": "Optional caption for the heading.",
+        "released": "10.6.0",
+        "isComponent": true
       },
       {
         "name": "size",
@@ -126,6 +148,13 @@
     "required": false,
     "description": "The card link `href` attribute.",
     "released": "4.0.0"
+  },
+  {
+    "name": "openInNewTab",
+    "type": "boolean",
+    "required": false,
+    "description": "If set to `true`, then the card link will open in a new tab.",
+    "released": "10.7.0"
   },
   {
     "name": "clickable",
@@ -249,6 +278,27 @@
         "released": "10.6.0"
       },
       {
+        "name": "visuallyHiddenText",
+        "type": "string",
+        "required": false,
+        "description": "A visually hidden suffix added to the description.",
+        "released": "10.7.0"
+      },
+      {
+        "name": "href",
+        "type": "string",
+        "required": false,
+        "description": "The card description link `href` attribute.",
+        "released": "10.7.0"
+      },
+      {
+        "name": "openInNewTab",
+        "type": "boolean",
+        "required": false,
+        "description": "If set to `true`, then the card description link will open in a new tab.",
+        "released": "10.7.0"
+      },
+      {
         "name": "classes",
         "type": "string",
         "required": false,
@@ -284,7 +334,9 @@
         "type": "array",
         "required": false,
         "description": "Array of actions as links for use in the card component.",
+        "alias": "link",
         "released": "10.3.0",
+        "isComponent": true,
         "params": [
           {
             "name": "id",
@@ -341,6 +393,13 @@
             "required": true,
             "description": "The action `href` attribute. If set, the action will use an `<a>` tag automatically unless `type` is provided.",
             "released": "10.3.0"
+          },
+          {
+            "name": "openInNewTab",
+            "type": "boolean",
+            "required": false,
+            "description": "If set to `true`, then the action will open in a new tab.",
+            "released": "10.7.0"
           },
           {
             "name": "classes",
