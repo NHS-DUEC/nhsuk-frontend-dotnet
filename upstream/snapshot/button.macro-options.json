@@ -36,6 +36,13 @@
     "released": "10.4.0"
   },
   {
+    "name": "visuallyHiddenText",
+    "type": "string",
+    "required": false,
+    "description": "A visually hidden prefix used before the button text. Defaults to `\"Warning\"` for warning buttons. If `ariaLabel` is provided, this has no effect.",
+    "released": "10.7.0"
+  },
+  {
     "name": "name",
     "type": "string",
     "required": false,
@@ -71,6 +78,13 @@
     "released": "1.0.0"
   },
   {
+    "name": "openInNewTab",
+    "type": "boolean",
+    "required": false,
+    "description": "If set to `true`, then the button link will open in a new tab unless `type` is provided.",
+    "released": "10.7.0"
+  },
+  {
     "name": "variant",
     "type": "string",
     "required": false,
@@ -83,6 +97,13 @@
     "required": false,
     "description": "If set to `true`, smaller button size will be used.",
     "released": "10.4.0"
+  },
+  {
+    "name": "className",
+    "type": "string",
+    "required": false,
+    "description": "Optional class to use for the button. Defaults to `\"nhsuk-button\"`.",
+    "released": "10.7.0"
   },
   {
     "name": "classes",

@@ -166,7 +166,7 @@
         "name": "label",
         "type": "object",
         "required": false,
-        "description": "The label used by each checkbox item within the checkboxes component. The `label.size` and `label.heading` options are not supported.",
+        "description": "The label used by each checkbox item within the checkboxes component. The `label.caption`, `label.heading` and `label.size` options are not supported.",
         "released": "1.0.0",
         "isComponent": true
       },
@@ -180,10 +180,26 @@
       },
       {
         "name": "divider",
-        "type": "string",
+        "type": "object",
         "required": false,
         "description": "Divider text to separate checkbox items, for example the text `\"or\"`.",
-        "released": "3.1.0"
+        "released": "3.1.0",
+        "params": [
+          {
+            "name": "text",
+            "type": "string",
+            "required": true,
+            "description": "If `html` is set, this is not required. Text for the divider. If `html` is provided, the `text` option will be ignored.",
+            "released": "10.7.0"
+          },
+          {
+            "name": "html",
+            "type": "string",
+            "required": true,
+            "description": "If `text` is set, this is not required. HTML for the divider. If `html` is provided, the `text` option will be ignored.",
+            "released": "10.7.0"
+          }
+        ]
       },
       {
         "name": "checked",
@@ -200,10 +216,17 @@
         "released": "1.0.0",
         "params": [
           {
+            "name": "text",
+            "type": "string",
+            "required": true,
+            "description": "If `html` is set, this is not required. The text to reveal when the checkbox is checked.",
+            "released": "10.7.0"
+          },
+          {
             "name": "html",
             "type": "string",
             "required": true,
-            "description": "The HTML to reveal when the checkbox is checked.",
+            "description": "If `text` is set, this is not required. The HTML to reveal when the checkbox is checked.",
             "released": "1.0.0"
           }
         ]
