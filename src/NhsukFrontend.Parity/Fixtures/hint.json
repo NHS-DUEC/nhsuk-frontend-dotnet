@@ -13,7 +13,7 @@
         ]
       },
       "options": {},
-      "html": "<div class=\"nhsuk-hint\">\n  Do not include personal information like your name, date of birth or NHS number\n</div>"
+      "html": "<div class=\"nhsuk-hint\">\n  Do not include personal information like your name, date of birth or NHS number\n</div>\n"
     },
     {
       "name": "with HTML",
@@ -22,15 +22,14 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-hint\">\n  This is a 10 digit number (like <span class=\"nhsuk-u-nowrap\">999 123 4567</span>) that you can find on an NHS letter, prescription or in the NHS App\n</div>"
+      "html": "<div class=\"nhsuk-hint\">\n  This is a 10 digit number (like <span class=\"nhsuk-u-nowrap\">999 123 4567</span>) that you can find on an NHS letter, prescription or in the NHS App\n</div>\n"
     },
     {
       "name": "with HTML via call block",
-      "context": {},
       "callBlock": "This is a 10 digit number (like <span class=\"nhsuk-u-nowrap\">999 123 4567</span>) that you can find on an NHS letter, prescription or in the NHS App",
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-hint\">\nThis is a 10 digit number (like <span class=\"nhsuk-u-nowrap\">999 123 4567</span>) that you can find on an NHS letter, prescription or in the NHS App\n</div>"
+      "html": "<div class=\"nhsuk-hint\">\n  This is a 10 digit number (like <span class=\"nhsuk-u-nowrap\">999 123 4567</span>) that you can find on an NHS letter, prescription or in the NHS App\n</div>\n"
     }
   ]
 }

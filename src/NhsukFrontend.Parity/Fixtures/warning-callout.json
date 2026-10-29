@@ -18,7 +18,7 @@
         ]
       },
       "options": {},
-      "html": "<div class=\"nhsuk-card nhsuk-card--warning\">\n  <div class=\"nhsuk-card__content\">\n    <h3 class=\"nhsuk-card__heading\">\n      Important\n    </h3>\n    <p class=\"nhsuk-card__description\">For safety, tell your doctor or pharmacist if you&#39;re taking any other medicines, including herbal medicines, vitamins or supplements.</p>\n  </div>\n</div>"
+      "html": "<div class=\"nhsuk-card nhsuk-card--warning\">\n  <div class=\"nhsuk-card__content\">\n    <h3 class=\"nhsuk-card__heading\">\n      Important\n    </h3>\n    <p class=\"nhsuk-card__description\">\n      For safety, tell your doctor or pharmacist if you&#39;re taking any other medicines, including herbal medicines, vitamins or supplements.\n    </p>\n  </div>\n</div>\n"
     },
     {
       "name": "with custom heading",
@@ -36,7 +36,7 @@
         ]
       },
       "options": {},
-      "html": "<div class=\"nhsuk-card nhsuk-card--warning\">\n  <div class=\"nhsuk-card__content\">\n    <h3 class=\"nhsuk-card__heading\">\n      <span role=\"text\">\n        <span class=\"nhsuk-u-visually-hidden\">Important: </span>School, nursery or work\n      </span>\n    </h3>\n    <p class=\"nhsuk-card__description\">Stay away from school, nursery or work until all the spots have crusted over. This is usually 5 days after the spots first appeared.</p>\n  </div>\n</div>"
+      "html": "<div class=\"nhsuk-card nhsuk-card--warning\">\n  <div class=\"nhsuk-card__content\">\n    <h3 class=\"nhsuk-card__heading\">\n      <span role=\"text\">\n        <span class=\"nhsuk-u-visually-hidden\">Important: </span>School, nursery or work\n      </span>\n    </h3>\n    <p class=\"nhsuk-card__description\">\n      Stay away from school, nursery or work until all the spots have crusted over. This is usually 5 days after the spots first appeared.\n    </p>\n  </div>\n</div>\n"
     },
     {
       "name": "with custom heading as string",
@@ -46,7 +46,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-card nhsuk-card--warning\">\n  <div class=\"nhsuk-card__content\">\n    <h3 class=\"nhsuk-card__heading\">\n      <span role=\"text\">\n        <span class=\"nhsuk-u-visually-hidden\">Important: </span>School, nursery or work\n      </span>\n    </h3>\n    <p class=\"nhsuk-card__description\">Stay away from school, nursery or work until all the spots have crusted over. This is usually 5 days after the spots first appeared.</p>\n  </div>\n</div>"
+      "html": "<div class=\"nhsuk-card nhsuk-card--warning\">\n  <div class=\"nhsuk-card__content\">\n    <h3 class=\"nhsuk-card__heading\">\n      <span role=\"text\">\n        <span class=\"nhsuk-u-visually-hidden\">Important: </span>School, nursery or work\n      </span>\n    </h3>\n    <p class=\"nhsuk-card__description\">\n      Stay away from school, nursery or work until all the spots have crusted over. This is usually 5 days after the spots first appeared.\n    </p>\n  </div>\n</div>\n"
     },
     {
       "name": "with HTML",
@@ -58,7 +58,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-card nhsuk-card--warning\">\n  <div class=\"nhsuk-card__content\">\n    <h3 class=\"nhsuk-card__heading\">\n      Important\n    </h3>\n    <p class=\"nhsuk-card__description\">Stay away from school, nursery or work until all the spots have crusted over. This is usually 5 days after the spots first appeared.</p>\n  </div>\n</div>"
+      "html": "<div class=\"nhsuk-card nhsuk-card--warning\">\n  <div class=\"nhsuk-card__content\">\n    <h3 class=\"nhsuk-card__heading\">\n      Important\n    </h3>\n    <p class=\"nhsuk-card__description\">Stay away from school, nursery or work until all the spots have crusted over. This is usually 5 days after the spots first appeared.</p>\n  </div>\n</div>\n"
     },
     {
       "name": "with HTML via call block",
@@ -70,7 +70,7 @@
       "callBlock": "<p class=\"nhsuk-card__description\">Stay away from school, nursery or work until all the spots have crusted over. This is usually 5 days after the spots first appeared.</p>",
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-card nhsuk-card--warning\">\n  <div class=\"nhsuk-card__content\">\n    <h3 class=\"nhsuk-card__heading\">\n      Important\n    </h3>\n<p class=\"nhsuk-card__description\">Stay away from school, nursery or work until all the spots have crusted over. This is usually 5 days after the spots first appeared.</p>\n  </div>\n</div>"
+      "html": "<div class=\"nhsuk-card nhsuk-card--warning\">\n  <div class=\"nhsuk-card__content\">\n    <h3 class=\"nhsuk-card__heading\">\n      Important\n    </h3>\n<p class=\"nhsuk-card__description\">Stay away from school, nursery or work until all the spots have crusted over. This is usually 5 days after the spots first appeared.</p>\n  </div>\n</div>\n"
     },
     {
       "name": "without heading",
@@ -81,7 +81,7 @@
       "options": {
         "hidden": true
       },
-      "html": "<div class=\"nhsuk-card nhsuk-card--warning\">\n  <div class=\"nhsuk-card__content\">\n    <p class=\"nhsuk-card__description\">Stay away from school, nursery or work until all the spots have crusted over. This is usually 5 days after the spots first appeared.</p>\n  </div>\n</div>"
+      "html": "<div class=\"nhsuk-card nhsuk-card--warning\">\n  <div class=\"nhsuk-card__content\">\n    <p class=\"nhsuk-card__description\">\n      Stay away from school, nursery or work until all the spots have crusted over. This is usually 5 days after the spots first appeared.\n    </p>\n  </div>\n</div>\n"
     }
   ]
 }

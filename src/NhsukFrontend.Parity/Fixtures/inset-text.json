@@ -9,7 +9,7 @@
       },
       "screenshot": true,
       "options": {},
-      "html": "<div class=\"nhsuk-inset-text\">\n  <span class=\"nhsuk-u-visually-hidden\">Information: </span>\n  <p>You can report any suspected side effect using the Yellow Card safety scheme</p>\n</div>"
+      "html": "<div class=\"nhsuk-inset-text\">\n  <span class=\"nhsuk-u-visually-hidden\">Information: </span>\n  <p>You can report any suspected side effect using the Yellow Card safety scheme</p>\n</div>\n"
     },
     {
       "name": "with HTML",
@@ -18,15 +18,14 @@
       },
       "screenshot": true,
       "options": {},
-      "html": "<div class=\"nhsuk-inset-text\">\n  <span class=\"nhsuk-u-visually-hidden\">Information: </span>\n  <p>You can report any suspected side effect using the <a href=\"#\">Yellow Card safety scheme</a>.</p>\n</div>"
+      "html": "<div class=\"nhsuk-inset-text\">\n  <span class=\"nhsuk-u-visually-hidden\">Information: </span>\n  <p>You can report any suspected side effect using the <a href=\"#\">Yellow Card safety scheme</a>.</p>\n</div>\n"
     },
     {
       "name": "with HTML via call block",
-      "context": {},
       "callBlock": "<p>You can report any suspected side effect using the <a href=\"#\">Yellow Card safety scheme</a>.</p>",
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-inset-text\">\n  <span class=\"nhsuk-u-visually-hidden\">Information: </span>\n<p>You can report any suspected side effect using the <a href=\"#\">Yellow Card safety scheme</a>.</p>\n</div>"
+      "html": "<div class=\"nhsuk-inset-text\">\n  <span class=\"nhsuk-u-visually-hidden\">Information: </span>\n  <p>You can report any suspected side effect using the <a href=\"#\">Yellow Card safety scheme</a>.</p>\n</div>\n"
     }
   ]
 }
