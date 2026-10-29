@@ -1,5 +1,5 @@
 {
-  "upstreamVersion": "10.6.1",
+  "upstreamVersion": "10.7.1",
   "ported": [
     "action-link",
     "back-link",
@@ -46,5 +46,9 @@
     "textarea",
     "warning-callout"
   ],
-  "notYetPorted": []
+  "notYetPorted": [
+    "environment-banner",
+    "link",
+    "visually-hidden"
+  ]
 }
