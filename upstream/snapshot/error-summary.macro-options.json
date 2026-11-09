@@ -135,13 +135,6 @@
     "released": "1.0.0",
     "params": [
       {
-        "name": "href",
-        "type": "string",
-        "required": false,
-        "description": "The error `href` attribute. If set, the error will become a link.",
-        "released": "1.0.0"
-      },
-      {
         "name": "text",
         "type": "string",
         "required": true,
@@ -153,6 +146,13 @@
         "type": "string",
         "required": true,
         "description": "If `text` is set, this is not required. HTML for the error link item. If `html` is provided, the `text` option will be ignored.",
+        "released": "1.0.0"
+      },
+      {
+        "name": "href",
+        "type": "string",
+        "required": false,
+        "description": "The error `href` attribute. If set, the error will become a link.",
         "released": "1.0.0"
       },
       {
