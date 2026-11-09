@@ -57,6 +57,13 @@
             "released": "10.6.0"
           },
           {
+            "name": "openInNewTab",
+            "type": "boolean",
+            "required": false,
+            "description": "If set to `true`, then the heading link will open in a new tab.",
+            "released": "10.7.0"
+          },
+          {
             "name": "caption",
             "type": "object",
             "required": false,
@@ -175,6 +182,13 @@
         "required": false,
         "description": "If set, the heading will become a link.",
         "released": "10.6.0"
+      },
+      {
+        "name": "openInNewTab",
+        "type": "boolean",
+        "required": false,
+        "description": "If set to `true`, then the heading link will open in a new tab.",
+        "released": "10.7.0"
       },
       {
         "name": "caption",

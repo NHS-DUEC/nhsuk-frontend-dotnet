@@ -16,28 +16,7 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--l\">\n    What is your full name?\n  </label>\n</h1>"
-    },
-    {
-      "name": "size class",
-      "context": {
-        "heading": "What is your full name?",
-        "classes": "nhsuk-label--l"
-      },
-      "screenshot": false,
-      "options": {},
-      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--l\">\n    What is your full name?\n  </label>\n</h1>"
-    },
-    {
-      "name": "size class overriding size option",
-      "context": {
-        "heading": "What is your full name?",
-        "classes": "nhsuk-label--l",
-        "size": "s"
-      },
-      "screenshot": false,
-      "options": {},
-      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--l\">\n    What is your full name?\n  </label>\n</h1>"
+      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--l\">\n    What is your full name?\n  </label>\n</h1>\n"
     },
     {
       "name": "text",
@@ -52,7 +31,7 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--s\">\n    What is your full name?\n  </label>\n</h1>"
+      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--s\">\n    What is your full name?\n  </label>\n</h1>\n"
     },
     {
       "name": "text",
@@ -67,7 +46,7 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--m\">\n    What is your full name?\n  </label>\n</h1>"
+      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--m\">\n    What is your full name?\n  </label>\n</h1>\n"
     },
     {
       "name": "text",
@@ -82,7 +61,7 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--l\">\n    What is your full name?\n  </label>\n</h1>"
+      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--l\">\n    What is your full name?\n  </label>\n</h1>\n"
     },
     {
       "name": "text",
@@ -97,7 +76,7 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--xl\">\n    What is your full name?\n  </label>\n</h1>"
+      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--xl\">\n    What is your full name?\n  </label>\n</h1>\n"
     },
     {
       "name": "text and caption",
@@ -113,7 +92,7 @@
         ]
       },
       "options": {},
-      "html": "<label class=\"nhsuk-label nhsuk-label--s\">\n  <span class=\"nhsuk-caption\">\n    About you\n  </span>\n  What is your full name?\n</label>"
+      "html": "<label class=\"nhsuk-label nhsuk-label--s\">\n  <span class=\"nhsuk-caption\">\n    About you\n  </span>\n  What is your full name?\n</label>\n"
     },
     {
       "name": "text and caption",
@@ -129,7 +108,7 @@
         ]
       },
       "options": {},
-      "html": "<label class=\"nhsuk-label nhsuk-label--m\">\n  <span class=\"nhsuk-caption-m\">\n    About you\n  </span>\n  What is your full name?\n</label>"
+      "html": "<label class=\"nhsuk-label nhsuk-label--m\">\n  <span class=\"nhsuk-caption-m\">\n    About you\n  </span>\n  What is your full name?\n</label>\n"
     },
     {
       "name": "text and caption",
@@ -145,7 +124,7 @@
         ]
       },
       "options": {},
-      "html": "<label class=\"nhsuk-label nhsuk-label--l\">\n  <span class=\"nhsuk-caption-l\">\n    About you\n  </span>\n  What is your full name?\n</label>"
+      "html": "<label class=\"nhsuk-label nhsuk-label--l\">\n  <span class=\"nhsuk-caption-l\">\n    About you\n  </span>\n  What is your full name?\n</label>\n"
     },
     {
       "name": "text and caption",
@@ -161,7 +140,7 @@
         ]
       },
       "options": {},
-      "html": "<label class=\"nhsuk-label nhsuk-label--xl\">\n  <span class=\"nhsuk-caption-xl\">\n    About you\n  </span>\n  What is your full name?\n</label>"
+      "html": "<label class=\"nhsuk-label nhsuk-label--xl\">\n  <span class=\"nhsuk-caption-xl\">\n    About you\n  </span>\n  What is your full name?\n</label>\n"
     },
     {
       "name": "text and caption \"after\" as a paragraph",
@@ -181,7 +160,7 @@
         ]
       },
       "options": {},
-      "html": "<label class=\"nhsuk-label nhsuk-label--s\">\n  What is your full name?\n</label>\n<p class=\"nhsuk-caption nhsuk-caption--bottom\">\n  About you\n</p>"
+      "html": "<label class=\"nhsuk-label nhsuk-label--s\">\n  What is your full name?\n</label>\n<p class=\"nhsuk-caption nhsuk-caption--bottom\">\n  About you\n</p>\n"
     },
     {
       "name": "text and caption \"after\" as a paragraph",
@@ -201,7 +180,7 @@
         ]
       },
       "options": {},
-      "html": "<label class=\"nhsuk-label nhsuk-label--m\">\n  What is your full name?\n</label>\n<p class=\"nhsuk-caption-m nhsuk-caption--bottom\">\n  About you\n</p>"
+      "html": "<label class=\"nhsuk-label nhsuk-label--m\">\n  What is your full name?\n</label>\n<p class=\"nhsuk-caption-m nhsuk-caption--bottom\">\n  About you\n</p>\n"
     },
     {
       "name": "text and caption \"after\" as a paragraph",
@@ -221,7 +200,7 @@
         ]
       },
       "options": {},
-      "html": "<label class=\"nhsuk-label nhsuk-label--l\">\n  What is your full name?\n</label>\n<p class=\"nhsuk-caption-l nhsuk-caption--bottom\">\n  About you\n</p>"
+      "html": "<label class=\"nhsuk-label nhsuk-label--l\">\n  What is your full name?\n</label>\n<p class=\"nhsuk-caption-l nhsuk-caption--bottom\">\n  About you\n</p>\n"
     },
     {
       "name": "text and caption \"after\" as a paragraph",
@@ -241,7 +220,7 @@
         ]
       },
       "options": {},
-      "html": "<label class=\"nhsuk-label nhsuk-label--xl\">\n  What is your full name?\n</label>\n<p class=\"nhsuk-caption-xl nhsuk-caption--bottom\">\n  About you\n</p>"
+      "html": "<label class=\"nhsuk-label nhsuk-label--xl\">\n  What is your full name?\n</label>\n<p class=\"nhsuk-caption-xl nhsuk-caption--bottom\">\n  About you\n</p>\n"
     },
     {
       "name": "text and caption \"before\" as a paragraph",
@@ -261,7 +240,7 @@
         ]
       },
       "options": {},
-      "html": "<p class=\"nhsuk-caption\">\n  About you\n</p>\n<label class=\"nhsuk-label nhsuk-label--s\">\n  What is your full name?\n</label>"
+      "html": "<p class=\"nhsuk-caption\">\n  About you\n</p>\n<label class=\"nhsuk-label nhsuk-label--s\">\n  What is your full name?\n</label>\n"
     },
     {
       "name": "text and caption \"before\" as a paragraph",
@@ -281,7 +260,7 @@
         ]
       },
       "options": {},
-      "html": "<p class=\"nhsuk-caption-m\">\n  About you\n</p>\n<label class=\"nhsuk-label nhsuk-label--m\">\n  What is your full name?\n</label>"
+      "html": "<p class=\"nhsuk-caption-m\">\n  About you\n</p>\n<label class=\"nhsuk-label nhsuk-label--m\">\n  What is your full name?\n</label>\n"
     },
     {
       "name": "text and caption \"before\" as a paragraph",
@@ -301,7 +280,7 @@
         ]
       },
       "options": {},
-      "html": "<p class=\"nhsuk-caption-l\">\n  About you\n</p>\n<label class=\"nhsuk-label nhsuk-label--l\">\n  What is your full name?\n</label>"
+      "html": "<p class=\"nhsuk-caption-l\">\n  About you\n</p>\n<label class=\"nhsuk-label nhsuk-label--l\">\n  What is your full name?\n</label>\n"
     },
     {
       "name": "text and caption \"before\" as a paragraph",
@@ -321,7 +300,7 @@
         ]
       },
       "options": {},
-      "html": "<p class=\"nhsuk-caption-xl\">\n  About you\n</p>\n<label class=\"nhsuk-label nhsuk-label--xl\">\n  What is your full name?\n</label>"
+      "html": "<p class=\"nhsuk-caption-xl\">\n  About you\n</p>\n<label class=\"nhsuk-label nhsuk-label--xl\">\n  What is your full name?\n</label>\n"
     },
     {
       "name": "with deprecated page heading",
@@ -332,7 +311,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--m\">\n    What is your full name?\n  </label>\n</h1>"
+      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--m\">\n    What is your full name?\n  </label>\n</h1>\n"
     },
     {
       "name": "with deprecated page heading overriding heading",
@@ -346,7 +325,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<label class=\"nhsuk-label\">\n  What is your full name?\n</label>"
+      "html": "<label class=\"nhsuk-label\">\n  What is your full name?\n</label>\n"
     },
     {
       "name": "with heading level 1",
@@ -359,7 +338,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--l\">\n    What is your full name?\n  </label>\n</h1>"
+      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--l\">\n    What is your full name?\n  </label>\n</h1>\n"
     },
     {
       "name": "with heading level 2",
@@ -372,7 +351,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<h2 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--m\">\n    What is your full name?\n  </label>\n</h2>"
+      "html": "<h2 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--m\">\n    What is your full name?\n  </label>\n</h2>\n"
     },
     {
       "name": "with heading level 3",
@@ -385,7 +364,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<h3 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--s\">\n    What is your full name?\n  </label>\n</h3>"
+      "html": "<h3 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--s\">\n    What is your full name?\n  </label>\n</h3>\n"
     },
     {
       "name": "with heading options only",
@@ -398,7 +377,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<h3 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--s\">\n    What is your full name?\n  </label>\n</h3>"
+      "html": "<h3 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--s\">\n    What is your full name?\n  </label>\n</h3>\n"
     },
     {
       "name": "with HTML",
@@ -409,7 +388,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--l\">\n    What is your full name?\n  </label>\n</h1>"
+      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--l\">\n    What is your full name?\n  </label>\n</h1>\n"
     },
     {
       "name": "with HTML via call block",
@@ -420,7 +399,7 @@
       "callBlock": "What is your full name?",
       "screenshot": false,
       "options": {},
-      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--l\">\n  What is your full name?\n  </label>\n</h1>"
+      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--l\">\n    What is your full name?\n  </label>\n</h1>\n"
     },
     {
       "name": "with HTML via call block, without heading",
@@ -430,7 +409,7 @@
       "callBlock": "What is your full name?",
       "screenshot": false,
       "options": {},
-      "html": "<label class=\"nhsuk-label nhsuk-label--l\">\nWhat is your full name?\n</label>"
+      "html": "<label class=\"nhsuk-label nhsuk-label--l\">\n  What is your full name?\n</label>\n"
     },
     {
       "name": "with id attribute",
@@ -441,7 +420,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--l\" id=\"custom-id\">\n    What is your full name?\n  </label>\n</h1>"
+      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--l\" id=\"custom-id\">\n    What is your full name?\n  </label>\n</h1>\n"
     },
     {
       "name": "with id attribute on heading",
@@ -454,7 +433,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<h1 class=\"nhsuk-label-wrapper\" id=\"custom-id\">\n  <label class=\"nhsuk-label nhsuk-label--l\">\n    What is your full name?\n  </label>\n</h1>"
+      "html": "<h1 class=\"nhsuk-label-wrapper\" id=\"custom-id\">\n  <label class=\"nhsuk-label nhsuk-label--l\">\n    What is your full name?\n  </label>\n</h1>\n"
     },
     {
       "name": "without heading",
@@ -463,7 +442,28 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<label class=\"nhsuk-label\">\n  What is your full name?\n</label>"
+      "html": "<label class=\"nhsuk-label\">\n  What is your full name?\n</label>\n"
+    },
+    {
+      "name": "with size class",
+      "context": {
+        "heading": "What is your full name?",
+        "classes": "nhsuk-label--l"
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--l\">\n    What is your full name?\n  </label>\n</h1>\n"
+    },
+    {
+      "name": "with size class overriding size option",
+      "context": {
+        "heading": "What is your full name?",
+        "classes": "nhsuk-label--l",
+        "size": "s"
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<h1 class=\"nhsuk-label-wrapper\">\n  <label class=\"nhsuk-label nhsuk-label--l\">\n    What is your full name?\n  </label>\n</h1>\n"
     }
   ]
 }

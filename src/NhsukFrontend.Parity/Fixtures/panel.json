@@ -18,7 +18,7 @@
         ]
       },
       "options": {},
-      "html": "<div class=\"nhsuk-panel\">\n  <h1 class=\"nhsuk-panel__heading\">\n    Booking complete\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>"
+      "html": "<div class=\"nhsuk-panel\">\n  <h1 class=\"nhsuk-panel__heading\">\n    Booking complete\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>\n"
     },
     {
       "name": "heading",
@@ -32,7 +32,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-panel\">\n  <h1 class=\"nhsuk-panel__heading nhsuk-panel__heading--m\">\n    Booking complete\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>"
+      "html": "<div class=\"nhsuk-panel\">\n  <h1 class=\"nhsuk-panel__heading nhsuk-panel__heading--m\">\n    Booking complete\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>\n"
     },
     {
       "name": "heading",
@@ -46,7 +46,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-panel\">\n  <h1 class=\"nhsuk-panel__heading nhsuk-panel__heading--l\">\n    Booking complete\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>"
+      "html": "<div class=\"nhsuk-panel\">\n  <h1 class=\"nhsuk-panel__heading nhsuk-panel__heading--l\">\n    Booking complete\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>\n"
     },
     {
       "name": "heading",
@@ -60,7 +60,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-panel\">\n  <h1 class=\"nhsuk-panel__heading nhsuk-panel__heading--xl\">\n    Booking complete\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>"
+      "html": "<div class=\"nhsuk-panel\">\n  <h1 class=\"nhsuk-panel__heading nhsuk-panel__heading--xl\">\n    Booking complete\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>\n"
     },
     {
       "name": "heading",
@@ -77,7 +77,7 @@
       "options": {
         "hidden": true
       },
-      "html": "<div class=\"nhsuk-panel\">\n  <h1 class=\"nhsuk-panel__heading nhsuk-panel__heading--l\" id=\"custom-id\">\n    Booking complete\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>"
+      "html": "<div class=\"nhsuk-panel\">\n  <h1 class=\"nhsuk-panel__heading nhsuk-panel__heading--l\" id=\"custom-id\">\n    Booking complete\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>\n"
     },
     {
       "name": "interruption",
@@ -87,7 +87,7 @@
           "size": "l"
         },
         "variant": "interruption",
-        "html": "<p>They had a COVID-19 vaccine on 25 September 2025.</p>\n<p>For most people, the minimum recommended gap between COVID-19 vaccine doses is 3 months.</p>\n<div class=\"nhsuk-button-group\">\n  <a class=\"nhsuk-button nhsuk-button--reverse\" data-module=\"nhsuk-button\" href=\"#\" role=\"button\" draggable=\"false\">\n  Continue anyway\n</a>\n\n  <a href=\"#\">Cancel</a>\n</div>"
+        "html": "<p>They had a COVID-19 vaccine on 25 September 2025.</p>\n<p>For most people, the minimum recommended gap between COVID-19 vaccine doses is 3 months.</p>\n<div class=\"nhsuk-button-group\">\n  <a class=\"nhsuk-button nhsuk-button--reverse\" data-module=\"nhsuk-button\" href=\"#\" role=\"button\" draggable=\"false\">\n    Continue anyway\n  </a>\n  \n  <a href=\"#\">Cancel</a>\n</div>"
       },
       "screenshot": {
         "viewports": [
@@ -97,7 +97,7 @@
         ]
       },
       "options": {},
-      "html": "<div class=\"nhsuk-panel nhsuk-panel--interruption\">\n  <h1 class=\"nhsuk-panel__heading nhsuk-panel__heading--l\">\n    Jodie Brown had a COVID-19 vaccine less than 3 months ago\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    <p>They had a COVID-19 vaccine on 25 September 2025.</p>\n    <p>For most people, the minimum recommended gap between COVID-19 vaccine doses is 3 months.</p>\n    <div class=\"nhsuk-button-group\">\n      <a class=\"nhsuk-button nhsuk-button--reverse\" data-module=\"nhsuk-button\" href=\"#\" role=\"button\" draggable=\"false\">\n      Continue anyway\n    </a>\n    \n      <a href=\"#\">Cancel</a>\n    </div>\n  </div>\n</div>"
+      "html": "<div class=\"nhsuk-panel nhsuk-panel--interruption\">\n  <h1 class=\"nhsuk-panel__heading nhsuk-panel__heading--l\">\n    Jodie Brown had a COVID-19 vaccine less than 3 months ago\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    <p>They had a COVID-19 vaccine on 25 September 2025.</p>\n    <p>For most people, the minimum recommended gap between COVID-19 vaccine doses is 3 months.</p>\n    <div class=\"nhsuk-button-group\">\n      <a class=\"nhsuk-button nhsuk-button--reverse\" data-module=\"nhsuk-button\" href=\"#\" role=\"button\" draggable=\"false\">\n        Continue anyway\n      </a>\n      \n      <a href=\"#\">Cancel</a>\n    </div>\n  </div>\n</div>\n"
     },
     {
       "name": "interruption for confirmation to cancel",
@@ -107,11 +107,11 @@
           "size": "l"
         },
         "variant": "interruption",
-        "html": "<p>You will be able to reschedule your appointment for another time, but this may delay your treatment.</p>\n<p>Cancelling your appointment cannot be undone.</p>\n<div class=\"nhsuk-button-group\">\n  <a class=\"nhsuk-button nhsuk-button--reverse\" data-module=\"nhsuk-button\" href=\"#\" role=\"button\" draggable=\"false\">\n  Cancel appointment\n</a>\n\n  <a href=\"#\">Change my weight</a>\n</div>"
+        "html": "<p>You will be able to reschedule your appointment for another time, but this may delay your treatment.</p>\n<p>Cancelling your appointment cannot be undone.</p>\n<div class=\"nhsuk-button-group\">\n  <a class=\"nhsuk-button nhsuk-button--reverse\" data-module=\"nhsuk-button\" href=\"#\" role=\"button\" draggable=\"false\">\n    Cancel appointment\n  </a>\n  \n  <a href=\"#\">Change my weight</a>\n</div>"
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-panel nhsuk-panel--interruption\">\n  <h1 class=\"nhsuk-panel__heading nhsuk-panel__heading--l\">\n    Confirm you want to cancel your hospital appointment\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    <p>You will be able to reschedule your appointment for another time, but this may delay your treatment.</p>\n    <p>Cancelling your appointment cannot be undone.</p>\n    <div class=\"nhsuk-button-group\">\n      <a class=\"nhsuk-button nhsuk-button--reverse\" data-module=\"nhsuk-button\" href=\"#\" role=\"button\" draggable=\"false\">\n      Cancel appointment\n    </a>\n    \n      <a href=\"#\">Change my weight</a>\n    </div>\n  </div>\n</div>"
+      "html": "<div class=\"nhsuk-panel nhsuk-panel--interruption\">\n  <h1 class=\"nhsuk-panel__heading nhsuk-panel__heading--l\">\n    Confirm you want to cancel your hospital appointment\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    <p>You will be able to reschedule your appointment for another time, but this may delay your treatment.</p>\n    <p>Cancelling your appointment cannot be undone.</p>\n    <div class=\"nhsuk-button-group\">\n      <a class=\"nhsuk-button nhsuk-button--reverse\" data-module=\"nhsuk-button\" href=\"#\" role=\"button\" draggable=\"false\">\n        Cancel appointment\n      </a>\n      \n      <a href=\"#\">Change my weight</a>\n    </div>\n  </div>\n</div>\n"
     },
     {
       "name": "interruption for confirmation to continue",
@@ -121,11 +121,11 @@
           "size": "l"
         },
         "variant": "interruption",
-        "html": "<p>You entered your weight as <b>21.4 kilograms</b>. This is lower than expected.</p>\n<div class=\"nhsuk-button-group\">\n  <a class=\"nhsuk-button nhsuk-button--reverse\" data-module=\"nhsuk-button\" href=\"#\" role=\"button\" draggable=\"false\">\n  Yes, this is correct\n</a>\n\n  <a href=\"#\">Change my weight</a>\n</div>"
+        "html": "<p>You entered your weight as <b>21.4 kilograms</b>. This is lower than expected.</p>\n<div class=\"nhsuk-button-group\">\n  <a class=\"nhsuk-button nhsuk-button--reverse\" data-module=\"nhsuk-button\" href=\"#\" role=\"button\" draggable=\"false\">\n    Yes, this is correct\n  </a>\n  \n  <a href=\"#\">Change my weight</a>\n</div>"
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-panel nhsuk-panel--interruption\">\n  <h1 class=\"nhsuk-panel__heading nhsuk-panel__heading--l\">\n    Is your weight correct?\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    <p>You entered your weight as <b>21.4 kilograms</b>. This is lower than expected.</p>\n    <div class=\"nhsuk-button-group\">\n      <a class=\"nhsuk-button nhsuk-button--reverse\" data-module=\"nhsuk-button\" href=\"#\" role=\"button\" draggable=\"false\">\n      Yes, this is correct\n    </a>\n    \n      <a href=\"#\">Change my weight</a>\n    </div>\n  </div>\n</div>"
+      "html": "<div class=\"nhsuk-panel nhsuk-panel--interruption\">\n  <h1 class=\"nhsuk-panel__heading nhsuk-panel__heading--l\">\n    Is your weight correct?\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    <p>You entered your weight as <b>21.4 kilograms</b>. This is lower than expected.</p>\n    <div class=\"nhsuk-button-group\">\n      <a class=\"nhsuk-button nhsuk-button--reverse\" data-module=\"nhsuk-button\" href=\"#\" role=\"button\" draggable=\"false\">\n        Yes, this is correct\n      </a>\n      \n      <a href=\"#\">Change my weight</a>\n    </div>\n  </div>\n</div>\n"
     },
     {
       "name": "with heading as string",
@@ -135,7 +135,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-panel\">\n  <h1 class=\"nhsuk-panel__heading\">\n    Booking complete\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>"
+      "html": "<div class=\"nhsuk-panel\">\n  <h1 class=\"nhsuk-panel__heading\">\n    Booking complete\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>\n"
     },
     {
       "name": "with heading classes",
@@ -148,7 +148,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-panel\">\n  <h1 class=\"nhsuk-panel__heading nhsuk-panel__heading--l\">\n    Booking complete\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>"
+      "html": "<div class=\"nhsuk-panel\">\n  <h1 class=\"nhsuk-panel__heading nhsuk-panel__heading--l\">\n    Booking complete\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>\n"
     },
     {
       "name": "with heading level 1",
@@ -161,7 +161,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-panel\">\n  <h1 class=\"nhsuk-panel__heading\">\n    Booking complete\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>"
+      "html": "<div class=\"nhsuk-panel\">\n  <h1 class=\"nhsuk-panel__heading\">\n    Booking complete\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>\n"
     },
     {
       "name": "with heading level 2",
@@ -174,7 +174,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-panel\">\n  <h2 class=\"nhsuk-panel__heading\">\n    Booking complete\n  </h2>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>"
+      "html": "<div class=\"nhsuk-panel\">\n  <h2 class=\"nhsuk-panel__heading\">\n    Booking complete\n  </h2>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>\n"
     },
     {
       "name": "with heading level 3",
@@ -187,7 +187,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-panel\">\n  <h3 class=\"nhsuk-panel__heading\">\n    Booking complete\n  </h3>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>"
+      "html": "<div class=\"nhsuk-panel\">\n  <h3 class=\"nhsuk-panel__heading\">\n    Booking complete\n  </h3>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>\n"
     },
     {
       "name": "with HTML",
@@ -199,7 +199,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-panel\">\n  <h1 class=\"nhsuk-panel__heading\">\n    Booking complete\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>"
+      "html": "<div class=\"nhsuk-panel\">\n  <h1 class=\"nhsuk-panel__heading\">\n    Booking complete\n  </h1>\n  <div class=\"nhsuk-panel__body\">\n    We have sent you a confirmation email\n  </div>\n</div>\n"
     },
     {
       "name": "with HTML via call block",
@@ -211,7 +211,7 @@
       "callBlock": "We have sent you a confirmation email",
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-panel\">\n  <h1 class=\"nhsuk-panel__heading\">\n    Booking complete\n  </h1>\n  <div class=\"nhsuk-panel__body\">\nWe have sent you a confirmation email\n  </div>\n</div>"
+      "html": "<div class=\"nhsuk-panel\">\n  <h1 class=\"nhsuk-panel__heading\">\n    Booking complete\n  </h1>\n  <div class=\"nhsuk-panel__body\">\nWe have sent you a confirmation email\n  </div>\n</div>\n"
     }
   ]
 }
