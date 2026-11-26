@@ -55,6 +55,19 @@
     [Parameter, MacroOption("htmlAttributes")] public NhsukAttributes? HtmlAttributes { get; set; }
     [Parameter, MacroOption("pageTitleLang")] public string? PageTitleLang { get; set; }
     [Parameter, MacroOption("themeColor")] public string? ThemeColor { get; set; }
+
+    /// <summary>
+    /// Name of a non-production environment, such as "Review". Sets a matching <see cref="ThemeName"/> for
+    /// development, review, test, QA and preview unless a theme is given. Pass the same name to
+    /// <c>NhsukEnvironmentBanner</c> in the <see cref="Header"/> block.
+    /// </summary>
+    [Parameter, MacroOption("environmentName")] public string? EnvironmentName { get; set; }
+
+    /// <summary>A tag colour name, such as "purple", used to pick the browser toolbar colour.</summary>
+    [Parameter, MacroOption("themeName")] public string? ThemeName { get; set; }
+
+    /// <summary>Replaces the toolbar colour for each <see cref="ThemeName"/>.</summary>
+    [Parameter, MacroOption("themeColors")] public Dictionary<string, string>? ThemeColors { get; set; }
     [Parameter, MacroOption("assetPath")] public string? AssetPath { get; set; }
     [Parameter, MacroOption("assetUrl")] public string? AssetUrl { get; set; }
     [Parameter, MacroOption("opengraphImageUrl")] public string? OpengraphImageUrl { get; set; }
@@ -77,12 +90,47 @@
     [Parameter, MacroBlock("footer")] public RenderFragment? Footer { get; set; }
     [Parameter, MacroBlock("bodyEnd")] public RenderFragment? BodyEnd { get; set; }
 
+    // Pale tints of each tag colour, from upstream's template.njk.
+    private static readonly Dictionary<string, string> DefaultThemeColors = new()
+    {
+        ["white"] = "#d8dde0",
+        ["grey"] = "#d8dde0",
+        ["green"] = "#cce5d8",
+        ["aqua-green"] = "#bae6e3",
+        ["blue"] = "#ccdff1",
+        ["purple"] = "#ded6e8",
+        ["pink"] = "#efd3e3",
+        ["red"] = "#f7d4d1",
+        ["orange"] = "#fbe8cc",
+        ["warm-yellow"] = "#fff1d2",
+        ["yellow"] = "#fff9c4",
+    };
+
     private string _assetPath = "", _themeColor = "";
 
     protected override void OnParametersSet()
     {
+        var themeName = ThemeName;
+        var themeColor = ThemeColor;
+
+        if (Truthy(EnvironmentName) && !Truthy(themeColor) && !Truthy(themeName))
+        {
+            themeName = EnvironmentName!.ToLowerInvariant() switch
+            {
+                "development" => "white",
+                "review" => "purple",
+                "test" => "red",
+                "qa" => "orange",
+                "preview" => "yellow",
+                _ => null,
+            };
+        }
+
+        if (Truthy(themeName) && !Truthy(themeColor))
+            themeColor = (ThemeColors ?? DefaultThemeColors).GetValueOrDefault(themeName!.ToLowerInvariant());
+
         _assetPath = DefaultIfFalsy(AssetPath, "/assets");
-        _themeColor = DefaultIfFalsy(ThemeColor, "#005eb8");
+        _themeColor = DefaultIfFalsy(themeColor, "#005eb8");
     }
 
     private string JsEnabledScript =>

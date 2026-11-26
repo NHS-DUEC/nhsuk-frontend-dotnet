@@ -5,8 +5,14 @@
     @if (CaptionOptions?.Placement == "before") { @CaptionFragment }
     <NhsukElement Tag="@Tag" Attributes="HeadingAttributes">
         @if (CaptionOptions?.Placement == "start" || (HasCaption && CaptionOptions!.Placement is null)) { @CaptionFragment }
-        @if (ChildContent is not null) { @ChildContent } else { @InnerHtml }
-        @if (Truthy(VisuallyHiddenText)) {<span class="nhsuk-u-visually-hidden"> @VisuallyHiddenText</span>}
+        @if (Truthy(Href))
+        {
+            @Render.Link(new LinkOptions { Href = Href, Text = Text, Html = Html, VisuallyHiddenText = VisuallyHiddenText, OpenInNewTab = OpenInNewTab }, ChildContent)
+        }
+        else
+        {
+            @Render.Content(text: Text, html: Html, caller: ChildContent, visuallyHiddenText: VisuallyHiddenText)
+        }
         @if (CaptionOptions?.Placement == "end") { @CaptionFragment }
     </NhsukElement>
     @if (CaptionOptions?.Placement == "after") { @CaptionFragment }
@@ -20,9 +26,11 @@
 
     protected override void OnParametersSet()
     {
-        var className = Default(ClassName, "nhsuk-heading");
+        // className: false (or "") asks for no base class at all; a missing value uses the default.
+        var noClassName = ClassName is "" or "false";
+        var className = noClassName ? "nhsuk-heading" : ClassName ?? "nhsuk-heading";
         var classPrefix = Default(ClassPrefix, className + "-");
-        var classNames = className;
+        var classNames = noClassName ? "" : className;
         var sizes = Sizes ?? [.. AllSizes];
 
         _size = null;
@@ -30,9 +38,9 @@
         {
             _size = Size;
             var prefixWithoutClassName = className.Length > 0 ? classPrefix.Replace(className, "") : classPrefix;
-            classNames = prefixWithoutClassName == "-" ? classPrefix + _size : classNames + " " + classPrefix + _size;
+            classNames = prefixWithoutClassName == "-" ? classPrefix + _size : (classNames + " " + classPrefix + _size).Trim();
         }
-        _classNames = Append(classNames, Classes);
+        _classNames = (classNames + " " + Classes).Trim();
     }
 
     private string Tag => Default(Element, "h" + (Level is > 0 ? Level : 1)).ToLowerInvariant();
@@ -44,12 +52,6 @@
         .Optional("class", Truthy(_classNames) ? _classNames : null)
         .Optional("id", Id)
         .AddUser(Attributes, AdditionalAttributes);
-
-    private RenderFragment InnerText => @<NhsukContent Html="@Html" Text="@Text" />;
-
-    private RenderFragment InnerHtml => Truthy(Href)
-        ? @<a class="nhsuk-link" href="@Href">@InnerText</a>
-        : InnerText;
 
     private RenderFragment? CaptionFragment => !HasCaption ? null :
         @<NhsukCaption Id="@Caption!.Id" Element="@Caption.Element" Text="@Caption.Text" Html="@Caption.Html"

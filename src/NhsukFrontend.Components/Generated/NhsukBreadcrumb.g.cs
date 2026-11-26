@@ -145,7 +145,7 @@ public sealed partial class BreadcrumbItemsItem : NhsukOptions, IShorthandOption
 
     /// <summary>Can be used to add visually hidden content to the link component. If `ariaLabel` is provided, this has no effect.</summary>
     /// <remarks>Macro option <c>items.visuallyHidden</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("visuallyHidden")] public NhsukAttributes? VisuallyHidden { get; set; }
+    [JsonPropertyName("visuallyHidden")] public VisuallyHiddenOptions? VisuallyHidden { get; set; }
 
     /// <summary>Accessible name identifying the link to screen readers.</summary>
     /// <remarks>Macro option <c>items.ariaLabel</c>, released in 10.7.0.</remarks>
@@ -189,7 +189,7 @@ public sealed partial class BreadcrumbItemsItem : NhsukOptions, IShorthandOption
 
     /// <summary>Specified points for injecting custom content relative to the link component.</summary>
     /// <remarks>Macro option <c>items.slots</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("slots")] public BreadcrumbItemsSlotsOptions? Slots { get; set; }
+    [JsonPropertyName("slots")] public NhsukSlots? Slots { get; set; }
 
     /// <summary>Configured automatically if `href` is provided.</summary>
     /// <remarks>Macro option <c>items.element</c>, released in 10.7.0.</remarks>
@@ -202,103 +202,4 @@ public sealed partial class BreadcrumbItemsItem : NhsukOptions, IShorthandOption
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
     public static BreadcrumbItemsItem FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator BreadcrumbItemsItem(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>breadcrumb.items.slots</c>.</summary>
-public sealed partial class BreadcrumbItemsSlotsOptions : NhsukOptions
-{
-    /// <summary>Custom content injected before the link component.</summary>
-    /// <remarks>Macro option <c>items.slots.before</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("before")] public BreadcrumbItemsSlotsBeforeOptions? Before { get; set; }
-
-    /// <summary>Custom content injected at the start, within the link component.</summary>
-    /// <remarks>Macro option <c>items.slots.start</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("start")] public BreadcrumbItemsSlotsStartOptions? Start { get; set; }
-
-    /// <summary>Custom content injected at the end, within the link component.</summary>
-    /// <remarks>Macro option <c>items.slots.end</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("end")] public BreadcrumbItemsSlotsEndOptions? End { get; set; }
-
-    /// <summary>Custom content injected after the link component.</summary>
-    /// <remarks>Macro option <c>items.slots.after</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("after")] public BreadcrumbItemsSlotsAfterOptions? After { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator BreadcrumbItemsSlotsOptions(bool value) => value ? new() { IsTrue = true } : null!;
-}
-
-/// <summary>Nested options at <c>breadcrumb.items.slots.before</c>.</summary>
-public sealed partial class BreadcrumbItemsSlotsBeforeOptions : NhsukOptions, IShorthandOptions<BreadcrumbItemsSlotsBeforeOptions>
-{
-    /// <summary>Custom text injected before the link component.</summary>
-    /// <remarks>Macro option <c>items.slots.before.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected before the link component.</summary>
-    /// <remarks>Macro option <c>items.slots.before.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator BreadcrumbItemsSlotsBeforeOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static BreadcrumbItemsSlotsBeforeOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator BreadcrumbItemsSlotsBeforeOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>breadcrumb.items.slots.start</c>.</summary>
-public sealed partial class BreadcrumbItemsSlotsStartOptions : NhsukOptions, IShorthandOptions<BreadcrumbItemsSlotsStartOptions>
-{
-    /// <summary>Custom text injected at the start, within the link component.</summary>
-    /// <remarks>Macro option <c>items.slots.start.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected at the start, within the link component.</summary>
-    /// <remarks>Macro option <c>items.slots.start.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator BreadcrumbItemsSlotsStartOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static BreadcrumbItemsSlotsStartOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator BreadcrumbItemsSlotsStartOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>breadcrumb.items.slots.end</c>.</summary>
-public sealed partial class BreadcrumbItemsSlotsEndOptions : NhsukOptions, IShorthandOptions<BreadcrumbItemsSlotsEndOptions>
-{
-    /// <summary>Custom text injected at the end, within the link component.</summary>
-    /// <remarks>Macro option <c>items.slots.end.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected at the end, within the link component.</summary>
-    /// <remarks>Macro option <c>items.slots.end.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator BreadcrumbItemsSlotsEndOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static BreadcrumbItemsSlotsEndOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator BreadcrumbItemsSlotsEndOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>breadcrumb.items.slots.after</c>.</summary>
-public sealed partial class BreadcrumbItemsSlotsAfterOptions : NhsukOptions, IShorthandOptions<BreadcrumbItemsSlotsAfterOptions>
-{
-    /// <summary>Custom text injected after the link component.</summary>
-    /// <remarks>Macro option <c>items.slots.after.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected after the link component.</summary>
-    /// <remarks>Macro option <c>items.slots.after.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator BreadcrumbItemsSlotsAfterOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static BreadcrumbItemsSlotsAfterOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator BreadcrumbItemsSlotsAfterOptions(string value) => FromShorthand(value);
 }

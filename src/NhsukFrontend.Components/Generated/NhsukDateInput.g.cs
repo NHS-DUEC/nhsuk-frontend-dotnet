@@ -139,7 +139,7 @@ public sealed partial class DateInputOptions : NhsukOptions
 }
 
 /// <summary>Nested options at <c>date-input.items</c>.</summary>
-public sealed partial class DateInputItemsItem : NhsukOptions
+public sealed partial class DateInputItemsItem : NhsukOptions, IShorthandOptions<DateInputItemsItem>
 {
     /// <summary>Item-specific `name` attribute. Defaults to `"day"`, `"month"` or `"year"`.</summary>
     /// <remarks>Macro option <c>items.name</c> (required), released in 1.0.0.</remarks>
@@ -243,6 +243,10 @@ public sealed partial class DateInputItemsItem : NhsukOptions
 
     /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
     public static implicit operator DateInputItemsItem(bool value) => value ? new() { IsTrue = true } : null!;
+
+    /// <summary>Upstream templates accept a plain string here, used as <c>value</c>.</summary>
+    public static DateInputItemsItem FromShorthand(string value) => new() { Value = value, IsShorthand = true };
+    public static implicit operator DateInputItemsItem(string value) => FromShorthand(value);
 }
 
 /// <summary>Nested options at <c>date-input.formGroup</c>.</summary>

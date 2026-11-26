@@ -2,7 +2,7 @@
 
 **NHS.UK frontend for ASP.NET Core.** Tag helpers for Razor Pages and MVC, and Razor components for Blazor, that
 render the same HTML as the [NHS.UK frontend](https://github.com/nhsuk/nhsuk-frontend) Nunjucks macros. They are
-generated from, and tested against, a pinned upstream release (currently **10.6.1**).
+generated from, and tested against, a pinned upstream release (currently **10.7.2**).
 
 > **A community project.** nhsuk-frontend-dotnet is not maintained by NHS England or the NHS design system team.
 > It is looked after by volunteers on a best-efforts basis. For the design system itself, see the
@@ -10,7 +10,7 @@ generated from, and tested against, a pinned upstream release (currently **10.6.
 > [nhsuk-frontend](https://github.com/nhsuk/nhsuk-frontend). Use of the NHS logo is governed by the
 > [NHS identity guidelines](https://www.england.nhs.uk/nhsidentity/), not by this project's licence.
 
-- **All 43 components** in nhsuk-frontend and the page template are ported.
+- **All 46 components** in nhsuk-frontend and the page template are ported.
 - All **988** examples match upstream's HTML: 983 from upstream's own fixtures, plus 5 page template examples
   rendered from `template.njk`. The tag helpers are tested against the same examples. Upstream's JavaScript runs
   unchanged against the output.
@@ -26,8 +26,8 @@ The package will be published to NuGet as **`nhsuk-frontend-dotnet`**. Until the
 dotnet add package nhsuk-frontend-dotnet --prerelease
 ```
 
-The package version follows the nhsuk-frontend release it is generated from: `10.6.1-beta.1` is the first beta
-built from nhsuk-frontend 10.6.1. The C# namespace is `NhsukFrontend.Components`.
+The package version follows the nhsuk-frontend release it is generated from: `10.7.2-beta.1` is the first beta
+built from nhsuk-frontend 10.7.2. The C# namespace is `NhsukFrontend.Components`.
 
 ## How it stays in step with upstream
 

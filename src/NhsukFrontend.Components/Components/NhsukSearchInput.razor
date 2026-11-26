@@ -29,7 +29,7 @@
     private RenderFragment SearchButton => @<text>
         @if (Button is not { IsFalse: true })
         {
-            <NhsukButton Html="@Button?.Html" Text="@Button?.Text" AriaLabel="@(Button?.AriaLabel ?? "Search")" Id="@Button?.Id" Href="@Button?.Href"
+            <NhsukButton Html="@Button?.Html" Text="@Button?.Text" AriaLabel="@(Button?.AriaLabel ?? (Button?.Icon is { IsFalse: true } ? null : "Search"))" Id="@Button?.Id" Href="@Button?.Href"
                          Name="@Button?.Name" Value="@Button?.Value" Type="@DefaultIfFalsy(Button?.Type, "submit")"
                          Icon="@(Button?.Icon ?? ButtonIconOptions.FromShorthand("search"))" Small="@(Button?.Small ?? Large != true)"
                          PreventDoubleClick="@Button?.PreventDoubleClick" Disabled="@(Button?.Disabled ?? Disabled)"

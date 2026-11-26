@@ -344,7 +344,7 @@ public sealed partial class HeaderNavigationItemsItem : NhsukOptions, IShorthand
 
     /// <summary>Can be used to add visually hidden content to the link component. If `ariaLabel` is provided, this has no effect.</summary>
     /// <remarks>Macro option <c>navigation.items.visuallyHidden</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("visuallyHidden")] public NhsukAttributes? VisuallyHidden { get; set; }
+    [JsonPropertyName("visuallyHidden")] public VisuallyHiddenOptions? VisuallyHidden { get; set; }
 
     /// <summary>Accessible name identifying the link to screen readers.</summary>
     /// <remarks>Macro option <c>navigation.items.ariaLabel</c>, released in 10.7.0.</remarks>
@@ -376,7 +376,7 @@ public sealed partial class HeaderNavigationItemsItem : NhsukOptions, IShorthand
 
     /// <summary>Specified points for injecting custom content relative to the link component.</summary>
     /// <remarks>Macro option <c>navigation.items.slots</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("slots")] public HeaderNavigationItemsSlotsOptions? Slots { get; set; }
+    [JsonPropertyName("slots")] public NhsukSlots? Slots { get; set; }
 
     /// <summary>Configured automatically if `href` is provided.</summary>
     /// <remarks>Macro option <c>navigation.items.element</c>, released in 10.7.0.</remarks>
@@ -469,7 +469,7 @@ public sealed partial class HeaderAccountItemsItem : NhsukOptions, IShorthandOpt
 
     /// <summary>Can be used to add visually hidden content to the link component. If `ariaLabel` is provided, this has no effect.</summary>
     /// <remarks>Macro option <c>account.items.visuallyHidden</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("visuallyHidden")] public NhsukAttributes? VisuallyHidden { get; set; }
+    [JsonPropertyName("visuallyHidden")] public VisuallyHiddenOptions? VisuallyHidden { get; set; }
 
     /// <summary>Accessible name identifying the link to screen readers.</summary>
     /// <remarks>Macro option <c>account.items.ariaLabel</c>, released in 10.7.0.</remarks>
@@ -509,7 +509,7 @@ public sealed partial class HeaderAccountItemsItem : NhsukOptions, IShorthandOpt
 
     /// <summary>Specified points for injecting custom content relative to the link component.</summary>
     /// <remarks>Macro option <c>account.items.slots</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("slots")] public HeaderAccountItemsSlotsOptions? Slots { get; set; }
+    [JsonPropertyName("slots")] public NhsukSlots? Slots { get; set; }
 
     /// <summary>Configured automatically if `href` is provided.</summary>
     /// <remarks>Macro option <c>account.items.element</c>, released in 10.7.0.</remarks>
@@ -522,202 +522,4 @@ public sealed partial class HeaderAccountItemsItem : NhsukOptions, IShorthandOpt
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
     public static HeaderAccountItemsItem FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator HeaderAccountItemsItem(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>header.navigation.items.slots</c>.</summary>
-public sealed partial class HeaderNavigationItemsSlotsOptions : NhsukOptions
-{
-    /// <summary>Custom content injected before the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.before</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("before")] public HeaderNavigationItemsSlotsBeforeOptions? Before { get; set; }
-
-    /// <summary>Custom content injected at the start, within the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.start</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("start")] public HeaderNavigationItemsSlotsStartOptions? Start { get; set; }
-
-    /// <summary>Custom content injected at the end, within the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.end</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("end")] public HeaderNavigationItemsSlotsEndOptions? End { get; set; }
-
-    /// <summary>Custom content injected after the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.after</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("after")] public HeaderNavigationItemsSlotsAfterOptions? After { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator HeaderNavigationItemsSlotsOptions(bool value) => value ? new() { IsTrue = true } : null!;
-}
-
-/// <summary>Nested options at <c>header.account.items.slots</c>.</summary>
-public sealed partial class HeaderAccountItemsSlotsOptions : NhsukOptions
-{
-    /// <summary>Custom content injected before the link component.</summary>
-    /// <remarks>Macro option <c>account.items.slots.before</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("before")] public HeaderAccountItemsSlotsBeforeOptions? Before { get; set; }
-
-    /// <summary>Custom content injected at the start, within the link component.</summary>
-    /// <remarks>Macro option <c>account.items.slots.start</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("start")] public HeaderAccountItemsSlotsStartOptions? Start { get; set; }
-
-    /// <summary>Custom content injected at the end, within the link component.</summary>
-    /// <remarks>Macro option <c>account.items.slots.end</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("end")] public HeaderAccountItemsSlotsEndOptions? End { get; set; }
-
-    /// <summary>Custom content injected after the link component.</summary>
-    /// <remarks>Macro option <c>account.items.slots.after</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("after")] public HeaderAccountItemsSlotsAfterOptions? After { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator HeaderAccountItemsSlotsOptions(bool value) => value ? new() { IsTrue = true } : null!;
-}
-
-/// <summary>Nested options at <c>header.navigation.items.slots.before</c>.</summary>
-public sealed partial class HeaderNavigationItemsSlotsBeforeOptions : NhsukOptions, IShorthandOptions<HeaderNavigationItemsSlotsBeforeOptions>
-{
-    /// <summary>Custom text injected before the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.before.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected before the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.before.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator HeaderNavigationItemsSlotsBeforeOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static HeaderNavigationItemsSlotsBeforeOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator HeaderNavigationItemsSlotsBeforeOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>header.navigation.items.slots.start</c>.</summary>
-public sealed partial class HeaderNavigationItemsSlotsStartOptions : NhsukOptions, IShorthandOptions<HeaderNavigationItemsSlotsStartOptions>
-{
-    /// <summary>Custom text injected at the start, within the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.start.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected at the start, within the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.start.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator HeaderNavigationItemsSlotsStartOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static HeaderNavigationItemsSlotsStartOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator HeaderNavigationItemsSlotsStartOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>header.navigation.items.slots.end</c>.</summary>
-public sealed partial class HeaderNavigationItemsSlotsEndOptions : NhsukOptions, IShorthandOptions<HeaderNavigationItemsSlotsEndOptions>
-{
-    /// <summary>Custom text injected at the end, within the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.end.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected at the end, within the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.end.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator HeaderNavigationItemsSlotsEndOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static HeaderNavigationItemsSlotsEndOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator HeaderNavigationItemsSlotsEndOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>header.navigation.items.slots.after</c>.</summary>
-public sealed partial class HeaderNavigationItemsSlotsAfterOptions : NhsukOptions, IShorthandOptions<HeaderNavigationItemsSlotsAfterOptions>
-{
-    /// <summary>Custom text injected after the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.after.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected after the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.after.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator HeaderNavigationItemsSlotsAfterOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static HeaderNavigationItemsSlotsAfterOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator HeaderNavigationItemsSlotsAfterOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>header.account.items.slots.before</c>.</summary>
-public sealed partial class HeaderAccountItemsSlotsBeforeOptions : NhsukOptions, IShorthandOptions<HeaderAccountItemsSlotsBeforeOptions>
-{
-    /// <summary>Custom text injected before the link component.</summary>
-    /// <remarks>Macro option <c>account.items.slots.before.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected before the link component.</summary>
-    /// <remarks>Macro option <c>account.items.slots.before.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator HeaderAccountItemsSlotsBeforeOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static HeaderAccountItemsSlotsBeforeOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator HeaderAccountItemsSlotsBeforeOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>header.account.items.slots.start</c>.</summary>
-public sealed partial class HeaderAccountItemsSlotsStartOptions : NhsukOptions, IShorthandOptions<HeaderAccountItemsSlotsStartOptions>
-{
-    /// <summary>Custom text injected at the start, within the link component.</summary>
-    /// <remarks>Macro option <c>account.items.slots.start.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected at the start, within the link component.</summary>
-    /// <remarks>Macro option <c>account.items.slots.start.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator HeaderAccountItemsSlotsStartOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static HeaderAccountItemsSlotsStartOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator HeaderAccountItemsSlotsStartOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>header.account.items.slots.end</c>.</summary>
-public sealed partial class HeaderAccountItemsSlotsEndOptions : NhsukOptions, IShorthandOptions<HeaderAccountItemsSlotsEndOptions>
-{
-    /// <summary>Custom text injected at the end, within the link component.</summary>
-    /// <remarks>Macro option <c>account.items.slots.end.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected at the end, within the link component.</summary>
-    /// <remarks>Macro option <c>account.items.slots.end.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator HeaderAccountItemsSlotsEndOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static HeaderAccountItemsSlotsEndOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator HeaderAccountItemsSlotsEndOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>header.account.items.slots.after</c>.</summary>
-public sealed partial class HeaderAccountItemsSlotsAfterOptions : NhsukOptions, IShorthandOptions<HeaderAccountItemsSlotsAfterOptions>
-{
-    /// <summary>Custom text injected after the link component.</summary>
-    /// <remarks>Macro option <c>account.items.slots.after.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected after the link component.</summary>
-    /// <remarks>Macro option <c>account.items.slots.after.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator HeaderAccountItemsSlotsAfterOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static HeaderAccountItemsSlotsAfterOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator HeaderAccountItemsSlotsAfterOptions(string value) => FromShorthand(value);
 }

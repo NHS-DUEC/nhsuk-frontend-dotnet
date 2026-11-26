@@ -15,7 +15,7 @@
                                 @if (content.Heading is { } h && (Truthy(h.Text) || Truthy(h.Html)))
                                 {
                                     <NhsukHeading Id="@h.Id" Text="@h.Text" Html="@h.Html" VisuallyHiddenText="@h.VisuallyHiddenText" Caption="@h.Caption"
-                                                  Href="@h.Href" Size="@(h.Size ?? "xl")" Level="@h.Level" Classes="@Append("nhsuk-hero__heading", h.Classes)"
+                                                  Href="@h.Href" OpenInNewTab="@h.OpenInNewTab" Size="@(h.Size ?? "xl")" Level="@h.Level" Classes="@Append("nhsuk-hero__heading", h.Classes)"
                                                   Attributes="@h.Attributes" />
                                 }
                                 @if (content.Fragment is not null) { @content.Fragment }
@@ -55,7 +55,7 @@
             var heading = Heading is { IsShorthand: false } h
                 ? new HeroContentHeadingOptions
                 {
-                    Id = h.Id, Text = h.Text, Html = h.Html, VisuallyHiddenText = h.VisuallyHiddenText, Href = h.Href,
+                    Id = h.Id, Text = h.Text, Html = h.Html, VisuallyHiddenText = h.VisuallyHiddenText, Href = h.Href, OpenInNewTab = h.OpenInNewTab,
                     Caption = h.Caption, Size = h.Size, Level = h.Level, Classes = h.Classes, Attributes = h.Attributes,
                 }
                 : new HeroContentHeadingOptions { Text = Heading?.Text, Size = HeadingSize, Level = HeadingLevel, Classes = HeadingClasses };

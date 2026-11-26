@@ -285,7 +285,7 @@ public sealed partial class FooterNavigationItemsItem : NhsukOptions, IShorthand
 
     /// <summary>Can be used to add visually hidden content to the link component. If `ariaLabel` is provided, this has no effect.</summary>
     /// <remarks>Macro option <c>navigation.items.visuallyHidden</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("visuallyHidden")] public NhsukAttributes? VisuallyHidden { get; set; }
+    [JsonPropertyName("visuallyHidden")] public VisuallyHiddenOptions? VisuallyHidden { get; set; }
 
     /// <summary>Accessible name identifying the link to screen readers.</summary>
     /// <remarks>Macro option <c>navigation.items.ariaLabel</c>, released in 10.7.0.</remarks>
@@ -325,7 +325,7 @@ public sealed partial class FooterNavigationItemsItem : NhsukOptions, IShorthand
 
     /// <summary>Specified points for injecting custom content relative to the link component.</summary>
     /// <remarks>Macro option <c>navigation.items.slots</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("slots")] public FooterNavigationItemsSlotsOptions? Slots { get; set; }
+    [JsonPropertyName("slots")] public NhsukSlots? Slots { get; set; }
 
     /// <summary>Configured automatically if `href` is provided.</summary>
     /// <remarks>Macro option <c>navigation.items.element</c>, released in 10.7.0.</remarks>
@@ -373,7 +373,7 @@ public sealed partial class FooterMetaItemsItem : NhsukOptions, IShorthandOption
 
     /// <summary>Can be used to add visually hidden content to the link component. If `ariaLabel` is provided, this has no effect.</summary>
     /// <remarks>Macro option <c>meta.items.visuallyHidden</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("visuallyHidden")] public NhsukAttributes? VisuallyHidden { get; set; }
+    [JsonPropertyName("visuallyHidden")] public VisuallyHiddenOptions? VisuallyHidden { get; set; }
 
     /// <summary>Accessible name identifying the link to screen readers.</summary>
     /// <remarks>Macro option <c>meta.items.ariaLabel</c>, released in 10.7.0.</remarks>
@@ -413,7 +413,7 @@ public sealed partial class FooterMetaItemsItem : NhsukOptions, IShorthandOption
 
     /// <summary>Specified points for injecting custom content relative to the link component.</summary>
     /// <remarks>Macro option <c>meta.items.slots</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("slots")] public FooterMetaItemsSlotsOptions? Slots { get; set; }
+    [JsonPropertyName("slots")] public NhsukSlots? Slots { get; set; }
 
     /// <summary>Configured automatically if `href` is provided.</summary>
     /// <remarks>Macro option <c>meta.items.element</c>, released in 10.7.0.</remarks>
@@ -426,202 +426,4 @@ public sealed partial class FooterMetaItemsItem : NhsukOptions, IShorthandOption
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
     public static FooterMetaItemsItem FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator FooterMetaItemsItem(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>footer.navigation.items.slots</c>.</summary>
-public sealed partial class FooterNavigationItemsSlotsOptions : NhsukOptions
-{
-    /// <summary>Custom content injected before the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.before</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("before")] public FooterNavigationItemsSlotsBeforeOptions? Before { get; set; }
-
-    /// <summary>Custom content injected at the start, within the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.start</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("start")] public FooterNavigationItemsSlotsStartOptions? Start { get; set; }
-
-    /// <summary>Custom content injected at the end, within the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.end</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("end")] public FooterNavigationItemsSlotsEndOptions? End { get; set; }
-
-    /// <summary>Custom content injected after the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.after</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("after")] public FooterNavigationItemsSlotsAfterOptions? After { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator FooterNavigationItemsSlotsOptions(bool value) => value ? new() { IsTrue = true } : null!;
-}
-
-/// <summary>Nested options at <c>footer.meta.items.slots</c>.</summary>
-public sealed partial class FooterMetaItemsSlotsOptions : NhsukOptions
-{
-    /// <summary>Custom content injected before the link component.</summary>
-    /// <remarks>Macro option <c>meta.items.slots.before</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("before")] public FooterMetaItemsSlotsBeforeOptions? Before { get; set; }
-
-    /// <summary>Custom content injected at the start, within the link component.</summary>
-    /// <remarks>Macro option <c>meta.items.slots.start</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("start")] public FooterMetaItemsSlotsStartOptions? Start { get; set; }
-
-    /// <summary>Custom content injected at the end, within the link component.</summary>
-    /// <remarks>Macro option <c>meta.items.slots.end</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("end")] public FooterMetaItemsSlotsEndOptions? End { get; set; }
-
-    /// <summary>Custom content injected after the link component.</summary>
-    /// <remarks>Macro option <c>meta.items.slots.after</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("after")] public FooterMetaItemsSlotsAfterOptions? After { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator FooterMetaItemsSlotsOptions(bool value) => value ? new() { IsTrue = true } : null!;
-}
-
-/// <summary>Nested options at <c>footer.navigation.items.slots.before</c>.</summary>
-public sealed partial class FooterNavigationItemsSlotsBeforeOptions : NhsukOptions, IShorthandOptions<FooterNavigationItemsSlotsBeforeOptions>
-{
-    /// <summary>Custom text injected before the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.before.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected before the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.before.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator FooterNavigationItemsSlotsBeforeOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static FooterNavigationItemsSlotsBeforeOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator FooterNavigationItemsSlotsBeforeOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>footer.navigation.items.slots.start</c>.</summary>
-public sealed partial class FooterNavigationItemsSlotsStartOptions : NhsukOptions, IShorthandOptions<FooterNavigationItemsSlotsStartOptions>
-{
-    /// <summary>Custom text injected at the start, within the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.start.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected at the start, within the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.start.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator FooterNavigationItemsSlotsStartOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static FooterNavigationItemsSlotsStartOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator FooterNavigationItemsSlotsStartOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>footer.navigation.items.slots.end</c>.</summary>
-public sealed partial class FooterNavigationItemsSlotsEndOptions : NhsukOptions, IShorthandOptions<FooterNavigationItemsSlotsEndOptions>
-{
-    /// <summary>Custom text injected at the end, within the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.end.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected at the end, within the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.end.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator FooterNavigationItemsSlotsEndOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static FooterNavigationItemsSlotsEndOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator FooterNavigationItemsSlotsEndOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>footer.navigation.items.slots.after</c>.</summary>
-public sealed partial class FooterNavigationItemsSlotsAfterOptions : NhsukOptions, IShorthandOptions<FooterNavigationItemsSlotsAfterOptions>
-{
-    /// <summary>Custom text injected after the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.after.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected after the link component.</summary>
-    /// <remarks>Macro option <c>navigation.items.slots.after.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator FooterNavigationItemsSlotsAfterOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static FooterNavigationItemsSlotsAfterOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator FooterNavigationItemsSlotsAfterOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>footer.meta.items.slots.before</c>.</summary>
-public sealed partial class FooterMetaItemsSlotsBeforeOptions : NhsukOptions, IShorthandOptions<FooterMetaItemsSlotsBeforeOptions>
-{
-    /// <summary>Custom text injected before the link component.</summary>
-    /// <remarks>Macro option <c>meta.items.slots.before.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected before the link component.</summary>
-    /// <remarks>Macro option <c>meta.items.slots.before.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator FooterMetaItemsSlotsBeforeOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static FooterMetaItemsSlotsBeforeOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator FooterMetaItemsSlotsBeforeOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>footer.meta.items.slots.start</c>.</summary>
-public sealed partial class FooterMetaItemsSlotsStartOptions : NhsukOptions, IShorthandOptions<FooterMetaItemsSlotsStartOptions>
-{
-    /// <summary>Custom text injected at the start, within the link component.</summary>
-    /// <remarks>Macro option <c>meta.items.slots.start.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected at the start, within the link component.</summary>
-    /// <remarks>Macro option <c>meta.items.slots.start.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator FooterMetaItemsSlotsStartOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static FooterMetaItemsSlotsStartOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator FooterMetaItemsSlotsStartOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>footer.meta.items.slots.end</c>.</summary>
-public sealed partial class FooterMetaItemsSlotsEndOptions : NhsukOptions, IShorthandOptions<FooterMetaItemsSlotsEndOptions>
-{
-    /// <summary>Custom text injected at the end, within the link component.</summary>
-    /// <remarks>Macro option <c>meta.items.slots.end.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected at the end, within the link component.</summary>
-    /// <remarks>Macro option <c>meta.items.slots.end.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator FooterMetaItemsSlotsEndOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static FooterMetaItemsSlotsEndOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator FooterMetaItemsSlotsEndOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>footer.meta.items.slots.after</c>.</summary>
-public sealed partial class FooterMetaItemsSlotsAfterOptions : NhsukOptions, IShorthandOptions<FooterMetaItemsSlotsAfterOptions>
-{
-    /// <summary>Custom text injected after the link component.</summary>
-    /// <remarks>Macro option <c>meta.items.slots.after.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected after the link component.</summary>
-    /// <remarks>Macro option <c>meta.items.slots.after.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator FooterMetaItemsSlotsAfterOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static FooterMetaItemsSlotsAfterOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator FooterMetaItemsSlotsAfterOptions(string value) => FromShorthand(value);
 }

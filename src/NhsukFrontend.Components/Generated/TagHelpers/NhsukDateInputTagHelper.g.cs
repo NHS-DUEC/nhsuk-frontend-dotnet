@@ -47,14 +47,23 @@ public sealed partial class NhsukDateInputTagHelper : NhsukFieldTagHelper<NhsukD
     /// <summary>Can be used to add a fieldset to the date input component. The `fieldset.html` option is not supported.</summary>
     [HtmlAttributeName("fieldset")] public FieldsetOptions? Fieldset { get; set; }
 
+    /// <summary>Can be used to customise the day input within the date input component. The `input.code`, `input.errorMessage`, `input.formGroup`, `input.hint` and `input.inputWrapper` options are not supported. Plain text; use <c>day-options</c> for every option.</summary>
+    [HtmlAttributeName("day")] public string? Day { get; set; }
+
     /// <summary>Can be used to customise the day input within the date input component. The `input.code`, `input.errorMessage`, `input.formGroup`, `input.hint` and `input.inputWrapper` options are not supported.</summary>
-    [HtmlAttributeName("day")] public DateInputItemsItem? Day { get; set; }
+    [HtmlAttributeName("day-options")] public DateInputItemsItem? DayOptions { get; set; }
+
+    /// <summary>Can be used to customise the month input within the date input component. The `input.code`, `input.errorMessage`, `input.formGroup`, `input.hint` and `input.inputWrapper` options are not supported. Plain text; use <c>month-options</c> for every option.</summary>
+    [HtmlAttributeName("month")] public string? Month { get; set; }
 
     /// <summary>Can be used to customise the month input within the date input component. The `input.code`, `input.errorMessage`, `input.formGroup`, `input.hint` and `input.inputWrapper` options are not supported.</summary>
-    [HtmlAttributeName("month")] public DateInputItemsItem? Month { get; set; }
+    [HtmlAttributeName("month-options")] public DateInputItemsItem? MonthOptions { get; set; }
+
+    /// <summary>Can be used to customise the year input within the date input component. The `input.code`, `input.errorMessage`, `input.formGroup`, `input.hint` and `input.inputWrapper` options are not supported. Plain text; use <c>year-options</c> for every option.</summary>
+    [HtmlAttributeName("year")] public string? Year { get; set; }
 
     /// <summary>Can be used to customise the year input within the date input component. The `input.code`, `input.errorMessage`, `input.formGroup`, `input.hint` and `input.inputWrapper` options are not supported.</summary>
-    [HtmlAttributeName("year")] public DateInputItemsItem? Year { get; set; }
+    [HtmlAttributeName("year-options")] public DateInputItemsItem? YearOptions { get; set; }
 
     /// <summary>An optional object used to specify `value` attributes for the inputs within the date input component without setting `items`.</summary>
     [HtmlAttributeName("values")] public DateInputValuesOptions? Values { get; set; }
@@ -80,8 +89,11 @@ public sealed partial class NhsukDateInputTagHelper : NhsukFieldTagHelper<NhsukD
         Set(parameters, "FormGroup", FormGroup);
         Set(parameters, "Fieldset", Fieldset);
         Set(parameters, "Day", Day);
+        Set(parameters, "Day", DayOptions);
         Set(parameters, "Month", Month);
+        Set(parameters, "Month", MonthOptions);
         Set(parameters, "Year", Year);
+        Set(parameters, "Year", YearOptions);
         Set(parameters, "Values", Values);
         Set(parameters, "Disabled", Disabled);
         Set(parameters, "Classes", Classes);

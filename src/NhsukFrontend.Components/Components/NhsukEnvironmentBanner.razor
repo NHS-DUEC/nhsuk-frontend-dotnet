@@ -1,0 +1,54 @@
+@namespace NhsukFrontend.Components
+@using System.Net
+@* Port of nhsuk/components/environment-banner/template.njk *@
+<div class="@_classNames" id="@(Truthy(Id) ? Id : null)" @attributes="new Attrs().AddUser(Attributes, AdditionalAttributes)">
+    <div class="@Append("nhsuk-environment-banner__container nhsuk-width-container", ContainerClasses)">
+        @if (!_hideTag)
+        {
+            <NhsukTag Id="@_tag.Id" Text="@(_tag.Text ?? _nameText)" Html="@(_tag.Html ?? _nameHtml)"
+                      Colour="@(_tag.Colour ?? Colour ?? "white")" Border="@(_tag.Border ?? Truthy(Colour))"
+                      Classes="@_tag.Classes" Attributes="@_tag.Attributes" />
+        }
+        @_inner
+    </div>
+</div>
+
+@code {
+    private const string Description = "This is a %{name} environment. Do not use it to make clinical decisions";
+    private const string Placeholder = "%{name}";
+
+    private static readonly string[] Colours = ["white", "grey", "green", "aqua-green", "blue", "purple", "pink", "red", "orange", "warm-yellow", "yellow"];
+
+    private string _classNames = "";
+    private bool _hideTag;
+    private TagOptions _tag = new();
+    private string? _nameText;
+    private string? _nameHtml;
+    private RenderFragment? _inner;
+
+    protected override void OnParametersSet()
+    {
+        // tag: false (or an empty string) leaves the tag out, but the banner text still names the environment.
+        _hideTag = Tag is { IsFalse: true } || (Tag is { IsShorthand: true } && !Truthy(Tag.Text));
+        _tag = Tag is null || _hideTag ? new TagOptions { Text = "Development" } : Tag;
+
+        _nameText = Name is null ? _tag.Text?.ToLowerInvariant() : Name.Text;
+        _nameHtml = Name is null ? _tag.Html?.ToLowerInvariant() : Name.Html;
+
+        var classNames = "nhsuk-environment-banner";
+        if (Colour is not null && Colours.Contains(Colour) && !Colours.Any(c => Contains(Classes, "nhsuk-environment-banner--" + c)))
+            classNames += " nhsuk-environment-banner--" + Colour;
+        _classNames = Append(classNames, Classes);
+
+        // The environment name replaces %{name} in the text, HTML or child content.
+        var environment = (Truthy(_nameHtml) ? _nameHtml! : WebUtility.HtmlEncode(_nameText ?? "")).Trim();
+        if (ChildContent is not null)
+            _inner = Render.ReplaceInMarkup(ChildContent, Placeholder, environment);
+        else if (Truthy(Html))
+            _inner = Markup(Html!.Replace(Placeholder, environment));
+        else
+            _inner = Markup(WebUtility.HtmlEncode(Text ?? Description).Replace(Placeholder, environment));
+    }
+
+    private static RenderFragment Markup(string html) => builder => builder.AddMarkupContent(0, html);
+}

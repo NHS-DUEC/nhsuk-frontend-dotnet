@@ -435,7 +435,7 @@ public sealed partial class CardActionsItemsItem : NhsukOptions, IShorthandOptio
 
     /// <summary>Can be used to add visually hidden content to the link component. If `ariaLabel` is provided, this has no effect.</summary>
     /// <remarks>Macro option <c>actions.items.visuallyHidden</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("visuallyHidden")] public NhsukAttributes? VisuallyHidden { get; set; }
+    [JsonPropertyName("visuallyHidden")] public VisuallyHiddenOptions? VisuallyHidden { get; set; }
 
     /// <summary>Accessible name identifying the link to screen readers.</summary>
     /// <remarks>Macro option <c>actions.items.ariaLabel</c>, released in 10.7.0.</remarks>
@@ -459,7 +459,7 @@ public sealed partial class CardActionsItemsItem : NhsukOptions, IShorthandOptio
 
     /// <summary>Specified points for injecting custom content relative to the link component.</summary>
     /// <remarks>Macro option <c>actions.items.slots</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("slots")] public CardActionsItemsSlotsOptions? Slots { get; set; }
+    [JsonPropertyName("slots")] public NhsukSlots? Slots { get; set; }
 
     /// <summary>Configured automatically if `href` is provided.</summary>
     /// <remarks>Macro option <c>actions.items.element</c>, released in 10.7.0.</remarks>
@@ -472,103 +472,4 @@ public sealed partial class CardActionsItemsItem : NhsukOptions, IShorthandOptio
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
     public static CardActionsItemsItem FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator CardActionsItemsItem(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>card.actions.items.slots</c>.</summary>
-public sealed partial class CardActionsItemsSlotsOptions : NhsukOptions
-{
-    /// <summary>Custom content injected before the link component.</summary>
-    /// <remarks>Macro option <c>actions.items.slots.before</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("before")] public CardActionsItemsSlotsBeforeOptions? Before { get; set; }
-
-    /// <summary>Custom content injected at the start, within the link component.</summary>
-    /// <remarks>Macro option <c>actions.items.slots.start</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("start")] public CardActionsItemsSlotsStartOptions? Start { get; set; }
-
-    /// <summary>Custom content injected at the end, within the link component.</summary>
-    /// <remarks>Macro option <c>actions.items.slots.end</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("end")] public CardActionsItemsSlotsEndOptions? End { get; set; }
-
-    /// <summary>Custom content injected after the link component.</summary>
-    /// <remarks>Macro option <c>actions.items.slots.after</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("after")] public CardActionsItemsSlotsAfterOptions? After { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator CardActionsItemsSlotsOptions(bool value) => value ? new() { IsTrue = true } : null!;
-}
-
-/// <summary>Nested options at <c>card.actions.items.slots.before</c>.</summary>
-public sealed partial class CardActionsItemsSlotsBeforeOptions : NhsukOptions, IShorthandOptions<CardActionsItemsSlotsBeforeOptions>
-{
-    /// <summary>Custom text injected before the link component.</summary>
-    /// <remarks>Macro option <c>actions.items.slots.before.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected before the link component.</summary>
-    /// <remarks>Macro option <c>actions.items.slots.before.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator CardActionsItemsSlotsBeforeOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static CardActionsItemsSlotsBeforeOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator CardActionsItemsSlotsBeforeOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>card.actions.items.slots.start</c>.</summary>
-public sealed partial class CardActionsItemsSlotsStartOptions : NhsukOptions, IShorthandOptions<CardActionsItemsSlotsStartOptions>
-{
-    /// <summary>Custom text injected at the start, within the link component.</summary>
-    /// <remarks>Macro option <c>actions.items.slots.start.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected at the start, within the link component.</summary>
-    /// <remarks>Macro option <c>actions.items.slots.start.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator CardActionsItemsSlotsStartOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static CardActionsItemsSlotsStartOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator CardActionsItemsSlotsStartOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>card.actions.items.slots.end</c>.</summary>
-public sealed partial class CardActionsItemsSlotsEndOptions : NhsukOptions, IShorthandOptions<CardActionsItemsSlotsEndOptions>
-{
-    /// <summary>Custom text injected at the end, within the link component.</summary>
-    /// <remarks>Macro option <c>actions.items.slots.end.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected at the end, within the link component.</summary>
-    /// <remarks>Macro option <c>actions.items.slots.end.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator CardActionsItemsSlotsEndOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static CardActionsItemsSlotsEndOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator CardActionsItemsSlotsEndOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>card.actions.items.slots.after</c>.</summary>
-public sealed partial class CardActionsItemsSlotsAfterOptions : NhsukOptions, IShorthandOptions<CardActionsItemsSlotsAfterOptions>
-{
-    /// <summary>Custom text injected after the link component.</summary>
-    /// <remarks>Macro option <c>actions.items.slots.after.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected after the link component.</summary>
-    /// <remarks>Macro option <c>actions.items.slots.after.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator CardActionsItemsSlotsAfterOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static CardActionsItemsSlotsAfterOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator CardActionsItemsSlotsAfterOptions(string value) => FromShorthand(value);
 }

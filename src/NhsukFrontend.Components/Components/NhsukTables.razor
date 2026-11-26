@@ -13,8 +13,8 @@ else
 @code {
     /// <summary>One cell as upstream's <c>_tableCell</c> macro receives it.</summary>
     private sealed record Cell(
-        string Element, string? Text, string? Html, string? VisuallyHiddenText, string? Href, string? Format, string? Scope, string? Role,
-        int? Colspan, int? Rowspan, string? Align, string? Width, string? Classes, Attrs Attributes, string? Header);
+        string Element, string? Text, string? Html, string? VisuallyHiddenText, string? Href, bool? OpenInNewTab, string? Format, string? Scope,
+        string? Role, int? Colspan, int? Rowspan, string? Align, string? Width, string? Classes, Attrs Attributes);
 
     // A caption above the table caption, which must sit inside it (placement "start" or "end").
     private CaptionOptions? CaptionCaption => _caption.Caption is not { } c ? null : new CaptionOptions
@@ -57,7 +57,8 @@ else
             _isSortableOnServer = (_isSortable && Truthy(item.Href)) || _isSortableOnServer;
         }
         if (_isSortable && !Contains(Classes, "nhsuk-table--sortable")) classNames += " nhsuk-table--sortable";
-        if (Striped == true && !Contains(Classes, "nhsuk-table--striped")) classNames += " nhsuk-table--striped";
+        // Stripes need at least two rows to alternate.
+        if (Striped == true && !Contains(Classes, "nhsuk-table--striped") && _rows.Count > 1) classNames += " nhsuk-table--striped";
         var extra = Truthy(Classes) ? Classes : TableClasses;
         _classNames = Truthy(extra) ? classNames + " " + extra : classNames;
 
@@ -103,7 +104,14 @@ else
     }
 
     private RenderFragment Table => @<table @attributes="TableAttributes">
-        @if (Truthy(_caption.Text) || Truthy(_caption.Html))
+        @if (!(Truthy(_caption.Text) || Truthy(_caption.Html)) && Truthy(_captionHiddenText))
+        {
+            @Render.VisuallyHidden(new VisuallyHiddenOptions
+            {
+                Id = _captionId, Text = _captionHiddenText, Classes = _caption.Classes, Attributes = _caption.Attributes, Element = "caption",
+            })
+        }
+        else if (Truthy(_caption.Text) || Truthy(_caption.Html))
         {
             <NhsukHeading Id="@_captionId" Text="@_caption.Text" Html="@_caption.Html"
                           VisuallyHiddenText="@(Truthy(_captionHiddenText) ? "(" + _captionHiddenText + ")" : null)"
@@ -118,14 +126,17 @@ else
                 </tr>
             </thead>
         }
-        <tbody class="nhsuk-table__body">
-            @foreach (var row in _rows)
-            {
-                <tr class="nhsuk-table__row" role="@(Responsive == true ? "row" : null)">
-                    @for (var i = 0; i < row.Count; i++) { if (row[i] is { } item) { @CellFragment(BodyCell(item, i), true, i < _head.Count ? _head[i] : null) } }
-                </tr>
-            }
-        </tbody>
+        @if (_rows.Count > 0)
+        {
+            <tbody class="nhsuk-table__body">
+                @foreach (var row in _rows)
+                {
+                    <tr class="nhsuk-table__row" role="@(Responsive == true ? "row" : null)">
+                        @for (var i = 0; i < row.Count; i++) { if (row[i] is { } item) { @CellFragment(BodyCell(item, i), true, i < _head.Count ? _head[i] : null) } }
+                    </tr>
+                }
+            </tbody>
+        }
     </table>;
 
     private Cell HeadCell(TablesHeadItem item)
@@ -136,9 +147,9 @@ else
             .Optional("data-sort-next", Truthy(item.SortNext) && _isSortable && !_isSortableOnServer ? item.SortNext : null)
             .Optional("aria-sort", sort is not null && sort != "none" && _isSortable ? sort : null)
             .AddUser(item.Attributes);
-        return new Cell("th", item.Text, item.Html, item.VisuallyHiddenText, item.Href, item.Format, "col",
+        return new Cell("th", item.Text, item.Html, item.VisuallyHiddenText, item.Href, item.OpenInNewTab, item.Format, "col",
             Responsive == true ? "columnheader" : null, Responsive == true ? null : item.Colspan, item.Rowspan,
-            item.Align, item.Width, item.Classes, attrs, null);
+            item.Align, item.Width, item.Classes, attrs);
     }
 
     private Cell BodyCell(TablesRowsItem item, int index)
@@ -146,11 +157,11 @@ else
         var header = index < _head.Count ? _head[index] : null;
         var isRowHeader = index == 0 && FirstCellIsHeader == true;
         var attrs = new Attrs().Optional("data-sort-value", Truthy(item.SortValue) ? item.SortValue : null).AddUser(item.Attributes);
-        return new Cell(isRowHeader ? "th" : "td", item.Text, item.Html, item.VisuallyHiddenText, item.Href, item.Format ?? header?.Format,
+        return new Cell(isRowHeader ? "th" : "td", item.Text, item.Html, item.VisuallyHiddenText, item.Href, item.OpenInNewTab, item.Format ?? header?.Format,
             isRowHeader ? "row" : null, Responsive == true ? (isRowHeader ? "rowheader" : "cell") : null,
             Responsive == true ? null : item.Colspan, item.Rowspan,
             item.Align ?? (item.Format == "string" && header?.Format == "numeric" ? "right" : header?.Align),
-            item.Width, item.Classes, attrs, item.Header);
+            item.Width, item.Classes, attrs);
     }
 
     private RenderFragment CellFragment(Cell cell, bool isBody, TablesHeadItem? header)
@@ -171,14 +182,15 @@ else
         // and header cells never do.
         var showHeading = Responsive == true && isBody;
 
+        var content = Render.Content(text: cell.Text, html: cell.Html, visuallyHiddenText: cell.VisuallyHiddenText);
         RenderFragment inner = Truthy(cell.Href)
-            ? @<a class="nhsuk-link" href="@cell.Href">@Value(cell.Text, cell.Html, cell.VisuallyHiddenText)</a>
-            : Value(cell.Text, cell.Html, cell.VisuallyHiddenText);
+            ? Render.Link(new LinkOptions { Href = cell.Href, OpenInNewTab = cell.OpenInNewTab }, content)
+            : content;
 
         return @<NhsukElement Tag="@cell.Element" Attributes="attrs">
             @if (showHeading)
             {
-                <span class="nhsuk-table__heading" aria-hidden="true">@Value(header?.Text ?? cell.Header, header?.Html, header?.VisuallyHiddenText) </span>
+                <span class="nhsuk-table__heading" aria-hidden="true">@Render.Content(text: header?.Text, html: header?.Html, slots: new NhsukSlots { End = new NhsukSlot { Text = " " } })</span>
                 @if (Truthy(cell.Html)) { <span>@inner</span> } else { @inner }
             }
             else
@@ -187,23 +199,4 @@ else
             }
         </NhsukElement>;
     }
-
-    /// <summary>Port of the <c>_tableValue</c> macro.</summary>
-    private static RenderFragment Value(string? text, string? html, string? visuallyHiddenText) => builder =>
-    {
-        var hidden = visuallyHiddenText;
-        if (Truthy(html) || Truthy(text))
-        {
-            if (Truthy(hidden)) hidden = " " + hidden;
-            if (Truthy(html)) builder.AddMarkupContent(0, html);
-            else builder.AddContent(1, text);
-        }
-        if (Truthy(hidden))
-        {
-            builder.OpenElement(2, "span");
-            builder.AddAttribute(3, "class", "nhsuk-u-visually-hidden");
-            builder.AddContent(4, hidden);
-            builder.CloseElement();
-        }
-    };
 }

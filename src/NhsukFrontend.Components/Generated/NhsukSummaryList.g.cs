@@ -271,7 +271,7 @@ public sealed partial class SummaryListRowsActionsItemsItem : NhsukOptions, ISho
 
     /// <summary>Can be used to add visually hidden content to the link component. If `ariaLabel` is provided, this has no effect.</summary>
     /// <remarks>Macro option <c>rows.actions.items.visuallyHidden</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("visuallyHidden")] public NhsukAttributes? VisuallyHidden { get; set; }
+    [JsonPropertyName("visuallyHidden")] public VisuallyHiddenOptions? VisuallyHidden { get; set; }
 
     /// <summary>Accessible name identifying the link to screen readers.</summary>
     /// <remarks>Macro option <c>rows.actions.items.ariaLabel</c>, released in 10.7.0.</remarks>
@@ -295,7 +295,7 @@ public sealed partial class SummaryListRowsActionsItemsItem : NhsukOptions, ISho
 
     /// <summary>Specified points for injecting custom content relative to the link component.</summary>
     /// <remarks>Macro option <c>rows.actions.items.slots</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("slots")] public SummaryListRowsActionsItemsSlotsOptions? Slots { get; set; }
+    [JsonPropertyName("slots")] public NhsukSlots? Slots { get; set; }
 
     /// <summary>Configured automatically if `href` is provided.</summary>
     /// <remarks>Macro option <c>rows.actions.items.element</c>, released in 10.7.0.</remarks>
@@ -308,103 +308,4 @@ public sealed partial class SummaryListRowsActionsItemsItem : NhsukOptions, ISho
     /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
     public static SummaryListRowsActionsItemsItem FromShorthand(string value) => new() { Text = value, IsShorthand = true };
     public static implicit operator SummaryListRowsActionsItemsItem(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>summary-list.rows.actions.items.slots</c>.</summary>
-public sealed partial class SummaryListRowsActionsItemsSlotsOptions : NhsukOptions
-{
-    /// <summary>Custom content injected before the link component.</summary>
-    /// <remarks>Macro option <c>rows.actions.items.slots.before</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("before")] public SummaryListRowsActionsItemsSlotsBeforeOptions? Before { get; set; }
-
-    /// <summary>Custom content injected at the start, within the link component.</summary>
-    /// <remarks>Macro option <c>rows.actions.items.slots.start</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("start")] public SummaryListRowsActionsItemsSlotsStartOptions? Start { get; set; }
-
-    /// <summary>Custom content injected at the end, within the link component.</summary>
-    /// <remarks>Macro option <c>rows.actions.items.slots.end</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("end")] public SummaryListRowsActionsItemsSlotsEndOptions? End { get; set; }
-
-    /// <summary>Custom content injected after the link component.</summary>
-    /// <remarks>Macro option <c>rows.actions.items.slots.after</c>, released in 10.7.0.</remarks>
-    [JsonPropertyName("after")] public SummaryListRowsActionsItemsSlotsAfterOptions? After { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator SummaryListRowsActionsItemsSlotsOptions(bool value) => value ? new() { IsTrue = true } : null!;
-}
-
-/// <summary>Nested options at <c>summary-list.rows.actions.items.slots.before</c>.</summary>
-public sealed partial class SummaryListRowsActionsItemsSlotsBeforeOptions : NhsukOptions, IShorthandOptions<SummaryListRowsActionsItemsSlotsBeforeOptions>
-{
-    /// <summary>Custom text injected before the link component.</summary>
-    /// <remarks>Macro option <c>rows.actions.items.slots.before.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected before the link component.</summary>
-    /// <remarks>Macro option <c>rows.actions.items.slots.before.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator SummaryListRowsActionsItemsSlotsBeforeOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static SummaryListRowsActionsItemsSlotsBeforeOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator SummaryListRowsActionsItemsSlotsBeforeOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>summary-list.rows.actions.items.slots.start</c>.</summary>
-public sealed partial class SummaryListRowsActionsItemsSlotsStartOptions : NhsukOptions, IShorthandOptions<SummaryListRowsActionsItemsSlotsStartOptions>
-{
-    /// <summary>Custom text injected at the start, within the link component.</summary>
-    /// <remarks>Macro option <c>rows.actions.items.slots.start.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected at the start, within the link component.</summary>
-    /// <remarks>Macro option <c>rows.actions.items.slots.start.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator SummaryListRowsActionsItemsSlotsStartOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static SummaryListRowsActionsItemsSlotsStartOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator SummaryListRowsActionsItemsSlotsStartOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>summary-list.rows.actions.items.slots.end</c>.</summary>
-public sealed partial class SummaryListRowsActionsItemsSlotsEndOptions : NhsukOptions, IShorthandOptions<SummaryListRowsActionsItemsSlotsEndOptions>
-{
-    /// <summary>Custom text injected at the end, within the link component.</summary>
-    /// <remarks>Macro option <c>rows.actions.items.slots.end.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected at the end, within the link component.</summary>
-    /// <remarks>Macro option <c>rows.actions.items.slots.end.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator SummaryListRowsActionsItemsSlotsEndOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static SummaryListRowsActionsItemsSlotsEndOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator SummaryListRowsActionsItemsSlotsEndOptions(string value) => FromShorthand(value);
-}
-
-/// <summary>Nested options at <c>summary-list.rows.actions.items.slots.after</c>.</summary>
-public sealed partial class SummaryListRowsActionsItemsSlotsAfterOptions : NhsukOptions, IShorthandOptions<SummaryListRowsActionsItemsSlotsAfterOptions>
-{
-    /// <summary>Custom text injected after the link component.</summary>
-    /// <remarks>Macro option <c>rows.actions.items.slots.after.text</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("text")] public string? Text { get; set; }
-
-    /// <summary>Custom HTML injected after the link component.</summary>
-    /// <remarks>Macro option <c>rows.actions.items.slots.after.html</c> (required), released in 10.7.0.</remarks>
-    [JsonPropertyName("html")] public string? Html { get; set; }
-
-    /// <summary>Upstream templates accept <c>true</c> here to mean "use the defaults".</summary>
-    public static implicit operator SummaryListRowsActionsItemsSlotsAfterOptions(bool value) => value ? new() { IsTrue = true } : null!;
-
-    /// <summary>Upstream templates accept a plain string here, used as <c>text</c>.</summary>
-    public static SummaryListRowsActionsItemsSlotsAfterOptions FromShorthand(string value) => new() { Text = value, IsShorthand = true };
-    public static implicit operator SummaryListRowsActionsItemsSlotsAfterOptions(string value) => FromShorthand(value);
 }

@@ -14,7 +14,7 @@
                             {
                                 var heading = navigation!.Heading;
                                 <NhsukHeading Id="@heading?.Id" Text="@(heading?.Text ?? navigation.Title)" Html="@heading?.Html"
-                                              VisuallyHiddenText="@heading?.VisuallyHiddenText" Caption="@heading?.Caption" Href="@heading?.Href"
+                                              VisuallyHiddenText="@heading?.VisuallyHiddenText" Caption="@heading?.Caption" Href="@heading?.Href" OpenInNewTab="@heading?.OpenInNewTab"
                                               Level="2" Size="s" ClassName="nhsuk-footer__heading" ClassPrefix="nhsuk-heading-"
                                               Classes="@heading?.Classes" Attributes="@heading?.Attributes" />
                             }
@@ -68,17 +68,14 @@
             @foreach (var item in items)
             {
                 if (item is null) continue;
-                var (href, html, text, attributes) = Link(item);
-                <li class="nhsuk-footer__list-item">
-                    <a class="nhsuk-footer__list-item-link" href="@(href ?? "")" @attributes="new Attrs().AddUser(attributes)">@if (Truthy(html)) { @((MarkupString)html!) } else { @text }</a>
-                </li>
+                <li class="nhsuk-footer__list-item">@Render.Link(Link(item))</li>
             }
         </ul>;
 
-    private static (string? Href, string? Html, string? Text, NhsukAttributes? Attributes) Link(NhsukOptions item) => item switch
+    private static LinkOptions Link(NhsukOptions item) => item switch
     {
-        FooterNavigationItemsItem i => (i.Href, i.Html, i.Text, i.Attributes),
-        FooterMetaItemsItem i => (i.Href, i.Html, i.Text, i.Attributes),
-        _ => (null, null, null, null),
+        FooterNavigationItemsItem i => new() { Text = i.Text, Html = i.Html, Href = i.Href, OpenInNewTab = i.OpenInNewTab, ClassName = "nhsuk-footer__list-item-link", Attributes = i.Attributes },
+        FooterMetaItemsItem i => new() { Text = i.Text, Html = i.Html, Href = i.Href, OpenInNewTab = i.OpenInNewTab, ClassName = "nhsuk-footer__list-item-link", Attributes = i.Attributes },
+        _ => new(),
     };
 }

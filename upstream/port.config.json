@@ -14,6 +14,7 @@
     "date-input",
     "details",
     "do-dont-list",
+    "environment-banner",
     "error-message",
     "error-summary",
     "fieldset",
@@ -28,6 +29,7 @@
     "inset-text",
     "label",
     "legend",
+    "link",
     "notification-banner",
     "pagination",
     "panel",
@@ -43,6 +45,7 @@
     "tag",
     "task-list",
     "textarea",
+    "visually-hidden",
     "warning-callout"
   ],
   "overrides": {
@@ -61,11 +64,18 @@
       "$comment": "Passed straight through to the card, so it shares the card's type.",
       "type": "CardActionsOptions"
     },
+    "environment-banner/tag": {
+      "keepFalse": true
+    },
     "label/heading": {
       "keepFalse": true
     },
     "legend/heading": {
       "keepFalse": true
+    },
+    "date-input/items": {
+      "$comment": "A date part given as a string or number is its value.",
+      "shorthand": "value"
     },
     "date-input/day": {
       "type": "DateInputItemsItem",
@@ -113,6 +123,15 @@
   },
   "additionalOptions": {
     "$comment": "Options an upstream template reads but its macro-options.json does not declare.",
+    "visually-hidden": [
+      {
+        "name": "placement",
+        "type": "string",
+        "required": false,
+        "description": "Where the visually hidden content goes relative to the content it accompanies: `\"before\"`, `\"start\"`, `\"end\"` or `\"after\"`. Defaults to `\"end\"`.",
+        "released": "an undeclared option"
+      }
+    ],
     "contents-list/items": [
       {
         "name": "items",

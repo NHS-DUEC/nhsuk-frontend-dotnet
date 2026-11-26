@@ -1,7 +1,10 @@
 @namespace NhsukFrontend.Components
 @* Port of nhsuk/components/card/action/template.njk: an action link or button in a card or summary list row. *@
-<NhsukElement Tag="@_element" Attributes="ActionAttributes">@Render.HtmlOrText(Html, Text)@if (_hasHidden)
-{<span class="nhsuk-u-visually-hidden">@if (Truthy(VisuallyHiddenText)) {@(" " + VisuallyHiddenText)}@if (_hasHeading) {@(" (")@Render.HtmlOrText(HeadingHtml, HeadingText)@(")")}</span>}</NhsukElement>
+@Render.Link(new LinkOptions
+{
+    Id = Id, Text = Text, Html = Html, VisuallyHidden = Hidden, Href = Href, Name = Name, Value = Value, Type = Type,
+    OpenInNewTab = OpenInNewTab, Classes = Classes, Attributes = Attributes,
+})
 
 @code {
     [Parameter] public string? Id { get; set; }
@@ -12,6 +15,7 @@
     [Parameter] public string? Type { get; set; }
     [Parameter] public string? Value { get; set; }
     [Parameter] public string? Href { get; set; }
+    [Parameter] public bool? OpenInNewTab { get; set; }
     [Parameter] public string? Classes { get; set; }
     [Parameter] public NhsukAttributes? Attributes { get; set; }
 
@@ -19,26 +23,12 @@
     [Parameter] public string? HeadingText { get; set; }
     [Parameter] public string? HeadingHtml { get; set; }
 
-    private string _element = "a";
-    private bool _hasHeading, _hasHidden;
-
-    protected override void OnParametersSet()
-    {
-        _element = Truthy(Href) && !Truthy(Type) ? "a" : "button";
-        _hasHeading = Truthy(HeadingText) || Truthy(HeadingHtml);
-        _hasHidden = Truthy(VisuallyHiddenText) || _hasHeading;
-    }
-
-    private Attrs ActionAttributes
-    {
-        get
+    // "Change" becomes "Change name (Heading)" for screen readers when the card has a heading.
+    private VisuallyHiddenOptions Hidden => !(Truthy(HeadingText) || Truthy(HeadingHtml))
+        ? new VisuallyHiddenOptions { Text = VisuallyHiddenText }
+        : new VisuallyHiddenOptions
         {
-            var attrs = new Attrs().Add("class", Append("nhsuk-link", Classes)).Optional("id", Id);
-            if (_element == "button")
-                attrs.Optional("name", Name).Add("type", Nj.Default(Type, "submit")).Optional("value", Value);
-            else
-                attrs.Add("href", Nj.Default(Href, "#"));
-            return attrs.AddUser(Attributes);
-        }
-    }
+            Text = Truthy(HeadingText) ? ((VisuallyHiddenText ?? "") + " (" + HeadingText + ")").Trim() : null,
+            Html = Truthy(HeadingHtml) ? ((VisuallyHiddenText is null ? "" : System.Net.WebUtility.HtmlEncode(VisuallyHiddenText)) + " (" + HeadingHtml + ")").Trim() : null,
+        };
 }
