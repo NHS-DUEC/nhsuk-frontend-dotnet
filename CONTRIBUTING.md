@@ -38,6 +38,30 @@ dotnet run --project src/NhsukFrontend.Demo        # the demo site, with every e
 
 The README explains how the port works in more detail.
 
+## Releasing
+
+Publishing a GitHub release publishes the package to [nuget.org](https://www.nuget.org/packages/nhsuk-frontend-dotnet)
+(`.github/workflows/publish.yml`).
+
+1. Set the version. It is the upstream version plus `VersionSuffix` in
+   `src/NhsukFrontend.Components/NhsukFrontend.Components.csproj`: raise the suffix (`beta.2`) for another release
+   of the port against the same upstream version, and reset it to `beta.1` when upstream moves on. A version on
+   nuget.org can never be replaced, so every release needs a new one.
+2. Merge to `main` and wait for CI.
+3. On GitHub, create a release whose tag is the version with a `v` in front, such as `v10.7.2-beta.2`. The workflow
+   tests, packs, checks the tag against the package version and pushes. The package is installable once nuget.org
+   has validated it, usually within the hour.
+
+One-off setup, by a member of the nuget.org organisation that owns the package:
+
+- On nuget.org, under your username, choose Trusted Publishing and add a policy owned by the organisation, with
+  repository owner `NHS-DUEC`, repository `nhsuk-frontend-dotnet` and workflow file `publish.yml`. Leave the
+  environment empty.
+- On GitHub, add a repository secret `NUGET_USER` holding that person's nuget.org username (not their email).
+
+The policy stops working if that person leaves the nuget.org organisation, until someone else creates one and
+updates `NUGET_USER`. If the repository moves or is renamed, update the policy to match.
+
 ## Pull requests
 
 Keep each pull request to one change, say what it fixes, and make sure CI passes. A maintainer will review it.
