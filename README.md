@@ -11,7 +11,7 @@ generated from, and tested against, a pinned upstream release (currently **10.7.
 > [NHS identity guidelines](https://www.england.nhs.uk/nhsidentity/), not by this project's licence.
 
 - **All 46 components** in nhsuk-frontend and the page template are ported.
-- All **988** examples match upstream's HTML: 983 from upstream's own fixtures, plus 5 page template examples
+- All **1,116** examples match upstream's HTML: 1,106 from upstream's own fixtures, plus 10 page template examples
   rendered from `template.njk`. The tag helpers are tested against the same examples. Upstream's JavaScript runs
   unchanged against the output.
 - Form components bind to a model: names, values, labels and validation errors come from the model, in both
@@ -19,8 +19,7 @@ generated from, and tested against, a pinned upstream release (currently **10.7.
 
 ## Installing
 
-The package will be published to NuGet as **`nhsuk-frontend-dotnet`**. Until then, reference
-`src/NhsukFrontend.Components` from your solution. Once published:
+The package is on NuGet as **[`nhsuk-frontend-dotnet`](https://www.nuget.org/packages/nhsuk-frontend-dotnet)**:
 
 ```sh
 dotnet add package nhsuk-frontend-dotnet --prerelease
