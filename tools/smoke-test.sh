@@ -24,6 +24,16 @@ post() { # path, form data
 for path in / /about /examples/form /examples/razor-pages /components/radios /components/date-input /preview/summary-list/0 /healthz; do
   code=$(status "$path"); [[ "$code" == 200 ]] && echo "ok    GET $path" || { echo "FAIL  GET $path returned $code"; failures=$((failures + 1)); }
 done
+# Every component page linked from the home page, so one example a page can't display doesn't go unnoticed.
+pages=$(curl -s "$BASE/" | grep -o 'href="/components/[a-z-]*"' | sort -u | sed 's/href="//; s/"//')
+count=0; broken=0
+for path in $pages; do
+  count=$((count + 1)); code=$(status "$path")
+  [[ "$code" == 200 ]] || { echo "FAIL  GET $path returned $code"; failures=$((failures + 1)); broken=$((broken + 1)); }
+done
+[[ "$count" -gt 0 ]] || { echo "FAIL  no component pages found on the home page"; failures=$((failures + 1)); }
+[[ "$broken" == 0 && "$count" -gt 0 ]] && echo "ok    GET all $count component pages"
+
 code=$(status /no-such-page); [[ "$code" == 404 ]] && echo "ok    unknown page is 404" || { echo "FAIL  unknown page returned $code"; failures=$((failures + 1)); }
 
 for stack in "Blazor:/examples/form:Model:_handler=appointment&" "Razor Pages:/examples/razor-pages:Details:"; do
