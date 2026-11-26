@@ -25,8 +25,9 @@ The package is on NuGet as **[`nhsuk-frontend-dotnet`](https://www.nuget.org/pac
 dotnet add package nhsuk-frontend-dotnet --prerelease
 ```
 
-The package version follows the nhsuk-frontend release it is generated from: `10.7.2-beta.1` is the first beta
-built from nhsuk-frontend 10.7.2. The C# namespace is `NhsukFrontend.Components`.
+The package version follows the nhsuk-frontend release it is generated from, plus a suffix for each release of
+this port: `10.7.2-beta.2` is the second beta built from nhsuk-frontend 10.7.2. The C# namespace is
+`NhsukFrontend.Components`.
 
 ## How it stays in step with upstream
 
@@ -51,6 +52,7 @@ regenerates everything and reports:
 ## Repository layout
 
 ```
+.github/workflows/                CI, upstream release tracking, and publishing to NuGet
 upstream/                         Pins nhsuk-frontend; sync script; config of ported components; option snapshots
 src/NhsukFrontend.Components/     The Razor class library (the thing you'd publish to NuGet)
   Components/*.razor              Hand-written ports of each template
@@ -179,6 +181,26 @@ Wrap pages in `<NhsukTemplate>`, whose `RenderFragment` parameters are the templ
 `<BeforeContent>`…); see `src/NhsukFrontend.Demo/Components/Layout/DemoPage.razor`. Blazor support is tested with
 static server rendering; interactive render modes are untested.
 
+## Marking non-production environments
+
+The environment banner (nhsuk-frontend 10.7.0) labels development, review and other non-production sites. Put it
+above the header. In Razor Pages and MVC:
+
+```html
+<nhsuk-environment-banner tag="Review" colour="purple" />
+<nhsuk-header service="Your service" />
+```
+
+In Blazor, inside the template's `<Header>` block:
+
+```razor
+<NhsukEnvironmentBanner Tag="@("Review")" Colour="purple" />
+<NhsukHeader Service="@("Your service")" />
+```
+
+The banner's text can include `%{name}`, which is replaced with the environment name. `<NhsukTemplate>` also takes
+`EnvironmentName` and `ThemeName`, which set the browser toolbar colour to match.
+
 ## Forms: binding to a model
 
 Form components fill in their name, value, label (or legend) and error message from a model property.
@@ -265,6 +287,12 @@ git push heroku main
 For a preview site per pull request, create a Heroku Pipeline connected to the GitHub repository and turn on
 Review Apps; `app.json` configures them. Upstream-upgrade pull requests then get their own demo site automatically.
 
+## Releasing
+
+Publishing a GitHub release tagged with the package version (such as `v10.7.2-beta.2`) publishes the package to
+NuGet, using `.github/workflows/publish.yml`. [CONTRIBUTING.md](CONTRIBUTING.md#releasing) has the steps and the
+one-off setup.
+
 ## GitHub setup
 
 - Settings → Actions → General: allow GitHub Actions to create and approve pull requests (for the upgrade workflow).
@@ -272,6 +300,8 @@ Review Apps; `app.json` configures them. Upstream-upgrade pull requests then get
 - Pull requests opened with the default token don't trigger other workflows, so CI won't run on upgrade PRs
   until you add a fine-grained personal access token (contents and pull requests: read and write) as the
   `UPSTREAM_PR_TOKEN` repository secret. The upgrade PR body includes its own parity and test report either way.
+- Publishing to NuGet needs a trusted publishing policy on nuget.org and a `NUGET_USER` repository secret; see
+  [Releasing](CONTRIBUTING.md#releasing).
 
 ## Known limitations
 
