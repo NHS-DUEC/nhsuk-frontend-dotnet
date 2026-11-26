@@ -13,7 +13,7 @@
         ]
       },
       "options": {},
-      "html": "<strong class=\"nhsuk-tag\">\n  Active\n</strong>"
+      "html": "<strong class=\"nhsuk-tag\">Active</strong>\n"
     },
     {
       "name": "default",
@@ -28,7 +28,7 @@
         ]
       },
       "options": {},
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--white\">\n  In progress\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--white\">In progress</strong>\n"
     },
     {
       "name": "default",
@@ -43,7 +43,7 @@
         ]
       },
       "options": {},
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--grey\">\n  Inactive\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--grey\">Inactive</strong>\n"
     },
     {
       "name": "default",
@@ -58,7 +58,7 @@
         ]
       },
       "options": {},
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--green\">\n  New\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--green\">New</strong>\n"
     },
     {
       "name": "default",
@@ -73,7 +73,7 @@
         ]
       },
       "options": {},
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--aqua-green\">\n  Active\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--aqua-green\">Active</strong>\n"
     },
     {
       "name": "default",
@@ -88,7 +88,7 @@
         ]
       },
       "options": {},
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--blue\">\n  Pending\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--blue\">Pending</strong>\n"
     },
     {
       "name": "default",
@@ -103,7 +103,7 @@
         ]
       },
       "options": {},
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--purple\">\n  Received\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--purple\">Received</strong>\n"
     },
     {
       "name": "default",
@@ -118,7 +118,7 @@
         ]
       },
       "options": {},
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--pink\">\n  Sent\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--pink\">Sent</strong>\n"
     },
     {
       "name": "default",
@@ -133,7 +133,7 @@
         ]
       },
       "options": {},
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--red\">\n  Rejected\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--red\">Rejected</strong>\n"
     },
     {
       "name": "default",
@@ -148,7 +148,22 @@
         ]
       },
       "options": {},
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--orange\">\n  Declined\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--orange\">Declined</strong>\n"
+    },
+    {
+      "name": "default",
+      "description": "warm-yellow",
+      "context": {
+        "text": "On hold",
+        "colour": "warm-yellow"
+      },
+      "screenshot": {
+        "viewports": [
+          "mobile"
+        ]
+      },
+      "options": {},
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--warm-yellow\">On hold</strong>\n"
     },
     {
       "name": "default",
@@ -163,7 +178,7 @@
         ]
       },
       "options": {},
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--yellow\">\n  Delayed\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--yellow\">Delayed</strong>\n"
     },
     {
       "name": "colour class",
@@ -173,7 +188,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--green\">\n  Green\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--green\">Green</strong>\n"
     },
     {
       "name": "colour class overriding colour option",
@@ -184,7 +199,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--red\">\n  Not green\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--red\">Not green</strong>\n"
     },
     {
       "name": "with HTML",
@@ -194,7 +209,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--red\">\n  A&amp;E\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--red\">A&amp;E</strong>\n"
     },
     {
       "name": "with HTML via call block",
@@ -204,7 +219,7 @@
       "callBlock": "A&amp;E",
       "screenshot": false,
       "options": {},
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--red\">\nA&amp;E\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--red\">A&amp;E</strong>\n"
     },
     {
       "name": "without border",
@@ -220,7 +235,7 @@
       "options": {
         "layout": "background-blue"
       },
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--no-border\">\n  Active\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--no-border\">Active</strong>\n"
     },
     {
       "name": "without border",
@@ -238,7 +253,7 @@
       "options": {
         "layout": "background-blue"
       },
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--white nhsuk-tag--no-border\">\n  In progress\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--white nhsuk-tag--no-border\">In progress</strong>\n"
     },
     {
       "name": "without border",
@@ -256,7 +271,7 @@
       "options": {
         "layout": "background-blue"
       },
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--grey nhsuk-tag--no-border\">\n  Inactive\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--grey nhsuk-tag--no-border\">Inactive</strong>\n"
     },
     {
       "name": "without border",
@@ -274,7 +289,7 @@
       "options": {
         "layout": "background-blue"
       },
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--green nhsuk-tag--no-border\">\n  New\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--green nhsuk-tag--no-border\">New</strong>\n"
     },
     {
       "name": "without border",
@@ -292,7 +307,7 @@
       "options": {
         "layout": "background-blue"
       },
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--aqua-green nhsuk-tag--no-border\">\n  Active\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--aqua-green nhsuk-tag--no-border\">Active</strong>\n"
     },
     {
       "name": "without border",
@@ -310,7 +325,7 @@
       "options": {
         "layout": "background-blue"
       },
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--blue nhsuk-tag--no-border\">\n  Pending\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--blue nhsuk-tag--no-border\">Pending</strong>\n"
     },
     {
       "name": "without border",
@@ -328,7 +343,7 @@
       "options": {
         "layout": "background-blue"
       },
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--purple nhsuk-tag--no-border\">\n  Received\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--purple nhsuk-tag--no-border\">Received</strong>\n"
     },
     {
       "name": "without border",
@@ -346,7 +361,7 @@
       "options": {
         "layout": "background-blue"
       },
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--pink nhsuk-tag--no-border\">\n  Sent\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--pink nhsuk-tag--no-border\">Sent</strong>\n"
     },
     {
       "name": "without border",
@@ -364,7 +379,7 @@
       "options": {
         "layout": "background-blue"
       },
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--red nhsuk-tag--no-border\">\n  Rejected\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--red nhsuk-tag--no-border\">Rejected</strong>\n"
     },
     {
       "name": "without border",
@@ -382,7 +397,25 @@
       "options": {
         "layout": "background-blue"
       },
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--orange nhsuk-tag--no-border\">\n  Declined\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--orange nhsuk-tag--no-border\">Declined</strong>\n"
+    },
+    {
+      "name": "without border",
+      "description": "warm-yellow",
+      "context": {
+        "border": false,
+        "text": "On hold",
+        "colour": "warm-yellow"
+      },
+      "screenshot": {
+        "viewports": [
+          "mobile"
+        ]
+      },
+      "options": {
+        "layout": "background-blue"
+      },
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--warm-yellow nhsuk-tag--no-border\">On hold</strong>\n"
     },
     {
       "name": "without border",
@@ -400,7 +433,7 @@
       "options": {
         "layout": "background-blue"
       },
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--yellow nhsuk-tag--no-border\">\n  Delayed\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--yellow nhsuk-tag--no-border\">Delayed</strong>\n"
     },
     {
       "name": "without colour",
@@ -414,7 +447,7 @@
         ]
       },
       "options": {},
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--no-colour\">\n  Completed\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--no-colour\">Completed</strong>\n"
     },
     {
       "name": "with text escaping",
@@ -424,7 +457,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<strong class=\"nhsuk-tag nhsuk-tag--red\">\n  A&amp;E\n</strong>"
+      "html": "<strong class=\"nhsuk-tag nhsuk-tag--red\">A&amp;E</strong>\n"
     }
   ]
 }

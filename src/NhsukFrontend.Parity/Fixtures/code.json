@@ -9,7 +9,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-code\" data-module=\"nhsuk-code\">\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">This is a plain text code block</code></pre>\n</div>"
+      "html": "<div class=\"nhsuk-code\" data-module=\"nhsuk-code\">\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">This is a plain text code block</code></pre>\n</div>\n"
     },
     {
       "name": "button",
@@ -23,7 +23,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-code nhsuk-code--button\" data-module=\"nhsuk-code\">\n  <button class=\"nhsuk-button nhsuk-button--small nhsuk-code__button nhsuk-js-code-button\" data-module=\"nhsuk-button\" type=\"button\" hidden>\n    Copy code\n  </button>\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">This is a plain text code block</code></pre>\n</div>"
+      "html": "<div class=\"nhsuk-code nhsuk-code--button\" data-module=\"nhsuk-code\">\n  <button class=\"nhsuk-button nhsuk-button--small nhsuk-code__button nhsuk-js-code-button\" data-module=\"nhsuk-button\" type=\"button\" hidden>\n    Copy code\n  </button>\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">This is a plain text code block</code></pre>\n</div>\n"
     },
     {
       "name": "button",
@@ -34,7 +34,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-code nhsuk-code--button\" data-module=\"nhsuk-code\">\n  <button class=\"nhsuk-button nhsuk-button--secondary nhsuk-button--small nhsuk-code__button nhsuk-js-code-button\" data-module=\"nhsuk-button\" type=\"button\" hidden>\n    Copy code\n  </button>\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">This is a plain text code block</code></pre>\n</div>"
+      "html": "<div class=\"nhsuk-code nhsuk-code--button\" data-module=\"nhsuk-code\">\n  <button class=\"nhsuk-button nhsuk-button--secondary nhsuk-button--small nhsuk-code__button nhsuk-js-code-button\" data-module=\"nhsuk-button\" type=\"button\" hidden>\n    Copy code\n  </button>\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">This is a plain text code block</code></pre>\n</div>\n"
     },
     {
       "name": "button",
@@ -52,7 +52,7 @@
       "options": {
         "layout": "background-white"
       },
-      "html": "<div class=\"nhsuk-code nhsuk-code--button nhsuk-code--background-body\" data-module=\"nhsuk-code\">\n  <button class=\"nhsuk-button nhsuk-button--secondary-solid nhsuk-button--small nhsuk-code__button nhsuk-js-code-button\" data-module=\"nhsuk-button\" type=\"button\" hidden>\n    Copy code\n  </button>\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">This is a plain text code block</code></pre>\n</div>"
+      "html": "<div class=\"nhsuk-code nhsuk-code--button nhsuk-code--background-body\" data-module=\"nhsuk-code\">\n  <button class=\"nhsuk-button nhsuk-button--secondary-solid nhsuk-button--small nhsuk-code__button nhsuk-js-code-button\" data-module=\"nhsuk-button\" type=\"button\" hidden>\n    Copy code\n  </button>\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">This is a plain text code block</code></pre>\n</div>\n"
     },
     {
       "name": "with button double click not prevented",
@@ -64,7 +64,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-code nhsuk-code--button\" data-module=\"nhsuk-code\">\n  <button class=\"nhsuk-button nhsuk-button--secondary nhsuk-button--small nhsuk-code__button nhsuk-js-code-button\" data-module=\"nhsuk-button\" data-prevent-double-click=\"false\" type=\"button\" hidden>\n    Copy code\n  </button>\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">This is a plain text code block</code></pre>\n</div>"
+      "html": "<div class=\"nhsuk-code nhsuk-code--button\" data-module=\"nhsuk-code\">\n  <button class=\"nhsuk-button nhsuk-button--secondary nhsuk-button--small nhsuk-code__button nhsuk-js-code-button\" data-module=\"nhsuk-button\" data-prevent-double-click=\"false\" type=\"button\" hidden>\n    Copy code\n  </button>\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">This is a plain text code block</code></pre>\n</div>\n"
     },
     {
       "name": "with button double click prevented",
@@ -76,7 +76,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-code nhsuk-code--button\" data-module=\"nhsuk-code\">\n  <button class=\"nhsuk-button nhsuk-button--secondary nhsuk-button--small nhsuk-code__button nhsuk-js-code-button\" data-module=\"nhsuk-button\" data-prevent-double-click=\"true\" type=\"button\" hidden>\n    Copy code\n  </button>\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">This is a plain text code block</code></pre>\n</div>"
+      "html": "<div class=\"nhsuk-code nhsuk-code--button\" data-module=\"nhsuk-code\">\n  <button class=\"nhsuk-button nhsuk-button--secondary nhsuk-button--small nhsuk-code__button nhsuk-js-code-button\" data-module=\"nhsuk-button\" data-prevent-double-click=\"true\" type=\"button\" hidden>\n    Copy code\n  </button>\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">This is a plain text code block</code></pre>\n</div>\n"
     },
     {
       "name": "with custom HTML",
@@ -85,7 +85,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-code\" data-module=\"nhsuk-code\">\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">&lt;p&gt;This is an HTML code block.&lt;/p&gt;</code></pre>\n</div>"
+      "html": "<div class=\"nhsuk-code\" data-module=\"nhsuk-code\">\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">&lt;p&gt;This is an HTML code block.&lt;/p&gt;</code></pre>\n</div>\n"
     },
     {
       "name": "with custom HTML and button",
@@ -95,7 +95,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-code nhsuk-code--button\" data-module=\"nhsuk-code\">\n  <button class=\"nhsuk-button nhsuk-button--secondary nhsuk-button--small nhsuk-code__button nhsuk-js-code-button\" data-module=\"nhsuk-button\" type=\"button\" hidden>\n    Copy code\n  </button>\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">&lt;p&gt;This is an HTML code block.&lt;/p&gt;</code></pre>\n</div>"
+      "html": "<div class=\"nhsuk-code nhsuk-code--button\" data-module=\"nhsuk-code\">\n  <button class=\"nhsuk-button nhsuk-button--secondary nhsuk-button--small nhsuk-code__button nhsuk-js-code-button\" data-module=\"nhsuk-button\" type=\"button\" hidden>\n    Copy code\n  </button>\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">&lt;p&gt;This is an HTML code block.&lt;/p&gt;</code></pre>\n</div>\n"
     },
     {
       "name": "with custom HTML (escaped) and button",
@@ -105,7 +105,7 @@
       "callBlock": "&lt;p&gt;This is an HTML code block.&lt;/p&gt;",
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-code nhsuk-code--button\" data-module=\"nhsuk-code\">\n  <button class=\"nhsuk-button nhsuk-button--secondary nhsuk-button--small nhsuk-code__button nhsuk-js-code-button\" data-module=\"nhsuk-button\" type=\"button\" hidden>\n    Copy code\n  </button>\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">&lt;p&gt;This is an HTML code block.&lt;/p&gt;</code></pre>\n</div>"
+      "html": "<div class=\"nhsuk-code nhsuk-code--button\" data-module=\"nhsuk-code\">\n  <button class=\"nhsuk-button nhsuk-button--secondary nhsuk-button--small nhsuk-code__button nhsuk-js-code-button\" data-module=\"nhsuk-button\" type=\"button\" hidden>\n    Copy code\n  </button>\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">&lt;p&gt;This is an HTML code block.&lt;/p&gt;</code></pre>\n</div>\n"
     },
     {
       "name": "without border",
@@ -117,7 +117,7 @@
       "options": {
         "layout": "background-blue"
       },
-      "html": "<div class=\"nhsuk-code nhsuk-code--no-border\" data-module=\"nhsuk-code\">\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">This is a plain text code block</code></pre>\n</div>"
+      "html": "<div class=\"nhsuk-code nhsuk-code--no-border\" data-module=\"nhsuk-code\">\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">This is a plain text code block</code></pre>\n</div>\n"
     },
     {
       "name": "with scroll overflow",
@@ -126,7 +126,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-code\" data-module=\"nhsuk-code\">\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">Supercalifragilisticexpialidocious! Even though the sound of it is something quite atrocious, if you say it loud enough, you&#39;ll always sound precocious!</code></pre>\n</div>"
+      "html": "<div class=\"nhsuk-code\" data-module=\"nhsuk-code\">\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">Supercalifragilisticexpialidocious! Even though the sound of it is something quite atrocious, if you say it loud enough, you&#39;ll always sound precocious!</code></pre>\n</div>\n"
     },
     {
       "name": "with scroll overflow and button",
@@ -136,7 +136,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-code nhsuk-code--button\" data-module=\"nhsuk-code\">\n  <button class=\"nhsuk-button nhsuk-button--secondary nhsuk-button--small nhsuk-code__button nhsuk-js-code-button\" data-module=\"nhsuk-button\" type=\"button\" hidden>\n    Copy code\n  </button>\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">Supercalifragilisticexpialidocious! Even though the sound of it is something quite atrocious, if you say it loud enough, you&#39;ll always sound precocious!</code></pre>\n</div>"
+      "html": "<div class=\"nhsuk-code nhsuk-code--button\" data-module=\"nhsuk-code\">\n  <button class=\"nhsuk-button nhsuk-button--secondary nhsuk-button--small nhsuk-code__button nhsuk-js-code-button\" data-module=\"nhsuk-button\" type=\"button\" hidden>\n    Copy code\n  </button>\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">Supercalifragilisticexpialidocious! Even though the sound of it is something quite atrocious, if you say it loud enough, you&#39;ll always sound precocious!</code></pre>\n</div>\n"
     },
     {
       "name": "with translations",
@@ -149,7 +149,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<div class=\"nhsuk-code nhsuk-code--button\" data-i18n.copy-button=\"Copïo cod\" data-i18n.copied-button=\"Cod wedi&#39;i gopïo\" data-i18n.copied-announcement=\"Cod wedi&#39;i gopïo i&#39;r clipfwrdd\" data-module=\"nhsuk-code\">\n  <button class=\"nhsuk-button nhsuk-button--secondary nhsuk-button--small nhsuk-code__button nhsuk-js-code-button\" data-module=\"nhsuk-button\" type=\"button\" hidden>\n    Copïo cod\n  </button>\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">&lt;p&gt;Bloc cod HTML yw hwn.&lt;/p&gt;</code></pre>\n</div>"
+      "html": "<div class=\"nhsuk-code nhsuk-code--button\" data-i18n.copy-button=\"Copïo cod\" data-i18n.copied-button=\"Cod wedi&#39;i gopïo\" data-i18n.copied-announcement=\"Cod wedi&#39;i gopïo i&#39;r clipfwrdd\" data-module=\"nhsuk-code\">\n  <button class=\"nhsuk-button nhsuk-button--secondary nhsuk-button--small nhsuk-code__button nhsuk-js-code-button\" data-module=\"nhsuk-button\" type=\"button\" hidden>\n    Copïo cod\n  </button>\n  <pre class=\"nhsuk-code__container\"><code class=\"nhsuk-code__content\">&lt;p&gt;Bloc cod HTML yw hwn.&lt;/p&gt;</code></pre>\n</div>\n"
     }
   ]
 }

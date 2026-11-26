@@ -90,6 +90,9 @@ public static class NhsukJson
                     return new T { IsTrue = true };
                 case JsonTokenType.String when Shorthand is not null:
                     return (T)Shorthand.Invoke(null, [reader.GetString()!])!;
+                // Nunjucks prints numbers where text is expected (a table cell of 0, a date input day of 5).
+                case JsonTokenType.Number when Shorthand is not null:
+                    return (T)Shorthand.Invoke(null, [System.Text.Encoding.UTF8.GetString(reader.ValueSpan)])!;
                 case JsonTokenType.StartObject:
                     var result = new T();
                     using (var doc = JsonDocument.ParseValue(ref reader))
@@ -109,10 +112,26 @@ public static class NhsukJson
                         items.SetValue(list, ReadOption(doc.RootElement, items));
                         return list;
                     }
+                // From 10.7.0 text can be a list, which upstream's nhsukContent joins with commas.
+                case JsonTokenType.StartArray when Shorthand is not null:
+                    using (var doc = JsonDocument.ParseValue(ref reader))
+                    {
+                        var text = JoinText(doc.RootElement);
+                        return text.Length == 0 ? null : (T)Shorthand.Invoke(null, [text])!;
+                    }
                 default:
                     throw new JsonException($"Cannot read {typeof(T).Name} from {reader.TokenType}.");
             }
         }
+
+        private static string JoinText(JsonElement element) => element.ValueKind switch
+        {
+            JsonValueKind.String => element.GetString() ?? "",
+            JsonValueKind.Number => element.GetRawText(),
+            JsonValueKind.Array => string.Join(", ", element.EnumerateArray().Select(JoinText).Where(t => t.Length > 0)),
+            JsonValueKind.Object when element.TryGetProperty("text", out var text) => JoinText(text),
+            _ => "",
+        };
 
         public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options) =>
             throw new NotSupportedException();
@@ -131,7 +150,7 @@ public static class NhsukJson
     {
         public override List<T?>? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (reader.TokenType is JsonTokenType.Null or JsonTokenType.False) return null;
+            if (reader.TokenType is JsonTokenType.Null or JsonTokenType.False or JsonTokenType.True) return null;
             if (reader.TokenType == JsonTokenType.StartObject) return [JsonSerializer.Deserialize<T>(ref reader, options)];
 
             var list = new List<T?>();

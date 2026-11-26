@@ -13,7 +13,7 @@
         ]
       },
       "options": {},
-      "html": "<span class=\"nhsuk-error-message\">\n  <span class=\"nhsuk-u-visually-hidden\">Error: </span>Enter your full name\n</span>"
+      "html": "<span class=\"nhsuk-error-message\">\n  <span class=\"nhsuk-u-visually-hidden\">Error: </span>Enter your full name\n</span>\n"
     },
     {
       "name": "with HTML",
@@ -22,15 +22,14 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<span class=\"nhsuk-error-message\">\n  <span class=\"nhsuk-u-visually-hidden\">Error: </span>Postcode must not include &amp; and &lt;\n</span>"
+      "html": "<span class=\"nhsuk-error-message\">\n  <span class=\"nhsuk-u-visually-hidden\">Error: </span>Postcode must not include &amp; and &lt;\n</span>\n"
     },
     {
       "name": "with HTML via call block",
-      "context": {},
       "callBlock": "Postcode must not include &amp; and &lt;",
       "screenshot": false,
       "options": {},
-      "html": "<span class=\"nhsuk-error-message\">\n  <span class=\"nhsuk-u-visually-hidden\">Error: </span>Postcode must not include &amp; and &lt;\n</span>"
+      "html": "<span class=\"nhsuk-error-message\">\n  <span class=\"nhsuk-u-visually-hidden\">Error: </span>Postcode must not include &amp; and &lt;\n</span>\n"
     },
     {
       "name": "without visually hidden text",
@@ -40,7 +39,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<span class=\"nhsuk-error-message\">\n  There is an error on line 42\n</span>"
+      "html": "<span class=\"nhsuk-error-message\">\n  There is an error on line 42\n</span>\n"
     },
     {
       "name": "with text escaping",
@@ -49,7 +48,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<span class=\"nhsuk-error-message\">\n  <span class=\"nhsuk-u-visually-hidden\">Error: </span>Postcode must not include &amp; and &lt;\n</span>"
+      "html": "<span class=\"nhsuk-error-message\">\n  <span class=\"nhsuk-u-visually-hidden\">Error: </span>Postcode must not include &amp; and &lt;\n</span>\n"
     },
     {
       "name": "with translations",
@@ -59,7 +58,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<span class=\"nhsuk-error-message\">\n  <span class=\"nhsuk-u-visually-hidden\">Gwall: </span>Rhowch eich enw llawn\n</span>"
+      "html": "<span class=\"nhsuk-error-message\">\n  <span class=\"nhsuk-u-visually-hidden\">Gwall: </span>Rhowch eich enw llawn\n</span>\n"
     }
   ]
 }

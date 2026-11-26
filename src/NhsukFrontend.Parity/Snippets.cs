@@ -161,6 +161,7 @@ public static class Snippets
         if (typeof(NhsukOptions).IsAssignableFrom(target))
         {
             if (value.ValueKind == JsonValueKind.String) return Literal(value.GetString()!); // implicit string conversion
+            if (value.ValueKind == JsonValueKind.Number) return Literal(value.GetRawText()); // numbers are printed as text
             // `false` usually means "absent", but for [KeepFalse] options it means "leave this out".
             if (value.ValueKind == JsonValueKind.False && keepFalse) return $"new {target.Name} {{ IsFalse = true }}";
             if (value.ValueKind is JsonValueKind.True or JsonValueKind.False) return value.ValueKind == JsonValueKind.True ? "true" : "null";
@@ -171,6 +172,8 @@ public static class Snippets
             // A plain list where upstream also accepts { items: [...] } (card and summary list actions).
             if (value.ValueKind == JsonValueKind.Array && props.TryGetValue("items", out var itemsProp))
                 return $"new {target.Name}\n{closing}{{\n{indent}Items = {CSharp(itemsProp.PropertyType, value, depth + 1)},\n{closing}}}";
+            // A list of text, which upstream joins with commas.
+            if (value.ValueKind == JsonValueKind.Array) return Literal(JoinText(value));
             var entries = value.EnumerateObject()
                 .Where(p => props.ContainsKey(p.Name))
                 .Select(p => $"{indent}{props[p.Name].Name} = {CSharp(props[p.Name].PropertyType, p.Value, depth + 1, props[p.Name].GetCustomAttribute<KeepFalseAttribute>() is not null)},");
@@ -185,8 +188,22 @@ public static class Snippets
             return "[\n" + string.Join("\n", entries) + "\n" + closing + "]";
         }
 
+        if (target == typeof(Dictionary<string, string>) && value.ValueKind == JsonValueKind.Object)
+        {
+            var entries = value.EnumerateObject().Select(p => $"{indent}[{Literal(p.Name)}] = {Literal(p.Value.GetString() ?? "")},");
+            return "new Dictionary<string, string>\n" + closing + "{\n" + string.Join("\n", entries) + "\n" + closing + "}";
+        }
+
         return value.GetRawText();
     }
+
+    private static string JoinText(JsonElement element) => element.ValueKind switch
+    {
+        JsonValueKind.String => element.GetString() ?? "",
+        JsonValueKind.Number => element.GetRawText(),
+        JsonValueKind.Array => string.Join(", ", element.EnumerateArray().Select(JoinText).Where(t => t.Length > 0)),
+        _ => "",
+    };
 
     private static string AttributeValue(JsonElement value) => value.ValueKind switch
     {

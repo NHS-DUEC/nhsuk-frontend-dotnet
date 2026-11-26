@@ -17,7 +17,7 @@
         "selector": ".nhsuk-back-link"
       },
       "options": {},
-      "html": "<a class=\"nhsuk-back-link\" href=\"#\">\n  Back\n</a>"
+      "html": "<a class=\"nhsuk-back-link\" href=\"#\">Back</a>\n"
     },
     {
       "name": "default",
@@ -38,7 +38,7 @@
       "options": {
         "layout": "background-blue"
       },
-      "html": "<a class=\"nhsuk-back-link nhsuk-back-link--reverse\" href=\"#\">\n  Back\n</a>"
+      "html": "<a class=\"nhsuk-back-link nhsuk-back-link--reverse\" href=\"#\">Back</a>\n"
     },
     {
       "name": "with HTML",
@@ -47,15 +47,14 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<button class=\"nhsuk-back-link\" type=\"submit\">\n  What to expect at A&amp;E\n</button>"
+      "html": "<a class=\"nhsuk-back-link\" href=\"#\">What to expect at A&amp;E</a>\n"
     },
     {
       "name": "with HTML via call block",
-      "context": {},
       "callBlock": "What to expect at A&amp;E",
       "screenshot": false,
       "options": {},
-      "html": "<button class=\"nhsuk-back-link\" type=\"submit\">\n  What to expect at A&amp;E\n</button>"
+      "html": "<a class=\"nhsuk-back-link\" href=\"#\">What to expect at A&amp;E</a>\n"
     },
     {
       "name": "with text escaping",
@@ -64,7 +63,17 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<button class=\"nhsuk-back-link\" type=\"submit\">\n  What to expect at A&amp;E\n</button>"
+      "html": "<a class=\"nhsuk-back-link\" href=\"#\">What to expect at A&amp;E</a>\n"
+    },
+    {
+      "name": "with visually hidden text",
+      "context": {
+        "text": "A&E",
+        "visuallyHiddenText": "Back to"
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<a class=\"nhsuk-back-link\" href=\"#\"><span class=\"nhsuk-u-visually-hidden\">Back to </span>A&amp;E</a>\n"
     },
     {
       "name": "as a button",
@@ -81,7 +90,7 @@
         "selector": ".nhsuk-back-link"
       },
       "options": {},
-      "html": "<button class=\"nhsuk-back-link\" type=\"submit\">\n  Back\n</button>"
+      "html": "<button class=\"nhsuk-back-link\" type=\"submit\">Back</button>\n"
     },
     {
       "name": "as a button",
@@ -102,7 +111,7 @@
       "options": {
         "layout": "background-blue"
       },
-      "html": "<button class=\"nhsuk-back-link nhsuk-back-link--reverse\" type=\"submit\">\n  Back\n</button>"
+      "html": "<button class=\"nhsuk-back-link nhsuk-back-link--reverse\" type=\"submit\">Back</button>\n"
     }
   ]
 }

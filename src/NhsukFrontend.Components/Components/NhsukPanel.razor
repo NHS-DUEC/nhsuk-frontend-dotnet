@@ -2,7 +2,7 @@
 @* Port of nhsuk/components/panel/template.njk *@
 <div @attributes="PanelAttributes">
     <NhsukHeading Id="@_heading.Id" Text="@_heading.Text" Html="@_heading.Html" VisuallyHiddenText="@_heading.VisuallyHiddenText"
-                  Caption="@_heading.Caption" Href="@_heading.Href" Level="@_heading.Level" Size="@_heading.Size" Sizes="@(["m", "l", "xl"])"
+                  Caption="@_heading.Caption" Href="@_heading.Href" OpenInNewTab="@_heading.OpenInNewTab" Level="@_heading.Level" Size="@_heading.Size" Sizes="@(["m", "l", "xl"])"
                   ClassName="nhsuk-panel__heading" ClassPrefix="nhsuk-panel__heading--" Classes="@_heading.Classes" Attributes="@_heading.Attributes" />
     @if (ChildContent is not null || Truthy(Html) || Truthy(Text))
     {

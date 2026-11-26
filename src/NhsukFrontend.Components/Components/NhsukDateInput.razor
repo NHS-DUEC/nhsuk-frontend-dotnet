@@ -24,9 +24,10 @@
 
     protected override void OnParametersSet()
     {
-        _day = Day ?? new DateInputItemsItem { Name = "day", Value = Values?.Day, Width = 2 };
-        _month = Month ?? new DateInputItemsItem { Name = "month", Value = Values?.Month, Width = 2 };
-        _year = Year ?? new DateInputItemsItem { Name = "year", Value = Values?.Year, Width = 4 };
+        // A date part can be options, or just its value as a string or number.
+        _day = Day is { IsShorthand: false } ? Day : new DateInputItemsItem { Name = "day", Value = Day?.Value ?? Values?.Day, Width = 2 };
+        _month = Month is { IsShorthand: false } ? Month : new DateInputItemsItem { Name = "month", Value = Month?.Value ?? Values?.Month, Width = 2 };
+        _year = Year is { IsShorthand: false } ? Year : new DateInputItemsItem { Name = "year", Value = Year?.Value ?? Values?.Year, Width = 4 };
 
         _items = Items is { Count: > 0 }
             ? Items.Select(item => (item, PartOf(item))).ToList()
@@ -114,7 +115,7 @@
         return @<NhsukInput Label="@label" ErrorMessage="@(showError ? true : null)"
                             Id="@(Truthy(item.Id) ? item.Id : Id + "-" + name)"
                             Name="@(Truthy(NamePrefix) ? NamePrefix + "[" + name + "]" : name)"
-                            Value="@value" Type="@DefaultIfFalsy(item.Type, "text")"
+                            Value="@value" Placeholder="@item.Placeholder" Type="@DefaultIfFalsy(item.Type, "text")"
                             Prefix="@(item.Prefix is { } p ? new InputPrefixOptions { Text = p.Text, Html = p.Html, Classes = p.Classes, Attributes = p.Attributes } : null)"
                             Suffix="@(item.Suffix is { } s ? new InputSuffixOptions { Text = s.Text, Html = s.Html, Classes = s.Classes, Attributes = s.Attributes } : null)"
                             Width="@width" Inputmode="@(Truthy(item.Inputmode) ? item.Inputmode : "numeric")"

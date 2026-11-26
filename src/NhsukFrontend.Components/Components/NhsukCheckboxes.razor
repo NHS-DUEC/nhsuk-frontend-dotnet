@@ -73,14 +73,14 @@
         var itemId = Truthy(item.Id) ? item.Id! : _idPrefix + (index > 1 ? "-" + index : "");
         var conditionalId = "conditional-" + itemId;
         var notSupportedHidden = item.Behaviour == "inclusive" ? " nhsuk-u-frontend-not-supported-hidden" : "";
-        if (Truthy(item.Divider))
-            return @<div class="@("nhsuk-checkboxes__divider" + notSupportedHidden)">@item.Divider</div>;
+        if (item.Divider is { } divider && (Truthy(divider.Text) || Truthy(divider.Html)))
+            return @<div class="@("nhsuk-checkboxes__divider" + notSupportedHidden)">@Render.HtmlOrText(divider.Html, divider.Text)</div>;
 
         var isChecked = item.Checked == true || (Values is not null && item.Checked != false && Values.Contains(item.Value ?? ""));
         var hasHint = Truthy(item.Hint?.Text) || Truthy(item.Hint?.Html);
         var hintId = hasHint ? item.Hint!.Id ?? itemId + "-item-hint" : "";
         var itemDescribedBy = ((Fieldset is null ? _describedBy : "") + " " + hintId).Trim();
-        var hasConditional = Truthy(item.Conditional?.Html);
+        var hasConditional = Truthy(item.Conditional?.Html) || Truthy(item.Conditional?.Text);
         var behaviour = item.Exclusive == true ? "exclusive" : item.Behaviour;
         var behaviourGroup = item.ExclusiveGroup ?? item.BehaviourGroup;
 
@@ -112,7 +112,10 @@
             </div>
             @if (hasConditional)
             {
-                <div class="@("nhsuk-checkboxes__conditional" + (isChecked ? "" : " nhsuk-checkboxes__conditional--hidden"))" id="@conditionalId">@((MarkupString)item.Conditional!.Html!.Trim())</div>
+                <div class="@("nhsuk-checkboxes__conditional" + (isChecked ? "" : " nhsuk-checkboxes__conditional--hidden"))" id="@conditionalId">
+                    @if (Truthy(item.Conditional!.Html)) { @((MarkupString)item.Conditional.Html!.Trim()) }
+                    else { <p>@item.Conditional.Text</p> }
+                </div>
             }
         </text>;
     }

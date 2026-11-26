@@ -9,7 +9,7 @@
     <div class="nhsuk-notification-banner__content">
         @if (_hasHeading && Heading is { } h)
         {
-            <NhsukHeading Id="@h.Id" Text="@h.Text" Html="@h.Html" VisuallyHiddenText="@h.VisuallyHiddenText" Caption="@h.Caption" Href="@h.Href"
+            <NhsukHeading Id="@h.Id" Text="@h.Text" Html="@h.Html" VisuallyHiddenText="@h.VisuallyHiddenText" Caption="@h.Caption" Href="@h.Href" OpenInNewTab="@h.OpenInNewTab"
                           Level="@(h.Level ?? 3)" ClassName="nhsuk-notification-banner__heading" Classes="@h.Classes" Attributes="@h.Attributes" Element="@h.Element" />
         }
         @if (ChildContent is not null) { @ChildContent }

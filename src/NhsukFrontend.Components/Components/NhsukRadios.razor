@@ -73,13 +73,13 @@
         // The first id has no number suffix, so the error summary can link to it.
         var itemId = Truthy(item.Id) ? item.Id! : _idPrefix + (index > 1 ? "-" + index : "");
         var conditionalId = "conditional-" + itemId;
-        if (Truthy(item.Divider))
-            return @<div class="nhsuk-radios__divider">@item.Divider</div>;
+        if (item.Divider is { } divider && (Truthy(divider.Text) || Truthy(divider.Html)))
+            return @<div class="nhsuk-radios__divider">@Render.HtmlOrText(divider.Html, divider.Text)</div>;
 
         var isChecked = item.Checked == true || (Truthy(Value) && item.Checked != false && item.Value == Value);
         var hasHint = Truthy(item.Hint?.Text) || Truthy(item.Hint?.Html);
         var hintId = item.Hint?.Id ?? itemId + "-item-hint";
-        var hasConditional = Truthy(item.Conditional?.Html);
+        var hasConditional = Truthy(item.Conditional?.Html) || Truthy(item.Conditional?.Text);
 
         var input = new Attrs()
             .Add("class", Append("nhsuk-radios__input", item.Classes))
@@ -107,7 +107,10 @@
             </div>
             @if (hasConditional)
             {
-                <div class="@("nhsuk-radios__conditional" + (isChecked ? "" : " nhsuk-radios__conditional--hidden"))" id="@conditionalId">@((MarkupString)item.Conditional!.Html!.Trim())</div>
+                <div class="@("nhsuk-radios__conditional" + (isChecked ? "" : " nhsuk-radios__conditional--hidden"))" id="@conditionalId">
+                    @if (Truthy(item.Conditional!.Html)) { @((MarkupString)item.Conditional.Html!.Trim()) }
+                    else { <p>@item.Conditional.Text</p> }
+                </div>
             }
         </text>;
     }

@@ -1,0 +1,9 @@
+@namespace NhsukFrontend.Components
+@* Port of nhsuk/components/link/template.njk *@
+@Render.Link(new LinkOptions
+{
+    Id = Id, Text = Text, Html = Html, VisuallyHiddenText = VisuallyHiddenText, VisuallyHidden = VisuallyHidden,
+    AriaLabel = AriaLabel, Name = Name, Value = Value, Type = Type, Href = Href, OpenInNewTab = OpenInNewTab,
+    Current = Current, Variant = Variant, ModuleName = ModuleName, ClassName = ClassName, Classes = Classes,
+    Attributes = Attributes, Slots = Slots, Element = Element,
+}, ChildContent, AdditionalAttributes)

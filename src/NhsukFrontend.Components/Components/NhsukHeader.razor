@@ -5,10 +5,11 @@
         <div class="nhsuk-header__service">
             @if (Truthy(_logoHref))
             {
-                <a class="nhsuk-header__service-logo" href="@_logoHref" aria-label="@LogoAriaLabel">
-                    @ServiceLogo
-                    @if (_combineLinks) { @ServiceName(Service!.Text, null) }
-                </a>
+                @Render.Link(new LinkOptions { Href = _logoHref, AriaLabel = LogoAriaLabel, ClassName = "nhsuk-header__service-logo" },
+                    @<text>
+                        @ServiceLogo
+                        @if (_combineLinks) { @ServiceName(Service!.Text, null) }
+                    </text>)
             }
             else if (_combineLinks)
             {
@@ -45,12 +46,12 @@
                         <li class="@Append("nhsuk-header__account-item", item.Classes)">
                             @if (Truthy(item.Href))
                             {
-                                <a class="nhsuk-header__account-link" href="@item.Href">@AccountItem(item)</a>
+                                @Render.Link(new LinkOptions { Href = item.Href, OpenInNewTab = item.OpenInNewTab, ClassName = "nhsuk-header__account-link" }, AccountItem(item))
                             }
                             else if (Truthy(item.Action))
                             {
                                 <form class="nhsuk-header__account-form" action="@item.Action" method="@Default(item.Method, "post")" novalidate>
-                                    <button class="nhsuk-header__account-button">@AccountItem(item)</button>
+                                    <button class="nhsuk-header__account-button" type="submit">@AccountItem(item)</button>
                                 </form>
                             }
                             else
@@ -72,26 +73,35 @@
                     {
                         if (item is null) continue;
                         var isCurrent = item.Active == true || item.Current == true;
-                        var itemAttributes = new Attrs()
-                            .Add("class", Truthy(item.Href) ? "nhsuk-header__navigation-link" : "nhsuk-header__navigation-text")
-                            .Optional("href", item.Href)
-                            .Optional("aria-current", isCurrent ? (item.Current == true ? "page" : "true") : null);
+                        var ariaCurrent = isCurrent ? (item.Current == true ? "page" : "true") : null;
+                        var content = Render.Content(text: item.Text, html: item.Html, visuallyHidden: item.VisuallyHidden, visuallyHiddenText: item.VisuallyHiddenText, slots: item.Slots);
+                        // Current items are wrapped in <strong> so the current page still stands out if colours are overridden.
+                        RenderFragment inner = isCurrent
+                            ? @<strong class="nhsuk-header__navigation-item-current-fallback">@content</strong>
+                            : content;
                         <li class="@NavigationItemClasses(item, isCurrent)" @attributes="new Attrs().AddUser(item.Attributes)">
-                            <NhsukElement Tag="@(Truthy(item.Href) ? "a" : "span")" Attributes="itemAttributes">
-                                @if (isCurrent)
+                            @if (Truthy(item.Href))
+                            {
+                                @Render.Link(new LinkOptions
                                 {
-                                    <strong class="nhsuk-header__navigation-item-current-fallback">@HtmlOrText(item.Html, item.Text)</strong>
-                                }
-                                else
-                                {
-                                    @HtmlOrText(item.Html, item.Text)
-                                }
-                            </NhsukElement>
+                                    Href = item.Href, OpenInNewTab = item.OpenInNewTab, ClassName = "nhsuk-header__navigation-link",
+                                    Attributes = ariaCurrent is null ? null : new NhsukAttributes { ["aria-current"] = ariaCurrent },
+                                }, inner)
+                            }
+                            else
+                            {
+                                <span class="nhsuk-header__navigation-text" aria-current="@ariaCurrent">@inner</span>
+                            }
                         </li>
                     }
                     <li class="nhsuk-header__menu" hidden>
-                        <button class="nhsuk-header__menu-toggle nhsuk-header__navigation-link" id="toggle-menu" aria-expanded="false">
-                            <span class="nhsuk-u-visually-hidden">@Default(Navigation.ToggleMenuVisuallyHiddenText, "Browse") </span>@Default(Navigation.ToggleMenuText, "More")
+                        <button class="nhsuk-header__menu-toggle nhsuk-header__navigation-link" id="toggle-menu" type="button" aria-expanded="false">
+                            @Render.Content(text: Default(Navigation.ToggleMenuText, "More"), visuallyHidden: new VisuallyHiddenOptions
+                            {
+                                Text = Default(Navigation.ToggleMenuVisuallyHiddenText, "Browse"),
+                                Placement = "start",
+                                Slots = new NhsukSlots { End = new NhsukSlot { Text = " " } },
+                            })
                         </button>
                     </li>
                 </ul>
@@ -149,9 +159,8 @@
     private static string NavigationItemClasses(HeaderNavigationItemsItem item, bool isCurrent) =>
         Append("nhsuk-header__navigation-item" + (isCurrent ? " nhsuk-header__navigation-item--current" : ""), item.Classes);
 
-    private string LogoAriaLabel => Truthy(Logo?.AriaLabel)
-        ? Logo!.AriaLabel!
-        : string.Join(" ", new[] { _logoAlt, Organisation?.Name, Organisation?.Split, _combineLinks ? Service?.Text : null, "homepage" }
+    private string LogoAriaLabel => Logo?.AriaLabel
+        ?? string.Join(" ", new[] { _logoAlt, Organisation?.Name, Organisation?.Split, Organisation?.Descriptor, _combineLinks ? Service?.Text : null, "homepage" }
             .Where(s => s is not null));
 
     private string SearchLabelText => Default(Search!.Label?.VisuallyHiddenText ?? Search.VisuallyHiddenLabel, "Search the NHS website");
@@ -186,7 +195,7 @@
 
     private static RenderFragment ServiceName(string? text, string? href) =>
         !Truthy(text) ? _ => { }
-        : Truthy(href) ? @<a class="nhsuk-header__service-name" href="@href">@text</a>
+        : Truthy(href) ? Render.Link(new LinkOptions { Href = href, Text = text!.Trim(), ClassName = "nhsuk-header__service-name" })
         : @<span class="nhsuk-header__service-name">@text</span>;
 
     private static RenderFragment AccountItem(HeaderAccountItemsItem item) =>

@@ -14,7 +14,7 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-l\">\n  What is your full name?\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading-l\">\n  What is your full name?\n</h1>\n"
     },
     {
       "name": "size class",
@@ -24,7 +24,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading nhsuk-heading-l\">\n  What is your full name?\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading nhsuk-heading-l\">\n  What is your full name?\n</h1>\n"
     },
     {
       "name": "size class overriding size option",
@@ -35,7 +35,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading nhsuk-heading-l\">\n  What is your full name?\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading nhsuk-heading-l\">\n  What is your full name?\n</h1>\n"
     },
     {
       "name": "text",
@@ -50,7 +50,7 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-s\">\n  What is your full name?\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading-s\">\n  What is your full name?\n</h1>\n"
     },
     {
       "name": "text",
@@ -65,7 +65,7 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-m\">\n  What is your full name?\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading-m\">\n  What is your full name?\n</h1>\n"
     },
     {
       "name": "text",
@@ -80,7 +80,7 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-l\">\n  What is your full name?\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading-l\">\n  What is your full name?\n</h1>\n"
     },
     {
       "name": "text",
@@ -95,7 +95,7 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-xl\">\n  What is your full name?\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading-xl\">\n  What is your full name?\n</h1>\n"
     },
     {
       "name": "text and caption",
@@ -107,7 +107,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-s\">\n  <span class=\"nhsuk-caption\">\n    About you\n  </span>\n  What is your home address?\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading-s\">\n  <span class=\"nhsuk-caption\">\n    About you\n  </span>\n  What is your home address?\n</h1>\n"
     },
     {
       "name": "text and caption",
@@ -119,7 +119,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-m\">\n  <span class=\"nhsuk-caption-m\">\n    About you\n  </span>\n  What is your home address?\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading-m\">\n  <span class=\"nhsuk-caption-m\">\n    About you\n  </span>\n  What is your home address?\n</h1>\n"
     },
     {
       "name": "text and caption",
@@ -131,7 +131,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-l\">\n  <span class=\"nhsuk-caption-l\">\n    About you\n  </span>\n  What is your home address?\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading-l\">\n  <span class=\"nhsuk-caption-l\">\n    About you\n  </span>\n  What is your home address?\n</h1>\n"
     },
     {
       "name": "text and caption",
@@ -143,7 +143,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-xl\">\n  <span class=\"nhsuk-caption-xl\">\n    About you\n  </span>\n  What is your home address?\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading-xl\">\n  <span class=\"nhsuk-caption-xl\">\n    About you\n  </span>\n  What is your home address?\n</h1>\n"
     },
     {
       "name": "text and caption \"after\"",
@@ -162,7 +162,7 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-s\">\n  What is your home address?\n</h1>\n<span class=\"nhsuk-caption nhsuk-caption--bottom\">\n  About you\n</span>"
+      "html": "<h1 class=\"nhsuk-heading-s\">\n  What is your home address?\n</h1>\n<span class=\"nhsuk-caption nhsuk-caption--bottom\">\n  About you\n</span>\n"
     },
     {
       "name": "text and caption \"after\"",
@@ -181,7 +181,7 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-m\">\n  What is your home address?\n</h1>\n<span class=\"nhsuk-caption-m nhsuk-caption--bottom\">\n  About you\n</span>"
+      "html": "<h1 class=\"nhsuk-heading-m\">\n  What is your home address?\n</h1>\n<span class=\"nhsuk-caption-m nhsuk-caption--bottom\">\n  About you\n</span>\n"
     },
     {
       "name": "text and caption \"after\"",
@@ -200,7 +200,7 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-l\">\n  What is your home address?\n</h1>\n<span class=\"nhsuk-caption-l nhsuk-caption--bottom\">\n  About you\n</span>"
+      "html": "<h1 class=\"nhsuk-heading-l\">\n  What is your home address?\n</h1>\n<span class=\"nhsuk-caption-l nhsuk-caption--bottom\">\n  About you\n</span>\n"
     },
     {
       "name": "text and caption \"after\"",
@@ -219,7 +219,7 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-xl\">\n  What is your home address?\n</h1>\n<span class=\"nhsuk-caption-xl nhsuk-caption--bottom\">\n  About you\n</span>"
+      "html": "<h1 class=\"nhsuk-heading-xl\">\n  What is your home address?\n</h1>\n<span class=\"nhsuk-caption-xl nhsuk-caption--bottom\">\n  About you\n</span>\n"
     },
     {
       "name": "text and caption \"after\" as a paragraph",
@@ -234,7 +234,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-l\">\n  What is your home address?\n</h1>\n<p class=\"nhsuk-caption-l nhsuk-caption--bottom\">\n  About you\n</p>"
+      "html": "<h1 class=\"nhsuk-heading-l\">\n  What is your home address?\n</h1>\n<p class=\"nhsuk-caption-l nhsuk-caption--bottom\">\n  About you\n</p>\n"
     },
     {
       "name": "text and caption \"before\"",
@@ -253,7 +253,7 @@
         ]
       },
       "options": {},
-      "html": "<span class=\"nhsuk-caption\">\n  About you\n</span>\n<h1 class=\"nhsuk-heading-s\">\n  What is your home address?\n</h1>"
+      "html": "<span class=\"nhsuk-caption\">\n  About you\n</span>\n<h1 class=\"nhsuk-heading-s\">\n  What is your home address?\n</h1>\n"
     },
     {
       "name": "text and caption \"before\"",
@@ -272,7 +272,7 @@
         ]
       },
       "options": {},
-      "html": "<span class=\"nhsuk-caption-m\">\n  About you\n</span>\n<h1 class=\"nhsuk-heading-m\">\n  What is your home address?\n</h1>"
+      "html": "<span class=\"nhsuk-caption-m\">\n  About you\n</span>\n<h1 class=\"nhsuk-heading-m\">\n  What is your home address?\n</h1>\n"
     },
     {
       "name": "text and caption \"before\"",
@@ -291,7 +291,7 @@
         ]
       },
       "options": {},
-      "html": "<span class=\"nhsuk-caption-l\">\n  About you\n</span>\n<h1 class=\"nhsuk-heading-l\">\n  What is your home address?\n</h1>"
+      "html": "<span class=\"nhsuk-caption-l\">\n  About you\n</span>\n<h1 class=\"nhsuk-heading-l\">\n  What is your home address?\n</h1>\n"
     },
     {
       "name": "text and caption \"before\"",
@@ -310,7 +310,7 @@
         ]
       },
       "options": {},
-      "html": "<span class=\"nhsuk-caption-xl\">\n  About you\n</span>\n<h1 class=\"nhsuk-heading-xl\">\n  What is your home address?\n</h1>"
+      "html": "<span class=\"nhsuk-caption-xl\">\n  About you\n</span>\n<h1 class=\"nhsuk-heading-xl\">\n  What is your home address?\n</h1>\n"
     },
     {
       "name": "text and caption \"before\" as a heading",
@@ -325,7 +325,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<h2 class=\"nhsuk-caption-l\">\n  About you\n</h2>\n<h1 class=\"nhsuk-heading-l\">\n  What is your home address?\n</h1>"
+      "html": "<h2 class=\"nhsuk-caption-l\">\n  About you\n</h2>\n<h1 class=\"nhsuk-heading-l\">\n  What is your home address?\n</h1>\n"
     },
     {
       "name": "text and caption \"end\"",
@@ -344,7 +344,7 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-s\">\n  What is your home address?\n  <span class=\"nhsuk-caption nhsuk-caption--bottom\">\n    About you\n  </span>\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading-s\">\n  What is your home address?\n  <span class=\"nhsuk-caption nhsuk-caption--bottom\">\n    About you\n  </span>\n</h1>\n"
     },
     {
       "name": "text and caption \"end\"",
@@ -363,7 +363,7 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-m\">\n  What is your home address?\n  <span class=\"nhsuk-caption-m nhsuk-caption--bottom\">\n    About you\n  </span>\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading-m\">\n  What is your home address?\n  <span class=\"nhsuk-caption-m nhsuk-caption--bottom\">\n    About you\n  </span>\n</h1>\n"
     },
     {
       "name": "text and caption \"end\"",
@@ -382,7 +382,7 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-l\">\n  What is your home address?\n  <span class=\"nhsuk-caption-l nhsuk-caption--bottom\">\n    About you\n  </span>\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading-l\">\n  What is your home address?\n  <span class=\"nhsuk-caption-l nhsuk-caption--bottom\">\n    About you\n  </span>\n</h1>\n"
     },
     {
       "name": "text and caption \"end\"",
@@ -401,7 +401,7 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-xl\">\n  What is your home address?\n  <span class=\"nhsuk-caption-xl nhsuk-caption--bottom\">\n    About you\n  </span>\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading-xl\">\n  What is your home address?\n  <span class=\"nhsuk-caption-xl nhsuk-caption--bottom\">\n    About you\n  </span>\n</h1>\n"
     },
     {
       "name": "text and caption \"start\"",
@@ -420,7 +420,7 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-s\">\n  <span class=\"nhsuk-caption\">\n    About you\n  </span>\n  What is your home address?\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading-s\">\n  <span class=\"nhsuk-caption\">\n    About you\n  </span>\n  What is your home address?\n</h1>\n"
     },
     {
       "name": "text and caption \"start\"",
@@ -439,7 +439,7 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-m\">\n  <span class=\"nhsuk-caption-m\">\n    About you\n  </span>\n  What is your home address?\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading-m\">\n  <span class=\"nhsuk-caption-m\">\n    About you\n  </span>\n  What is your home address?\n</h1>\n"
     },
     {
       "name": "text and caption \"start\"",
@@ -458,7 +458,7 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-l\">\n  <span class=\"nhsuk-caption-l\">\n    About you\n  </span>\n  What is your home address?\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading-l\">\n  <span class=\"nhsuk-caption-l\">\n    About you\n  </span>\n  What is your home address?\n</h1>\n"
     },
     {
       "name": "text and caption \"start\"",
@@ -477,7 +477,99 @@
         ]
       },
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-xl\">\n  <span class=\"nhsuk-caption-xl\">\n    About you\n  </span>\n  What is your home address?\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading-xl\">\n  <span class=\"nhsuk-caption-xl\">\n    About you\n  </span>\n  What is your home address?\n</h1>\n"
+    },
+    {
+      "name": "text escaping",
+      "context": {
+        "text": "What to expect at A&E",
+        "size": "l"
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<h1 class=\"nhsuk-heading-l\">\n  What to expect at A&amp;E\n</h1>\n"
+    },
+    {
+      "name": "with custom class and size",
+      "context": {
+        "text": "What is your full name?",
+        "className": "app-heading",
+        "size": "s"
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<h1 class=\"app-heading-s\">\n  What is your full name?\n</h1>\n"
+    },
+    {
+      "name": "with custom class and size as modifier",
+      "context": {
+        "text": "What is your full name?",
+        "className": "app-heading",
+        "classPrefix": "app-heading--",
+        "size": "s"
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<h1 class=\"app-heading app-heading--s\">\n  What is your full name?\n</h1>\n"
+    },
+    {
+      "name": "with HTML",
+      "context": {
+        "html": "What to expect at A&amp;E",
+        "size": "l"
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<h1 class=\"nhsuk-heading-l\">\n  What to expect at A&amp;E\n</h1>\n"
+    },
+    {
+      "name": "with HTML and caption",
+      "context": {
+        "html": "What to expect at A&amp;E",
+        "caption": "Urgent and emergency care services",
+        "size": "l"
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<h1 class=\"nhsuk-heading-l\">\n  <span class=\"nhsuk-caption-l\">\n    Urgent and emergency care services\n  </span>\n  What to expect at A&amp;E\n</h1>\n"
+    },
+    {
+      "name": "with HTML via call block",
+      "context": {
+        "size": "l"
+      },
+      "callBlock": "What to expect at A&amp;E",
+      "screenshot": false,
+      "options": {},
+      "html": "<h1 class=\"nhsuk-heading-l\">\n  What to expect at A&amp;E\n</h1>\n"
+    },
+    {
+      "name": "with HTML via call block and caption \"end\"",
+      "context": {
+        "caption": {
+          "text": "Urgent and emergency care services",
+          "placement": "end"
+        },
+        "size": "l"
+      },
+      "callBlock": "What to expect at A&amp;E",
+      "screenshot": false,
+      "options": {},
+      "html": "<h1 class=\"nhsuk-heading-l\">\n  What to expect at A&amp;E\n  <span class=\"nhsuk-caption-l nhsuk-caption--bottom\">\n    Urgent and emergency care services\n  </span>\n</h1>\n"
+    },
+    {
+      "name": "with HTML via call block and caption \"start\"",
+      "context": {
+        "caption": {
+          "text": "Urgent and emergency care services",
+          "placement": "start"
+        },
+        "size": "l"
+      },
+      "callBlock": "What to expect at A&amp;E",
+      "screenshot": false,
+      "options": {},
+      "html": "<h1 class=\"nhsuk-heading-l\">\n  <span class=\"nhsuk-caption-l\">\n    Urgent and emergency care services\n  </span>\n  What to expect at A&amp;E\n</h1>\n"
     },
     {
       "name": "with link",
@@ -488,19 +580,41 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-l\">\n  <a class=\"nhsuk-link\" href=\"#/result/1\">Skin colour changes</a>\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading-l\">\n  <a class=\"nhsuk-link\" href=\"#/result/1\">Skin colour changes</a>\n</h1>\n"
     },
     {
       "name": "with link and caption",
       "context": {
+        "href": "#/result/1",
         "text": "Skin colour changes",
         "caption": "A to Z of NHS health writing",
-        "href": "#/result/1",
         "size": "l"
       },
       "screenshot": false,
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-l\">\n  <span class=\"nhsuk-caption-l\">\n    A to Z of NHS health writing\n  </span>\n  <a class=\"nhsuk-link\" href=\"#/result/1\">Skin colour changes</a>\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading-l\">\n  <span class=\"nhsuk-caption-l\">\n    A to Z of NHS health writing\n  </span>\n  <a class=\"nhsuk-link\" href=\"#/result/1\">Skin colour changes</a>\n</h1>\n"
+    },
+    {
+      "name": "with link opens in a new tab",
+      "context": {
+        "href": "#/result/1",
+        "text": "Skin colour changes",
+        "openInNewTab": true,
+        "size": "l"
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<h1 class=\"nhsuk-heading-l\">\n  <a class=\"nhsuk-link\" href=\"#/result/1\" rel=\"noopener noreferrer\" target=\"_blank\">Skin colour changes</a>\n</h1>\n"
+    },
+    {
+      "name": "without class",
+      "context": {
+        "text": "What is your full name?",
+        "className": false
+      },
+      "screenshot": false,
+      "options": {},
+      "html": "<h1>\n  What is your full name?\n</h1>\n"
     },
     {
       "name": "with visually hidden text",
@@ -511,7 +625,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-l\">\n  Home address<span class=\"nhsuk-u-visually-hidden\"> (Karen Francis)</span>\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading-l\">\n  Home address<span class=\"nhsuk-u-visually-hidden\"> (Karen Francis)</span>\n</h1>\n"
     },
     {
       "name": "with visually hidden text and caption",
@@ -523,7 +637,7 @@
       },
       "screenshot": false,
       "options": {},
-      "html": "<h1 class=\"nhsuk-heading-l\">\n  <span class=\"nhsuk-caption-l\">\n    About you\n  </span>\n  Home address<span class=\"nhsuk-u-visually-hidden\"> (Karen Francis)</span>\n</h1>"
+      "html": "<h1 class=\"nhsuk-heading-l\">\n  <span class=\"nhsuk-caption-l\">\n    About you\n  </span>\n  Home address<span class=\"nhsuk-u-visually-hidden\"> (Karen Francis)</span>\n</h1>\n"
     }
   ]
 }

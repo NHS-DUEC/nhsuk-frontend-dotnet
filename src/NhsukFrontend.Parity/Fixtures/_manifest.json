@@ -1,5 +1,5 @@
 {
-  "upstreamVersion": "10.6.1",
+  "upstreamVersion": "10.7.2",
   "ported": [
     "action-link",
     "back-link",
@@ -14,6 +14,7 @@
     "date-input",
     "details",
     "do-dont-list",
+    "environment-banner",
     "error-message",
     "error-summary",
     "fieldset",
@@ -28,6 +29,7 @@
     "inset-text",
     "label",
     "legend",
+    "link",
     "notification-banner",
     "pagination",
     "panel",
@@ -44,6 +46,7 @@
     "task-list",
     "template",
     "textarea",
+    "visually-hidden",
     "warning-callout"
   ],
   "notYetPorted": []

@@ -1,9 +1,12 @@
 @namespace NhsukFrontend.Components
 @* Port of nhsuk/components/tag/template.njk *@
-<strong class="@ClassNames" id="@(Truthy(Id) ? Id : null)" @attributes="new Attrs().AddUser(Attributes, AdditionalAttributes)"><NhsukContent Caller="ChildContent" Html="@Html" Text="@Text" /></strong>
+@if (ChildContent is not null || Truthy(Html) || Truthy(Text))
+{
+    <strong class="@ClassNames" id="@(Truthy(Id) ? Id : null)" @attributes="new Attrs().AddUser(Attributes, AdditionalAttributes)"><NhsukContent Caller="ChildContent" Html="@Html" Text="@Text" /></strong>
+}
 
 @code {
-    private static readonly string[] Colours = ["white", "grey", "green", "aqua-green", "blue", "purple", "pink", "red", "orange", "yellow"];
+    private static readonly string[] Colours = ["white", "grey", "green", "aqua-green", "blue", "purple", "pink", "red", "orange", "warm-yellow", "yellow"];
 
     private string ClassNames
     {

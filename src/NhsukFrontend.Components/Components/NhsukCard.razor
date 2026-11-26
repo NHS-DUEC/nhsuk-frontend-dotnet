@@ -31,9 +31,25 @@
     }
     <div class="@Append("nhsuk-card__content", _description.Classes)" @attributes="new Attrs().AddUser(_description.Attributes)">
         @if (!_isCareCard && _actions.Count == 0 && _hasHeading) { @CardHeading(_heading.VisuallyHiddenText) }
-        @if (ChildContent is not null) { @ChildContent }
-        else if (Truthy(_description.Html)) { @((MarkupString)_description.Html!) }
-        else if (Truthy(_description.Text)) { <p class="nhsuk-card__description">@_description.Text</p> }
+        @if (ChildContent is not null) { @Render.Content(caller: ChildContent, visuallyHiddenText: _description.VisuallyHiddenText) }
+        else if (Truthy(_description.Html)) { @Render.Content(html: _description.Html, visuallyHiddenText: _description.VisuallyHiddenText) }
+        else if (Truthy(_description.Text))
+        {
+            <p class="nhsuk-card__description">
+                @if (Truthy(_description.Href))
+                {
+                    @Render.Link(new LinkOptions
+                    {
+                        Href = _description.Href, Text = _description.Text, VisuallyHiddenText = _description.VisuallyHiddenText,
+                        OpenInNewTab = _description.OpenInNewTab, ClassName = "nhsuk-card__link",
+                    })
+                }
+                else
+                {
+                    @Render.Content(text: _description.Text, visuallyHiddenText: _description.VisuallyHiddenText)
+                }
+            </p>
+        }
         @if (Contains(_classNames, "nhsuk-card--primary")) { <NhsukIcon Name="chevron-right-circle" /> }
     </div>
 </div>
@@ -92,31 +108,42 @@
         : _variant == "urgent" ? "Urgent advice"
         : "Non-urgent advice";
 
-    private RenderFragment CardHeading(string? visuallyHiddenText) => @<text>
-        @if (Truthy(_heading.Text))
+    private RenderFragment CardHeading(string? visuallyHiddenText)
+    {
+        var href = Href ?? _heading.Href;
+        var inner = Render.Content(text: _heading.Text, visuallyHidden: new VisuallyHiddenOptions
         {
-            <NhsukHeading Id="@_heading.Id" Size="@_heading.Size" Level="@(_heading.Level ?? 2)" Classes="@_heading.Classes"
-                          ClassName="nhsuk-card__heading" ClassPrefix="nhsuk-heading-" Attributes="@_heading.Attributes">
-                @if (Truthy(Href) && !Contains(_classNames, "nhsuk-card--feature"))
-                {
-                    <a class="nhsuk-card__link" href="@Href">@_heading.Text!.Trim()</a>
-                }
-                else if (Truthy(visuallyHiddenText))
-                {
-                    <span role="text"><span class="nhsuk-u-visually-hidden">@visuallyHiddenText: </span>@_heading.Text!.Trim()</span>
-                }
-                else
-                {
-                    @_heading.Text!.Trim()
-                }
-            </NhsukHeading>
-        }
-        @if (Truthy(_heading.Html)) { @((MarkupString)_heading.Html!.Trim()) }
-        @if (_isCareCard) { <span class="nhsuk-card--care__arrow" aria-hidden="true"></span> }
-    </text>;
+            Text = visuallyHiddenText,
+            Placement = "start",
+            Slots = new NhsukSlots { End = new NhsukSlot { Text = ": " } },
+        });
+
+        return @<text>
+            @if (Truthy(_heading.Text))
+            {
+                <NhsukHeading Id="@_heading.Id" Caption="@_heading.Caption" Size="@_heading.Size" Level="@(_heading.Level ?? 2)" Classes="@_heading.Classes"
+                              ClassName="nhsuk-card__heading" ClassPrefix="nhsuk-heading-" Attributes="@_heading.Attributes">
+                    @if (Truthy(href) && !Contains(_classNames, "nhsuk-card--feature"))
+                    {
+                        @Render.Link(new LinkOptions { Href = href, OpenInNewTab = OpenInNewTab ?? _heading.OpenInNewTab, ClassName = "nhsuk-card__link" }, inner)
+                    }
+                    else if (Truthy(visuallyHiddenText))
+                    {
+                        <span role="text">@inner</span>
+                    }
+                    else
+                    {
+                        @inner
+                    }
+                </NhsukHeading>
+            }
+            @if (Truthy(_heading.Html)) { @((MarkupString)_heading.Html!.Trim()) }
+            @if (_isCareCard) { <span class="nhsuk-card--care__arrow" aria-hidden="true"></span> }
+        </text>;
+    }
 
     private RenderFragment ActionFragment(CardActionsItemsItem a) =>
         @<NhsukCardAction Id="@a.Id" Text="@a.Text" Html="@a.Html" VisuallyHiddenText="@a.VisuallyHiddenText" Name="@a.Name"
-                          Type="@a.Type" Value="@a.Value" Href="@a.Href" Classes="@a.Classes" Attributes="@a.Attributes"
+                          Type="@a.Type" Value="@a.Value" Href="@a.Href" OpenInNewTab="@a.OpenInNewTab" Classes="@a.Classes" Attributes="@a.Attributes"
                           HeadingText="@_heading.Text" HeadingHtml="@_heading.Html" />;
 }

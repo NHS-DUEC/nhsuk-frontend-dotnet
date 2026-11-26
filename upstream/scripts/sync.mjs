@@ -77,6 +77,8 @@ function generateComponent(component) {
     if (override.type) return override.type + '?'
     // Some macro-options.json files declare `attributes` as a string; every template reads it as an object.
     if (param.name === 'attributes') return 'NhsukAttributes?'
+    // Every `slots` option (before, start, end, after) has the same shape, read by upstream's nhsukSlot macro.
+    if (param.name === 'slots') return 'NhsukSlots?'
     switch (param.type) {
       case 'string': type = 'string'; break
       case 'boolean': type = 'bool'; break
@@ -347,6 +349,15 @@ function renderTemplateFixtures() {
         footer: '<footer class="app-footer">Custom footer</footer>',
         bodyEnd: '<p>End</p>'
       }
+    },
+    { name: 'with environment name', context: { environmentName: 'Review' }, blocks: {} },
+    { name: 'with environment name and no matching theme', context: { environmentName: 'Staging' }, blocks: {} },
+    { name: 'with theme name', context: { environmentName: 'Review', themeName: 'Aqua-Green' }, blocks: {} },
+    { name: 'with theme name and theme colour', context: { themeName: 'red', themeColor: '#330072' }, blocks: {} },
+    {
+      name: 'with custom theme colours',
+      context: { themeName: 'purple', themeColors: { purple: '#ded6e9' } },
+      blocks: {}
     },
     {
       name: 'with replaced main and skip link',
