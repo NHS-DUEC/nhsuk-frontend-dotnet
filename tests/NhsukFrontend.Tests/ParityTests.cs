@@ -60,6 +60,26 @@ public sealed class ParityTests
                 .Select(d => (d.Kind == DiffKind.Expected ? "- upstream " : "+ dotnet   ") + d.Token)));
     }
 
+    /// <summary>The demo site shows three snippets beside every example; one that throws takes the whole page down.</summary>
+    [Fact]
+    public void Every_example_has_snippets_for_the_demo_site()
+    {
+        foreach (var set in FixtureStore.All)
+        {
+            var type = ComponentRegistry.ByName[set.Component];
+            foreach (var fixture in set.Fixtures)
+            {
+                var failure = Record.Exception(() =>
+                {
+                    Snippets.Nunjucks(set.Component, fixture);
+                    Snippets.Razor(type, fixture);
+                    Snippets.TagHelper(type, fixture);
+                });
+                Assert.True(failure is null, $"{set.Component} / {fixture.Name}: {failure?.Message}");
+            }
+        }
+    }
+
     [Fact]
     public void Every_component_has_a_tag_helper()
     {

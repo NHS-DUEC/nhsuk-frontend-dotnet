@@ -114,7 +114,8 @@ public static class Snippets
 
     public static string Nunjucks(string component, Fixture fixture)
     {
-        var json = JsonSerializer.Serialize(fixture.Context, new JsonSerializerOptions
+        // Some fixtures pass no options at all, only a call block (from nhsuk-frontend 10.7.0).
+        var json = fixture.Context.ValueKind == JsonValueKind.Undefined ? "" : JsonSerializer.Serialize(fixture.Context, new JsonSerializerOptions
         {
             WriteIndented = true,
             Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
