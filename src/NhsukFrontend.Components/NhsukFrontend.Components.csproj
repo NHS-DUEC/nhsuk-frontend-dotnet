@@ -12,7 +12,7 @@
          Change the suffix for each release of this port; reset it to beta.1 when upstream moves on. -->
     <PackageId>nhsuk-frontend-dotnet</PackageId>
     <VersionPrefix>$(NhsukFrontendUpstreamVersion)</VersionPrefix>
-    <VersionSuffix>beta.1</VersionSuffix>
+    <VersionSuffix>beta.2</VersionSuffix>
     <Title>NHS.UK frontend for .NET</Title>
     <Description>Community port of NHS.UK frontend for ASP.NET Core: tag helpers for Razor Pages and MVC, and Razor components for Blazor, rendering the same HTML as nhsuk-frontend. Not maintained by NHS England.</Description>
     <Authors>nhsuk-frontend-dotnet contributors</Authors>
